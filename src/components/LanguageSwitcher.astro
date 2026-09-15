@@ -33,6 +33,7 @@ const { lang, path } = Astro.props;
     display: inline-block;
     padding: 5px 8px;
     border-radius: var(--radius-sm);
+    border: 1px solid transparent;
     color: var(--ink-soft);
     text-decoration: none;
     font-weight: 500;
@@ -45,7 +46,7 @@ const { lang, path } = Astro.props;
 
   .lang-option.active {
     background: var(--paper-raised);
-    border: 1px solid var(--line);
+    border-color: var(--line);
     color: var(--forest);
   }
 </style>
