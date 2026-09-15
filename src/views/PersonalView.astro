@@ -1,0 +1,53 @@
+---
+import { getDictionary, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<section class="personal-placeholder">
+  <p class="kicker">{t.personal.kicker}</p>
+  <h1>{t.personal.heading}</h1>
+  <p class="personal-body">{t.personal.body}</p>
+  <div class="photo-grid" aria-hidden="true">
+    <div class="photo-frame"></div>
+    <div class="photo-frame"></div>
+    <div class="photo-frame"></div>
+  </div>
+</section>
+
+<style>
+  .personal-placeholder {
+    padding: 56px 0;
+  }
+
+  .personal-body {
+    margin-top: 16px;
+    max-width: 52ch;
+    color: var(--ink-soft);
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .photo-frame {
+    aspect-ratio: 1;
+    background: var(--paper-raised);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 480px) {
+    .photo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

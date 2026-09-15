@@ -1,0 +1,210 @@
+---
+import EducationItem from '../components/EducationItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getDictionary, projectDetailPath, projectLinkLabels, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+
+const { repoLabel, demoLabel } = projectLinkLabels(lang);
+const github = t.contact.links.find((l) => l.label === 'GitHub');
+---
+
+<section class="hero-intro">
+  <div class="hero-intro-body">
+    <p class="kicker">{t.hero.kicker}</p>
+    <h1>{t.hero.greeting} {t.hero.name}</h1>
+    <p class="tagline">{t.hero.tagline.join(' | ')}</p>
+    <div class="hero-actions">
+      <a href={t.hero.ctaHref} class="btn btn-primary">{t.hero.cta}</a>
+      {github && (
+        <a href={github.href} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      )}
+    </div>
+    <p class="hero-outro">{t.hero.outro}</p>
+  </div>
+
+  <a href="#education" class="scroll-cta">
+    <span>{t.hero.exploreCta}</span>
+    <span class="scroll-arrow" aria-hidden="true">↓</span>
+  </a>
+</section>
+
+<section class="section" id="education">
+  <h2 class="section-heading">{t.education.heading}</h2>
+  <div class="section-note"></div>
+  <div class="education-list">
+    {t.education.items.map((item) => (
+      <EducationItem
+        institution={item.institution}
+        degree={item.degree}
+        dates={item.dates}
+        note={item.note}
+      />
+    ))}
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <h2 class="section-heading">{t.projects.heading}</h2>
+  <p class="section-note">{t.projects.note}</p>
+  <div class="projects-grid">
+    {t.projects.items.map((project) => (
+      <ProjectCard
+        title={project.title}
+        description={project.description}
+        stack={project.stack}
+        detailHref={projectDetailPath(lang, project.slug)}
+        repoHref={project.repoHref}
+        demoHref={project.demoHref}
+        detailLabel={t.projects.viewDetail}
+        repoLabel={repoLabel}
+        demoLabel={demoLabel}
+      />
+    ))}
+  </div>
+</section>
+
+<section class="section" id="stack">
+  <h2 class="section-heading">{t.stack.heading}</h2>
+  <div class="stack-list">
+    {t.stack.groups.map((group) => (
+      <div class="stack-row">
+        <span class="stack-label">{group.label}</span>
+        <span class="stack-items">{group.items.join(' · ')}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .hero-intro {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 48px 0 100px;
+  }
+
+  .hero-intro-body {
+    max-width: 640px;
+  }
+
+  .tagline {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+
+  .hero-actions {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-outro {
+    margin-top: 28px;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .scroll-cta {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .scroll-cta:hover {
+    color: var(--forest);
+  }
+
+  .scroll-arrow {
+    font-size: 18px;
+    animation: scroll-bounce 1.6s ease-in-out infinite;
+  }
+
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  .education-list {
+    margin-top: 8px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .stack-row {
+    display: flex;
+    gap: 28px;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stack-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .stack-label {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--forest);
+    min-width: 200px;
+    flex-shrink: 0;
+  }
+
+  .stack-items {
+    color: var(--ink-soft);
+    font-size: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .hero-intro {
+      padding: 40px 0 90px;
+    }
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+    .stack-row {
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stack-label {
+      min-width: auto;
+    }
+  }
+</style>

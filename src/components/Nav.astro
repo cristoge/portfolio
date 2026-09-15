@@ -1,0 +1,103 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getDictionary, localePath, pageSlug, type Lang, type Page } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  page: Page;
+  path?: string;
+}
+
+const { lang, page, path } = Astro.props;
+const t = getDictionary(lang);
+const currentPath = path ?? pageSlug(page);
+
+const navItems: { page: Page; label: string }[] = [
+  { page: 'home', label: t.nav.home },
+  { page: 'personal', label: t.nav.personal },
+  { page: 'contact', label: t.nav.contact },
+];
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href={localePath(lang, 'home')} class="brand">C.</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      {navItems.map((item) => (
+        <a
+          href={localePath(lang, item.page)}
+          class={`nav-link ${item.page === page ? 'active' : ''}`}
+          aria-current={item.page === page ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <LanguageSwitcher lang={lang} path={currentPath} />
+  </div>
+</header>
+
+<style>
+  .nav {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .brand {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--forest);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+  }
+
+  .nav-link.active {
+    color: var(--forest);
+    font-weight: 600;
+  }
+
+  @media (max-width: 560px) {
+    .nav-inner {
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+    .nav-links {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+  }
+</style>

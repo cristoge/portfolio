@@ -1,0 +1,91 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  stack: readonly string[];
+  detailHref: string;
+  repoHref: string;
+  demoHref: string;
+  detailLabel: string;
+  repoLabel: string;
+  demoLabel: string;
+}
+
+const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, repoLabel, demoLabel } =
+  Astro.props;
+---
+
+<article class="project-card card">
+  <a href={detailHref} class="project-image" aria-hidden="true">IMG</a>
+  <h3 class="project-title">
+    <a href={detailHref} class="project-title-link">{title}</a>
+  </h3>
+  <p class="project-description">{description}</p>
+  <div class="pill-row project-stack">
+    {stack.map((tech) => <span class="pill">{tech}</span>)}
+  </div>
+  <div class="project-links">
+    <a href={detailHref} class="project-link">{detailLabel} →</a>
+    <a href={repoHref} class="project-link">{repoLabel} →</a>
+    <a href={demoHref} class="project-link">{demoLabel} →</a>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-image {
+    aspect-ratio: 16 / 9;
+    background: var(--paper);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  .project-title {
+    margin: 0;
+  }
+
+  .project-title-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-title-link:hover {
+    color: var(--forest);
+  }
+
+  .project-description {
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .project-link {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--forest);
+    text-decoration: none;
+  }
+
+  .project-link:hover {
+    color: var(--forest-dim);
+  }
+</style>

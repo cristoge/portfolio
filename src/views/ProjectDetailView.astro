@@ -1,0 +1,133 @@
+---
+import { getDictionary, localePath, projectLinkLabels, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  slug: string;
+}
+
+const { lang, slug } = Astro.props;
+const t = getDictionary(lang);
+const project = t.projects.items.find((p) => p.slug === slug);
+
+if (!project) {
+  throw new Error(`Unknown project slug: ${slug}`);
+}
+
+const { repoLabel, demoLabel } = projectLinkLabels(lang);
+const d = t.projects.detail;
+---
+
+<article class="project-detail">
+  <a href={`${localePath(lang, 'home')}#projects`} class="back-link">← {d.back}</a>
+
+  <p class="kicker">{d.context}</p>
+  <h1>{project.title}</h1>
+  <p class="project-summary">{project.description}</p>
+
+  <div class="project-hero-image" aria-hidden="true">IMG</div>
+
+  <p class="project-context">{project.context}</p>
+
+  <section class="detail-block">
+    <h2 class="section-heading">{d.depth}</h2>
+    <ul class="depth-list">
+      {project.depthTopics.map((topic) => <li>{topic}</li>)}
+    </ul>
+  </section>
+
+  <section class="detail-block">
+    <h2 class="section-heading">{d.stackLabel}</h2>
+    <div class="pill-row">
+      {project.stack.map((tech) => <span class="pill">{tech}</span>)}
+    </div>
+  </section>
+
+  {project.outcome && (
+    <section class="detail-block">
+      <h2 class="section-heading">{d.outcome}</h2>
+      <p class="outcome-text">{project.outcome}</p>
+    </section>
+  )}
+
+  <div class="project-actions">
+    <a href={project.repoHref} class="btn btn-outline">{repoLabel} →</a>
+    <a href={project.demoHref} class="btn btn-primary">{demoLabel} →</a>
+  </div>
+</article>
+
+<style>
+  .project-detail {
+    padding: 56px 0 72px;
+    max-width: 760px;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-bottom: 24px;
+  }
+
+  .back-link:hover {
+    color: var(--forest);
+  }
+
+  .project-summary {
+    margin-top: 12px;
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+
+  .project-hero-image {
+    aspect-ratio: 16 / 6;
+    background: var(--paper-raised);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 28px 0;
+  }
+
+  .project-context {
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  .detail-block {
+    margin-top: 36px;
+  }
+
+  .depth-list {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: var(--ink-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .depth-list li {
+    line-height: 1.5;
+  }
+
+  .outcome-text {
+    margin-top: 10px;
+    color: var(--ink-soft);
+  }
+
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 44px;
+  }
+</style>
