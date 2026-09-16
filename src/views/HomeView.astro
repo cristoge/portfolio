@@ -90,16 +90,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
 <script>
   const toggle = document.getElementById('reveal-toggle');
   const wrap = document.getElementById('reveal-wrap');
-  const footer = document.getElementById('site-footer');
   const STORAGE_KEY = 'home-revealed';
-
-  const hasRevealed = () => {
-    try {
-      return sessionStorage.getItem(STORAGE_KEY) === 'true';
-    } catch {
-      return false;
-    }
-  };
 
   const markRevealed = () => {
     try {
@@ -107,44 +98,39 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     } catch {
       // ignore (private browsing / storage disabled)
     }
+    document.documentElement.classList.add('home-revealed');
+    toggle?.setAttribute('aria-expanded', 'true');
   };
 
-  const reveal = () => {
-    wrap?.removeAttribute('hidden');
-    footer?.removeAttribute('hidden');
-    toggle?.setAttribute('hidden', '');
-    document.documentElement.classList.remove('home-lock');
-    document.body.classList.remove('home-lock');
-  };
+  if (document.documentElement.classList.contains('home-revealed')) {
+    toggle?.setAttribute('aria-expanded', 'true');
+  }
 
   const hashTarget = window.location.hash && document.getElementById(window.location.hash.slice(1));
   const hasHashTarget = Boolean(wrap && hashTarget && wrap.contains(hashTarget));
 
-  if (hasRevealed() || hasHashTarget) {
-    reveal();
-    if (hasHashTarget) {
-      requestAnimationFrame(() => hashTarget.scrollIntoView({ block: 'start' }));
-    }
-  } else {
-    wrap?.setAttribute('hidden', '');
-    footer?.setAttribute('hidden', '');
-    document.documentElement.classList.add('home-lock');
-    document.body.classList.add('home-lock');
+  if (hasHashTarget) {
+    markRevealed();
+    requestAnimationFrame(() => hashTarget.scrollIntoView({ block: 'start' }));
   }
 
   toggle?.addEventListener('click', () => {
     markRevealed();
-    reveal();
     wrap?.scrollIntoView({ block: 'start' });
   });
 </script>
 
 <style>
-  :global(html.home-lock),
-  :global(body.home-lock) {
+  :global(html[data-hero-lock]:not(.home-revealed)),
+  :global(html[data-hero-lock]:not(.home-revealed) body) {
     height: 100%;
     overflow: hidden;
     overscroll-behavior: none;
+  }
+
+  :global(html[data-hero-lock]:not(.home-revealed) #reveal-wrap),
+  :global(html[data-hero-lock]:not(.home-revealed) #site-footer) {
+    display: none;
   }
 
   .hero-intro {
@@ -182,7 +168,6 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     color: var(--ink-soft);
   }
 
-  .scroll-cta[hidden],
   :global(html.home-revealed) .scroll-cta {
     display: none;
   }

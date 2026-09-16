@@ -124,12 +124,24 @@ export default {
   contact: {
     kicker: 'Contact',
     heading: "Let's talk",
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. You can find me in the following places.',
+    body: 'If you want to talk about a project, have a question, or just want to say hi, you can find me here.',
     links: [
-      { label: 'Email', value: 'you@example.com', href: 'mailto:you@example.com' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/your-user', href: 'https://linkedin.com/in/your-user' },
-      { label: 'GitHub', value: 'github.com/your-user', href: 'https://github.com/your-user' },
+      { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
+      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-marrasquin', href: 'https://www.linkedin.com/in/cristopher-marrasquin/' },
+      { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
     ],
+    map: {
+      heading: 'Location',
+      caption: 'Esplugues de Llobregat, near Barcelona.',
+    },
+    form: {
+      heading: 'Contact form',
+      nameLabel: 'Full name',
+      emailLabel: 'Email address',
+      messageLabel: 'Your message',
+      submitLabel: 'Send message',
+      subject: 'Message from the portfolio',
+    },
   },
   footer: {
     rights: 'All rights reserved.',

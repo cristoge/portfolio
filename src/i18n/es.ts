@@ -124,12 +124,24 @@ export default {
   contact: {
     kicker: 'Contacto',
     heading: 'Hablemos',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Puedes encontrarme en los siguientes sitios.',
+    body: 'Si quieres hablar de un proyecto, tienes alguna duda o simplemente quieres saludar, aquí me encuentras.',
     links: [
-      { label: 'Email', value: 'tu@ejemplo.com', href: 'mailto:tu@ejemplo.com' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/tu-usuario', href: 'https://linkedin.com/in/tu-usuario' },
-      { label: 'GitHub', value: 'github.com/tu-usuario', href: 'https://github.com/tu-usuario' },
+      { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
+      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-marrasquin', href: 'https://www.linkedin.com/in/cristopher-marrasquin/' },
+      { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
     ],
+    map: {
+      heading: 'Ubicación',
+      caption: 'Esplugues de Llobregat, cerca de Barcelona.',
+    },
+    form: {
+      heading: 'Formulario de contacto',
+      nameLabel: 'Nombre completo',
+      emailLabel: 'Correo electrónico',
+      messageLabel: 'Tu mensaje',
+      submitLabel: 'Enviar mensaje',
+      subject: 'Mensaje desde el portfolio',
+    },
   },
   footer: {
     rights: 'Todos los derechos reservados.',
