@@ -22,26 +22,44 @@ export default {
   },
   education: {
     heading: 'Education',
+    gradeLabel: 'Grade',
+    courseworkLabel: 'Relevant coursework',
     items: [
       {
-        // TODO: school name and exact years
-        institution: '[School / institution]',
+        institution: 'ITIC Barcelona',
         degree: 'Specialization Course in Cloud Resources and Environments',
-        dates: '[year] — present',
+        dates: '2026 — present',
         note: 'Ongoing — cloud infrastructure deployment and management.',
+        grade: '',
+        coursework: [],
       },
       {
-        institution: '[School / institution]',
+        institution: 'ITIC Barcelona',
         degree: 'Specialization Course in Artificial Intelligence and Big Data',
-        dates: '[year] — [year]',
+        dates: '2025 — 2026',
         note: 'Model development, data systems and large-scale processing.',
+        grade: '8.6/10',
+        coursework: [
+          'Artificial Intelligence Models',
+          'Machine Learning Systems',
+          'Artificial Intelligence Programming',
+          'Big Data Systems',
+          'Applied Big Data',
+        ],
       },
       {
-        // TODO: specific track (e.g. software development, networking...)
-        institution: '[School / institution]',
-        degree: 'Higher Vocational Training in [specialty]',
-        dates: '[year] — [year]',
+        institution: 'Prat FP',
+        degree: 'Higher Vocational Training in Multiplatform Application Development (DAM)',
+        dates: '2023 — 2025',
         note: '',
+        grade: '9.1/10',
+        coursework: [
+          'Programming',
+          'Databases',
+          'Data Access',
+          'Interface Development',
+          'Service and Process Programming',
+        ],
       },
     ],
   },

@@ -4,9 +4,13 @@ interface Props {
   degree: string;
   dates: string;
   note: string;
+  grade?: string;
+  coursework?: string[];
+  gradeLabel?: string;
+  courseworkLabel?: string;
 }
 
-const { institution, degree, dates, note } = Astro.props;
+const { institution, degree, dates, note, grade, coursework, gradeLabel, courseworkLabel } = Astro.props;
 ---
 
 <div class="education-item">
@@ -16,6 +20,16 @@ const { institution, degree, dates, note } = Astro.props;
   </div>
   <p class="education-degree">{degree}</p>
   {note && <p class="education-note">{note}</p>}
+  {grade && (
+    <p class="education-detail">
+      <strong>{gradeLabel}:</strong> {grade}
+    </p>
+  )}
+  {coursework && coursework.length > 0 && (
+    <p class="education-detail">
+      <strong>{courseworkLabel}:</strong> {coursework.join(', ')}
+    </p>
+  )}
 </div>
 
 <style>
@@ -58,5 +72,11 @@ const { institution, degree, dates, note } = Astro.props;
     color: var(--ink-soft);
     font-size: 14px;
     margin-top: 6px;
+  }
+
+  .education-detail {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-top: 4px;
   }
 </style>

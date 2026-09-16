@@ -22,26 +22,44 @@ export default {
   },
   education: {
     heading: 'Educación',
+    gradeLabel: 'Nota media',
+    courseworkLabel: 'Asignaturas relevantes',
     items: [
       {
-        // TODO: nombre del centro y años exactos
-        institution: '[Centro educativo]',
+        institution: 'ITIC Barcelona',
         degree: 'Curso de Especialización en Recursos y Entornos Cloud',
-        dates: '[año] — actualidad',
+        dates: '2026 — actualidad',
         note: 'En curso — despliegue y gestión de infraestructura cloud.',
+        grade: '',
+        coursework: [],
       },
       {
-        institution: '[Centro educativo]',
+        institution: 'ITIC Barcelona',
         degree: 'Curso de Especialización en Inteligencia Artificial y Big Data',
-        dates: '[año] — [año]',
+        dates: '2025 — 2026',
         note: 'Desarrollo de modelos, sistemas de datos y procesamiento a gran escala.',
+        grade: '8,6/10',
+        coursework: [
+          'Modelos de Inteligencia Artificial',
+          'Sistemas de Aprendizaje Automático',
+          'Programación de Inteligencia Artificial',
+          'Sistemas de Big Data',
+          'Big Data Aplicado',
+        ],
       },
       {
-        // TODO: especialidad concreta del ciclo (DAM, ASIR, DAW...)
-        institution: '[Centro educativo]',
-        degree: 'Ciclo Formativo de Grado Superior en [especialidad]',
-        dates: '[año] — [año]',
+        institution: 'Prat FP',
+        degree: 'Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)',
+        dates: '2023 — 2025',
         note: '',
+        grade: '9,1/10',
+        coursework: [
+          'Programación',
+          'Bases de Datos',
+          'Acceso a Datos',
+          'Desarrollo de Interfaces',
+          'Programación de Servicios y Procesos',
+        ],
       },
     ],
   },
