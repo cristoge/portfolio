@@ -25,9 +25,18 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
     {stack.map((tech) => <span class="pill">{tech}</span>)}
   </div>
   <div class="project-links">
-    <a href={detailHref} class="project-link">{detailLabel} →</a>
-    <a href={repoHref} class="project-link">{repoLabel} →</a>
-    <a href={demoHref} class="project-link">{demoLabel} →</a>
+    <a href={detailHref} class="project-link">
+      {detailLabel}
+      <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+    </a>
+    <a href={repoHref} class="project-link">
+      {repoLabel}
+      <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+    </a>
+    <a href={demoHref} class="project-link">
+      {demoLabel}
+      <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+    </a>
   </div>
 </article>
 
@@ -73,11 +82,16 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
 
   .project-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 16px;
     margin-top: 4px;
   }
 
   .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
     font-family: var(--font-ui);
     font-size: 13px;
     font-weight: 500;
@@ -87,5 +101,11 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
 
   .project-link:hover {
     color: var(--forest-dim);
+  }
+
+  .project-link-arrow {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
   }
 </style>

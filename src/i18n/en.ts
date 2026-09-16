@@ -123,7 +123,7 @@ export default {
     ],
   },
   stack: {
-    heading: 'Stack',
+    heading: 'Technologies',
     groups: [
       { label: 'AI / ML', items: ['Model development', 'RAG systems', 'Agent development'] },
       { label: 'Backend', items: ['FastAPI', 'Clean architecture', 'Typed outputs'] },

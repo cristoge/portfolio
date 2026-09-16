@@ -32,7 +32,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
 
   <button type="button" id="reveal-toggle" class="scroll-cta" aria-expanded="false" aria-controls="reveal-content">
     <span>{t.hero.exploreCta}</span>
-    <span class="scroll-arrow" aria-hidden="true">↓</span>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="5 13 12 20 19 13"/></svg>
   </button>
 </section>
 
@@ -191,7 +191,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     color: var(--ink-soft);
     font-family: var(--font-ui);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -201,7 +201,8 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
   }
 
   .scroll-arrow {
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
     animation: scroll-bounce 1.6s ease-in-out infinite;
     transition: transform 0.3s ease;
   }
@@ -238,6 +239,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     display: flex;
     flex-direction: column;
     gap: 14px;
+    margin-top: 24px;
   }
 
   .stack-row {
