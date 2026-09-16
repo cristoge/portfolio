@@ -25,6 +25,18 @@ const { lang, page, path, title, description = '' } = Astro.props;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script is:inline>
+      try {
+        const [entry] = performance.getEntriesByType('navigation');
+        const isReload = entry ? entry.type === 'reload' : performance.navigation?.type === 1;
+
+        if (isReload) {
+          sessionStorage.removeItem('home-revealed');
+        } else if (sessionStorage.getItem('home-revealed') === 'true') {
+          document.documentElement.classList.add('home-revealed');
+        }
+      } catch {}
+    </script>
   </head>
   <body>
     <Nav lang={lang} page={page} path={path} />

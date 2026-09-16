@@ -39,6 +39,19 @@ const navItems: { page: Page; label: string }[] = [
   </div>
 </header>
 
+<script>
+  const nav = document.querySelector('.nav');
+
+  const setNavHeight = () => {
+    if (nav instanceof HTMLElement) {
+      document.documentElement.style.setProperty('--nav-h', `${nav.offsetHeight}px`);
+    }
+  };
+
+  setNavHeight();
+  window.addEventListener('resize', setNavHeight);
+</script>
+
 <style>
   .nav {
     border-bottom: 1px solid var(--line);

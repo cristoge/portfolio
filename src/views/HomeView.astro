@@ -30,71 +30,136 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     <p class="hero-outro">{t.hero.outro}</p>
   </div>
 
-  <a href="#education" class="scroll-cta">
+  <button type="button" id="reveal-toggle" class="scroll-cta" aria-expanded="false" aria-controls="reveal-content">
     <span>{t.hero.exploreCta}</span>
     <span class="scroll-arrow" aria-hidden="true">↓</span>
-  </a>
+  </button>
 </section>
 
-<section class="section" id="education">
-  <h2 class="section-heading">{t.education.heading}</h2>
-  <div class="section-note"></div>
-  <div class="education-list">
-    {t.education.items.map((item) => (
-      <EducationItem
-        institution={item.institution}
-        degree={item.degree}
-        dates={item.dates}
-        note={item.note}
-      />
-    ))}
-  </div>
-</section>
-
-<section class="section" id="projects">
-  <h2 class="section-heading">{t.projects.heading}</h2>
-  <p class="section-note">{t.projects.note}</p>
-  <div class="projects-grid">
-    {t.projects.items.map((project) => (
-      <ProjectCard
-        title={project.title}
-        description={project.description}
-        stack={project.stack}
-        detailHref={projectDetailPath(lang, project.slug)}
-        repoHref={project.repoHref}
-        demoHref={project.demoHref}
-        detailLabel={t.projects.viewDetail}
-        repoLabel={repoLabel}
-        demoLabel={demoLabel}
-      />
-    ))}
-  </div>
-</section>
-
-<section class="section" id="stack">
-  <h2 class="section-heading">{t.stack.heading}</h2>
-  <div class="stack-list">
-    {t.stack.groups.map((group) => (
-      <div class="stack-row">
-        <span class="stack-label">{group.label}</span>
-        <span class="stack-items">{group.items.join(' · ')}</span>
+<div class="reveal-wrap" id="reveal-wrap">
+  <div class="reveal-inner" id="reveal-content">
+    <section class="section" id="education">
+      <h2 class="section-heading">{t.education.heading}</h2>
+      <div class="section-note"></div>
+      <div class="education-list">
+        {t.education.items.map((item) => (
+          <EducationItem
+            institution={item.institution}
+            degree={item.degree}
+            dates={item.dates}
+            note={item.note}
+          />
+        ))}
       </div>
-    ))}
+    </section>
+
+    <section class="section" id="projects">
+      <h2 class="section-heading">{t.projects.heading}</h2>
+      <p class="section-note">{t.projects.note}</p>
+      <div class="projects-grid">
+        {t.projects.items.map((project) => (
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            stack={project.stack}
+            detailHref={projectDetailPath(lang, project.slug)}
+            repoHref={project.repoHref}
+            demoHref={project.demoHref}
+            detailLabel={t.projects.viewDetail}
+            repoLabel={repoLabel}
+            demoLabel={demoLabel}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="section" id="stack">
+      <h2 class="section-heading">{t.stack.heading}</h2>
+      <div class="stack-list">
+        {t.stack.groups.map((group) => (
+          <div class="stack-row">
+            <span class="stack-label">{group.label}</span>
+            <span class="stack-items">{group.items.join(' · ')}</span>
+          </div>
+        ))}
+      </div>
+    </section>
   </div>
-</section>
+</div>
+
+<script>
+  const toggle = document.getElementById('reveal-toggle');
+  const wrap = document.getElementById('reveal-wrap');
+  const footer = document.getElementById('site-footer');
+  const STORAGE_KEY = 'home-revealed';
+
+  const hasRevealed = () => {
+    try {
+      return sessionStorage.getItem(STORAGE_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  };
+
+  const markRevealed = () => {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, 'true');
+    } catch {
+      // ignore (private browsing / storage disabled)
+    }
+  };
+
+  const reveal = () => {
+    wrap?.removeAttribute('hidden');
+    footer?.removeAttribute('hidden');
+    toggle?.setAttribute('hidden', '');
+    document.documentElement.classList.remove('home-lock');
+    document.body.classList.remove('home-lock');
+  };
+
+  const hashTarget = window.location.hash && document.getElementById(window.location.hash.slice(1));
+  const hasHashTarget = Boolean(wrap && hashTarget && wrap.contains(hashTarget));
+
+  if (hasRevealed() || hasHashTarget) {
+    reveal();
+    if (hasHashTarget) {
+      requestAnimationFrame(() => hashTarget.scrollIntoView({ block: 'start' }));
+    }
+  } else {
+    wrap?.setAttribute('hidden', '');
+    footer?.setAttribute('hidden', '');
+    document.documentElement.classList.add('home-lock');
+    document.body.classList.add('home-lock');
+  }
+
+  toggle?.addEventListener('click', () => {
+    markRevealed();
+    reveal();
+    wrap?.scrollIntoView({ block: 'start' });
+  });
+</script>
 
 <style>
+  :global(html.home-lock),
+  :global(body.home-lock) {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
   .hero-intro {
-    min-height: 100dvh;
+    height: calc(100dvh - var(--nav-h, 65px));
+    max-height: calc(100dvh - var(--nav-h, 65px));
     display: flex;
     flex-direction: column;
-    justify-content: center;
     position: relative;
-    padding: 48px 0 100px;
+    padding: 40px 0 24px;
+    overflow: hidden;
   }
 
   .hero-intro-body {
     max-width: 640px;
+    margin: auto 0;
   }
 
   .tagline {
@@ -117,15 +182,22 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     color: var(--ink-soft);
   }
 
+  .scroll-cta[hidden],
+  :global(html.home-revealed) .scroll-cta {
+    display: none;
+  }
+
   .scroll-cta {
-    position: absolute;
-    left: 50%;
-    bottom: 28px;
-    transform: translateX(-50%);
+    align-self: center;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
     text-decoration: none;
     color: var(--ink-soft);
     font-family: var(--font-ui);
@@ -142,11 +214,25 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
   .scroll-arrow {
     font-size: 18px;
     animation: scroll-bounce 1.6s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+
+  .scroll-cta[aria-expanded='true'] .scroll-arrow {
+    animation: none;
+    transform: rotate(180deg);
   }
 
   @keyframes scroll-bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(6px); }
+  }
+
+  .reveal-wrap {
+    scroll-margin-top: var(--nav-h, 65px);
+  }
+
+  .section {
+    scroll-margin-top: var(--nav-h, 65px);
   }
 
   .education-list {
@@ -194,7 +280,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
 
   @media (max-width: 640px) {
     .hero-intro {
-      padding: 40px 0 90px;
+      padding: 32px 0 20px;
     }
     .projects-grid {
       grid-template-columns: 1fr;
