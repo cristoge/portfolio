@@ -5,7 +5,7 @@ interface Props {
   stack: readonly string[];
   detailHref: string;
   repoHref: string;
-  demoHref: string;
+  demoHref?: string;
   detailLabel: string;
   repoLabel: string;
   demoLabel: string;
@@ -33,18 +33,24 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
       {repoLabel}
       <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
     </a>
-    <a href={demoHref} class="project-link">
-      {demoLabel}
-      <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
-    </a>
+    {demoHref && (
+      <a href={demoHref} class="project-link">
+        {demoLabel}
+        <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+      </a>
+    )}
   </div>
 </article>
 
 <style>
+  /* Each card spans 5 rows of the parent grid (image, title, description,
+     stack, links) via subgrid, so those rows line up across cards even when
+     the text or the number of tags differs. */
   .project-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+    row-gap: 12px;
   }
 
   .project-image {
@@ -78,6 +84,10 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
   .project-description {
     color: var(--ink-soft);
     font-size: 15px;
+  }
+
+  .project-stack {
+    align-content: start;
   }
 
   .project-links {

@@ -52,7 +52,7 @@ const d = t.projects.detail;
 
   <div class="project-actions">
     <a href={project.repoHref} class="btn btn-outline">{repoLabel} →</a>
-    <a href={project.demoHref} class="btn btn-primary">{demoLabel} →</a>
+    {project.demoHref && <a href={project.demoHref} class="btn btn-primary">{demoLabel} →</a>}
   </div>
 </article>
 
