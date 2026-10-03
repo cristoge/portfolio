@@ -157,6 +157,9 @@ export default {
       messageLabel: 'El teu missatge',
       submitLabel: 'Enviar missatge',
       subject: 'Missatge des del portfolio',
+      sendingLabel: 'Enviant…',
+      successMessage: 'Missatge enviat! Et respondré aviat.',
+      errorMessage: "No s'ha pogut enviar el missatge. Torna-ho a provar o escriu-me directament per correu.",
     },
   },
   footer: {

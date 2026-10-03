@@ -157,6 +157,9 @@ export default {
       messageLabel: 'Tu mensaje',
       submitLabel: 'Enviar mensaje',
       subject: 'Mensaje desde el portfolio',
+      sendingLabel: 'Enviando…',
+      successMessage: '¡Mensaje enviado! Te responderé pronto.',
+      errorMessage: 'No se ha podido enviar el mensaje. Vuelve a intentarlo o escríbeme directamente por correo.',
     },
   },
   footer: {
