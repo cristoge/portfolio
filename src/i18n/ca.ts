@@ -125,13 +125,11 @@ export default {
   stack: {
     heading: 'Tecnologies',
     groups: [
-      { label: 'IA / ML', items: ['Model development', 'RAG systems', 'Agent development'] },
-      { label: 'Backend', items: ['FastAPI', 'Clean architecture', 'Typed outputs'] },
-      { label: 'Bases de dades', items: ['PostgreSQL (relacional)'] },
-      { label: 'Bases de dades vectorials', items: ['pgvector', 'Pinecone'] },
-      { label: 'DevOps', items: ['Docker', 'GitHub Actions'] },
-      { label: 'Observabilitat', items: ['LangSmith'] },
-      { label: 'Cloud', items: ['AWS', 'Infrastructure fundamentals'] },
+      { label: 'Llenguatges', items: ['Python', 'JavaScript'] },
+      { label: 'IA / ML', items: ['LangChain', 'LangGraph', 'scikit-learn', 'Langfuse'] },
+      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'Celery', 'ARQ', 'pytest', 'uv'] },
+      { label: 'Bases de dades', items: ['PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic'] },
+      { label: 'DevOps / Cloud', items: ['Docker', 'GitHub Actions', 'Nginx', 'AWS (VPC, IAM, EC2, S3)'] },
     ],
   },
   personal: {
