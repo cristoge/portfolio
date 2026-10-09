@@ -3,11 +3,11 @@
 :root {
   /* Paleta vague — https://github.com/vague-theme */
   color-scheme: dark;
-  --bg: #2B2B37;
-  --surface: #343442;
-  --text: #CDCDCD;
-  --text-soft: #9A9AAA;
-  --line: #42424F;
+  --bg: #252530;
+  --surface: #2E2E3A;
+  --text: #D7D7D7;
+  --text-soft: #CDCDCD;
+  --line: #3A3A48;
   --grey: #606079;
   --primary: #C48282;
   --primary-soft: #405065;
@@ -15,7 +15,7 @@
   --accent: #E8B589;
   --danger: #D8647E;
 
-  --gradient: linear-gradient(137deg, #2B2B37, #405065, #C48282, #2B2B37);
+  --gradient: linear-gradient(137deg, #252530, #405065, #C48282, #252530);
 
   --font-body: 'Source Sans 3', sans-serif;
   --font-display: 'Fira Sans', sans-serif;

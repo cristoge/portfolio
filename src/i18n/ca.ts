@@ -125,24 +125,24 @@ export default {
     kicker: 'Personal',
     heading: "Qui sóc",
     intro: [
-      "Sóc en Cristo, desenvolupador backend i d'IA de prop de Barcelona.",
-      "Em vaig ficar en això per pura curiositat. Des de petit m'agradava la tecnologia i entendre com funcionava tot per dins, i programar va ser la manera natural de continuar fent-ho. A més de programar, hi ha altres coses que m'apassionen, i aquí t'explico algunes.",
+      "Em dic Cristopher i sóc desenvolupador backend, amb coneixements en agents d'IA i movent-me cada vegada més en l'entorn cloud.",
+      "Em vaig ficar en el món de la informàtica per pura curiositat. Des de petit m'agradava la tecnologia i entendre com funcionava tot per dins, i programar va ser la manera natural de continuar fent-ho. A part de programar, hi ha altres coses que m'apassionen, i aquí t'explico algunes.",
     ],
     // TODO: afegeix les fotos a /public/personal/ i posa la ruta a `image` (p. ex. '/personal/teclats.jpg')
     sections: [
       {
         title: "Mecanografia i teclats",
         body: [
-          "Quan vaig començar a programar em passava l'estona mirant el teclat per trobar cada tecla. Em vaig proposar deixar de fer-ho i vaig començar a practicar mecanografia en diferents pàgines, a poc a poc, fins que escriure va deixar de ser un obstacle i em va començar a agradar de debò.",
-          "D'aquí vaig saltar al món dels teclats mecànics custom: vaig anar descobrint layouts diferents i tota mena de teclats, i avui en tinc quatre i continuo buscant models estranys i exclusius per provar.",
+          "Quan vaig començar a programar em passava l'estona mirant el teclat per trobar cada tecla. Em vaig proposar deixar de fer-ho i vaig començar a practicar mecanografia en diferents pàgines, a poc a poc, fins que un dia em vaig adonar que ja no mirava el teclat i que, a sobre, m'ho passava bé escrivint.",
+          "D'aquí vaig saltar al món dels teclats mecànics custom. Vaig anar descobrint layouts diferents i tota mena de teclats, i sense adonar-me'n he acabat fent-ne col·lecció: cada vegada en tinc més, i sempre n'hi ha algun de rar o exclusiu que vull provar.",
         ],
         image: '',
       },
       {
         title: "El meu setup",
         body: [
-          "De tant fer servir la terminal vaig acabar descobrint Neovim, i amb ell tot un món de configuracions. Com a terminal faig servir Ghostty, que em permet afegir-hi shaders perquè tot sigui més bonic visualment, i Starship per al prompt, buscant sempre la màxima personalització.",
-          "De tant provar configuracions i paletes de colors, vaig trobar la definitiva: vague. Ara la faig servir per a tot: l'editor, la terminal i pràcticament qualsevol eina que ho permeti.",
+          "De tant fer servir la terminal vaig acabar descobrint Neovim, i amb ell tot un món de configuracions. Ara faig servir Ghostty, que em deixa posar-hi shaders perquè tot quedi més bonic. També vaig descobrir Starship, que em permet personalitzar el prompt de mil maneres diferents i no haver de veure sempre el típic prompt senzill.",
+          "Després de provar moltes configuracions i paletes de colors, vaig trobar la definitiva: vague. Ara la poso a tot arreu: a l'editor, a la terminal i a qualsevol eina que em deixi personalitzar els colors.",
         ],
         note: "I sí, si t'hi has fixat: tot aquest portfolio també està fet amb la paleta vague.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
@@ -153,15 +153,16 @@ export default {
         title: "Música",
         body: [
           "Vaig començar a tocar el violí als 12 anys, a l'escola, gràcies a un programa de l'ajuntament que apropava la música i la cultura als alumnes.",
-          "Amb els anys, a poc a poc el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Més que una afició, és la meva manera de desintoxicar-me del digital, que de tant en tant no va gens malament.",
-          "A més, el violí em va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
+          "Amb els anys el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Més que una afició, és la meva manera de desintoxicar-me del digital, que de tant en tant no va gens malament.",
+          "El violí també em va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
         ],
         image: '',
       },
       {
-        title: "Cafè",
+        title: "Ara mateix",
         body: [
-          "I per acabar, el cafè: combustible oficial de cada projecte, i no hi falta mai.",
+          "Estic en una etapa en què estic buscant feina i, alhora, continuo formant-me. Vaig decidir aprofundir en cloud perquè és una de les coses que més es demana avui dia, així que estic fent el curs d'especialització i em passo el dia trastejant amb AWS.",
+          "El curs em prepara per a la certificació AWS Solutions Architect – Associate, i en paral·lel, pel meu compte, m'estic preparant la certificació AWS Developer – Associate. Les vaig traient pas a pas, i quan em queda temps em fico de ple amb els agents d'IA.",
         ],
         image: '',
       },

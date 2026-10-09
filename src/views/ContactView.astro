@@ -23,7 +23,6 @@ const icons: Record<string, string> = {
 ---
 
 <section class="contact-section">
-  <p class="kicker">{t.contact.kicker}</p>
   <h1>{t.contact.heading}</h1>
   <p class="contact-body">{t.contact.body}</p>
   <div class="contact-icons">
@@ -201,6 +200,10 @@ const icons: Record<string, string> = {
     gap: 18px;
     background: var(--surface);
     padding: 32px;
+  }
+
+  .contact-box:hover {
+    box-shadow: none;
   }
 
   .card-heading {

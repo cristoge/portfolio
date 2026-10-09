@@ -125,24 +125,24 @@ export default {
     kicker: 'Personal',
     heading: "Who I am",
     intro: [
-      "I'm Cristo, a backend and AI developer based near Barcelona.",
-      "I got into this out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Besides coding, there are a few other things I'm passionate about, and here are some of them.",
+      "My name is Cristopher and I'm a backend developer, with knowledge of AI agents and moving more and more into the cloud space.",
+      "I got into the world of computing out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Besides coding, there are a few other things I'm passionate about, and here are some of them.",
     ],
     // TODO: add the photos to /public/personal/ and set the path in `image` (e.g. '/personal/keyboards.jpg')
     sections: [
       {
         title: "Touch typing and keyboards",
         body: [
-          "When I started coding I spent most of the time looking down at the keyboard to find each key. I set out to stop doing that and began practicing touch typing on different sites, little by little, until typing stopped being an obstacle and turned into something I genuinely enjoyed.",
-          "From there I fell into the world of custom mechanical keyboards: I discovered different layouts and all kinds of boards, and today I own four and keep hunting for unusual, exclusive ones to try.",
+          "When I started coding I spent most of the time looking down at the keyboard to find each key. I set out to stop doing that and began practicing touch typing on different sites, little by little, until one day I realized I wasn't looking at the keyboard anymore and, on top of that, I was actually having fun typing.",
+          "From there I fell into the world of custom mechanical keyboards. I discovered different layouts and all kinds of boards, and before I knew it I'd started collecting them: the collection keeps growing, and there's always some rare or exclusive one I want to try.",
         ],
         image: '',
       },
       {
         title: "My setup",
         body: [
-          "Spending so much time in the terminal eventually led me to Neovim, and with it a whole world of configs. My terminal is Ghostty, which lets me add shaders to make everything look nicer, and I use Starship for the prompt, always chasing as much customization as possible.",
-          "After trying so many configs and color palettes, I found the one: vague. Now I use it for everything: the editor, the terminal and pretty much any tool that supports it.",
+          "Spending so much time in the terminal eventually led me to Neovim, and with it a whole world of configs. These days I use Ghostty, which lets me throw shaders on it so everything looks nicer. I also discovered Starship, which lets me customize the prompt in tons of different ways instead of staring at the same plain prompt all the time.",
+          "After trying so many configs and color palettes, I found the one: vague. Now it's on everything: my editor, my terminal and any other tool that lets me customize the colors.",
         ],
         note: "And yes, in case you noticed: this whole portfolio is built with the vague palette too.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
@@ -153,15 +153,16 @@ export default {
         title: "Music",
         body: [
           "I started playing the violin at 12, at school, thanks to a city council programme that brought music and culture closer to students.",
-          "Over the years I gradually drifted away from it, but I'm picking it back up now and learning little by little. More than a hobby, it's my way to detox from all things digital, which every now and then doesn't hurt at all.",
+          "Over the years I gradually drifted away from it, but I'm picking it back up now and learning at my own pace. More than a hobby, it's my way to detox from all things digital, which every now and then doesn't hurt at all.",
           "The violin also sparked my curiosity to learn more about music: discovering different genres, how a song is put together and everything behind it.",
         ],
         image: '',
       },
       {
-        title: "Coffee",
+        title: "Right now",
         body: [
-          "And last but not least, coffee: official fuel of every project, and never in short supply.",
+          "I'm at a stage where I'm looking for a job while I keep learning. I decided to go deeper into cloud because it's one of the most in-demand skills these days, so I'm doing the specialization course and spending my days tinkering with AWS.",
+          "The course is preparing me for the AWS Solutions Architect – Associate certification, and in parallel, on my own, I'm studying for the AWS Developer – Associate certification. I'm working through them step by step, and whenever I have some time left I dive into AI agents.",
         ],
         image: '',
       },

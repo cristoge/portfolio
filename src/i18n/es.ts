@@ -125,24 +125,24 @@ export default {
     kicker: 'Personal',
     heading: "Quién soy",
     intro: [
-      "Soy Cristo, desarrollador backend y de IA de cerca de Barcelona.",
-      "Me metí en esto por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Además de programar, hay otras cosas que me apasionan, y aquí te cuento algunas.",
+      "Me llamo Cristopher y soy desarrollador backend, con conocimientos en agentes de IA y moviéndome cada vez más en el entorno cloud.",
+      "Me metí en el mundo de la informática por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Aparte de programar, hay otras cosas que me apasionan, y aquí te cuento algunas.",
     ],
     // TODO: añade las fotos en /public/personal/ y pon la ruta en `image` (p. ej. '/personal/teclados.jpg')
     sections: [
       {
         title: "Mecanografía y teclados",
         body: [
-          "Cuando empecé a programar me pasaba el rato mirando el teclado para encontrar cada tecla. Me propuse dejar de hacerlo y empecé a practicar mecanografía en distintas páginas, poco a poco, hasta que escribir dejó de ser un obstáculo y empezó a gustarme de verdad.",
-          "De ahí salté al mundo de los teclados mecánicos custom: fui descubriendo distintos layouts y todo tipo de teclados, y hoy tengo cuatro y sigo buscando modelos raros y exclusivos que probar.",
+          "Cuando empecé a programar me pasaba el rato mirando el teclado para encontrar cada tecla. Me propuse dejar de hacerlo y empecé a practicar mecanografía en distintas páginas, poco a poco, hasta que un día me di cuenta de que ya no miraba el teclado y que, encima, me lo pasaba bien escribiendo.",
+          "De ahí salté al mundo de los teclados mecánicos custom. Fui descubriendo distintos layouts y todo tipo de teclados, y sin darme cuenta he acabado coleccionándolos: cada vez tengo más, y siempre hay alguno raro o exclusivo que quiero probar.",
         ],
         image: '',
       },
       {
         title: "Mi setup",
         body: [
-          "De tanto usar la terminal acabé descubriendo Neovim, y con él todo un mundo de configuraciones. Como terminal uso Ghostty, que me permite añadirle shaders para que todo sea más bonito visualmente, y Starship para el prompt, buscando siempre la máxima personalización.",
-          "De tanto probar configuraciones y paletas de colores, encontré la definitiva: vague. Ahora la uso para todo: el editor, la terminal y prácticamente cualquier herramienta que lo permita.",
+          "De tanto usar la terminal acabé descubriendo Neovim, y con él todo un mundo de configuraciones. Ahora uso Ghostty, que me deja meterle shaders para que todo quede más bonito. También descubrí Starship, que me permite personalizar el prompt de mil maneras distintas y no tener que ver siempre el típico prompt sencillo.",
+          "Después de probar muchas configuraciones y paletas de colores, encontré la definitiva: vague. Ahora la pongo en todas partes: en el editor, en la terminal y en cualquier herramienta que me deje personalizar los colores.",
         ],
         note: "Y sí, por si te habías fijado: todo este portfolio también está hecho con la paleta vague.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
@@ -153,15 +153,16 @@ export default {
         title: "Música",
         body: [
           "Empecé a tocar el violín a los 12 años, en el colegio, gracias a un programa del ayuntamiento que acercaba la música y la cultura a los alumnos.",
-          "Con los años lo fui dejando poco a poco, pero ahora lo estoy retomando y aprendiendo sin prisa. Más que una afición, es mi forma de desintoxicarme de lo digital, que de vez en cuando no viene nada mal.",
-          "Además, el violín despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
+          "Con los años lo fui dejando, pero ahora lo estoy retomando y aprendiendo sin prisa. Más que una afición, es mi forma de desintoxicarme de lo digital, que de vez en cuando no viene nada mal.",
+          "El violín también despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
         ],
         image: '',
       },
       {
-        title: "Café",
+        title: "Ahora mismo",
         body: [
-          "Y para terminar, el café: combustible oficial de cada proyecto, y nunca falta.",
+          "Estoy en una etapa en la que estoy buscando trabajo y, a la vez, sigo formándome. Decidí profundizar en cloud porque es de lo que más se pide hoy en día, así que estoy con el curso de especialización y me paso el día trasteando con AWS.",
+          "El curso me prepara para la certificación AWS Solutions Architect – Associate, y en paralelo, por mi cuenta, me estoy preparando la certificación AWS Developer – Associate. Me las voy sacando paso a paso, y cuando me queda tiempo me meto de lleno con los agentes de IA.",
         ],
         image: '',
       },
