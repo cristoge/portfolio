@@ -123,8 +123,38 @@ export default {
   },
   personal: {
     kicker: 'Personal',
-    heading: 'Still under construction',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. This space will hold photos and notes about my hobbies — for now it is a placeholder.',
+    heading: "Who I am",
+    intro: [
+      "I'm Cristo, a backend and AI developer based near Barcelona.",
+      "I got into this out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Away from the screen, though, there are a few other things I'm passionate about.",
+    ],
+    // TODO: add the photos to /public/personal/ and set the path in `image` (e.g. '/personal/keyboards.jpg')
+    sections: [
+      {
+        title: "Touch typing and keyboards",
+        body: [
+          "When I started coding I spent most of the time looking down at the keyboard to find each key. I set out to stop doing that and began practicing touch typing on different sites, little by little, until typing stopped being an obstacle and turned into something I genuinely enjoyed.",
+          "From there I fell into the world of custom mechanical keyboards: I discovered different layouts and all kinds of boards, and today I own four and keep hunting for unusual, exclusive ones to try.",
+        ],
+        image: '',
+      },
+      {
+        title: "Music",
+        body: [
+          "I started playing the violin at 12, at school, thanks to a city council programme that brought music and culture closer to students.",
+          "Over the years I gradually drifted away from it, but I'm picking it back up now and learning little by little. More than a hobby, it's my way to detox from all things digital, which every now and then doesn't hurt at all.",
+          "The violin also sparked my curiosity to learn more about music: discovering different genres, how a song is put together and everything behind it.",
+        ],
+        image: '',
+      },
+      {
+        title: "Coffee",
+        body: [
+          "And last but not least, coffee: official fuel of every project, and never in short supply.",
+        ],
+        image: '',
+      },
+    ],
   },
   contact: {
     kicker: 'Contact',

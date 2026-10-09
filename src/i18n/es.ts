@@ -123,8 +123,38 @@ export default {
   },
   personal: {
     kicker: 'Personal',
-    heading: 'Todavía en construcción',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Este espacio tendrá fotos y notas sobre mis hobbies — de momento es un marcador de posición.',
+    heading: "Quién soy",
+    intro: [
+      "Soy Cristo, desarrollador backend y de IA de cerca de Barcelona.",
+      "Me metí en esto por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Fuera de la pantalla, eso sí, también hay otras cosas que me apasionan.",
+    ],
+    // TODO: añade las fotos en /public/personal/ y pon la ruta en `image` (p. ej. '/personal/teclados.jpg')
+    sections: [
+      {
+        title: "Mecanografía y teclados",
+        body: [
+          "Cuando empecé a programar me pasaba el rato mirando el teclado para encontrar cada tecla. Me propuse dejar de hacerlo y empecé a practicar mecanografía en distintas páginas, poco a poco, hasta que escribir dejó de ser un obstáculo y empezó a gustarme de verdad.",
+          "De ahí salté al mundo de los teclados mecánicos custom: fui descubriendo distintos layouts y todo tipo de teclados, y hoy tengo cuatro y sigo buscando modelos raros y exclusivos que probar.",
+        ],
+        image: '',
+      },
+      {
+        title: "Música",
+        body: [
+          "Empecé a tocar el violín a los 12 años, en el colegio, gracias a un programa del ayuntamiento que acercaba la música y la cultura a los alumnos.",
+          "Con los años lo fui dejando poco a poco, pero ahora lo estoy retomando y aprendiendo sin prisa. Más que una afición, es mi forma de desintoxicarme de lo digital, que de vez en cuando no viene nada mal.",
+          "Además, el violín despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
+        ],
+        image: '',
+      },
+      {
+        title: "Café",
+        body: [
+          "Y para terminar, el café: combustible oficial de cada proyecto, y nunca falta.",
+        ],
+        image: '',
+      },
+    ],
   },
   contact: {
     kicker: 'Contacto',

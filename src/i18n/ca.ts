@@ -123,8 +123,38 @@ export default {
   },
   personal: {
     kicker: 'Personal',
-    heading: 'Encara en construcció',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aquest espai tindrà fotos i notes sobre els meus hobbies — de moment és un marcador de posició.',
+    heading: "Qui sóc",
+    intro: [
+      "Sóc en Cristo, desenvolupador backend i d'IA de prop de Barcelona.",
+      "Em vaig ficar en això per pura curiositat. Des de petit m'agradava la tecnologia i entendre com funcionava tot per dins, i programar va ser la manera natural de continuar fent-ho. Fora de la pantalla, però, també hi ha altres coses que m'apassionen.",
+    ],
+    // TODO: afegeix les fotos a /public/personal/ i posa la ruta a `image` (p. ex. '/personal/teclats.jpg')
+    sections: [
+      {
+        title: "Mecanografia i teclats",
+        body: [
+          "Quan vaig començar a programar em passava l'estona mirant el teclat per trobar cada tecla. Em vaig proposar deixar de fer-ho i vaig començar a practicar mecanografia en diferents pàgines, a poc a poc, fins que escriure va deixar de ser un obstacle i em va començar a agradar de debò.",
+          "D'aquí vaig saltar al món dels teclats mecànics custom: vaig anar descobrint layouts diferents i tota mena de teclats, i avui en tinc quatre i continuo buscant models estranys i exclusius per provar.",
+        ],
+        image: '',
+      },
+      {
+        title: "Música",
+        body: [
+          "Vaig començar a tocar el violí als 12 anys, a l'escola, gràcies a un programa de l'ajuntament que apropava la música i la cultura als alumnes.",
+          "Amb els anys, a poc a poc el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Més que una afició, és la meva manera de desintoxicar-me del digital, que de tant en tant no va gens malament.",
+          "A més, el violí em va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
+        ],
+        image: '',
+      },
+      {
+        title: "Cafè",
+        body: [
+          "I per acabar, el cafè: combustible oficial de cada projecte, i no hi falta mai.",
+        ],
+        image: '',
+      },
+    ],
   },
   contact: {
     kicker: 'Contacte',

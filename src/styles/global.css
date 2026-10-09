@@ -7,12 +7,12 @@
   --text-soft: #666666;
   --line: #E6E6E6;
   --grey: #C3C3C3;
-  --primary: #020073;
-  --primary-soft: #CBDCFF;
-  --accent: #746AFF;
+  --primary: #6B1E2E;
+  --primary-soft: #F2DADF;
+  --accent: #8C6A1F;
   --danger: #FF2E00;
 
-  --gradient: linear-gradient(137deg, #FFFFFF, #B8CEFF, #004FFF, #FFFFFF);
+  --gradient: linear-gradient(137deg, #FFFFFF, #F0C9D1, #A8324A, #FFFFFF);
 
   --font-body: 'Source Sans 3', sans-serif;
   --font-display: 'Fira Sans', sans-serif;
@@ -22,7 +22,7 @@
   --radius-md: 6px;
 
   --shadow-inset: inset 5px 5px 40px 0 rgba(0, 0, 0, 0.066);
-  --shadow-soft: 5px 5px 40px 0 rgba(2, 0, 115, 0.08);
+  --shadow-soft: 5px 5px 40px 0 rgba(107, 30, 46, 0.08);
 
   --ease: 200ms ease-in-out;
 

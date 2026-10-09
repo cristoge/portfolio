@@ -9,52 +9,101 @@ const { lang } = Astro.props;
 const t = getDictionary(lang);
 ---
 
-<section class="personal-placeholder">
-  <p class="kicker">{t.personal.kicker}</p>
-  <h1>{t.personal.heading}</h1>
-  <p class="personal-body">{t.personal.body}</p>
-  <div class="photo-grid" aria-hidden="true">
-    <div class="photo-frame"></div>
-    <div class="photo-frame"></div>
-    <div class="photo-frame"></div>
-  </div>
+<section class="personal">
+  <header class="personal-intro">
+    <p class="kicker">{t.personal.kicker}</p>
+    <h1>{t.personal.heading}</h1>
+    <div class="personal-body">
+      {t.personal.intro.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </header>
+
+  {t.personal.sections.map((entry) => (
+    <article class="entry">
+      <div class="entry-content">
+        <h2 class="entry-title">{entry.title}</h2>
+        {entry.body.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <div class="photo-frame">
+        {entry.image && <img src={entry.image} alt={entry.title} loading="lazy" />}
+      </div>
+    </article>
+  ))}
 </section>
 
 <style>
-  .personal-placeholder {
+  .personal {
     padding: 72px 0 72px 20px;
+  }
+
+  .personal-intro {
+    padding-bottom: 56px;
   }
 
   .personal-body {
     margin-top: 20px;
-    max-width: 52ch;
+    max-width: 62ch;
     color: var(--text-soft);
   }
 
-  .photo-grid {
+  .personal-body p + p {
+    margin-top: 14px;
+  }
+
+  .entry {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 44px;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 56px;
+    padding: 56px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .entry:nth-of-type(even) .photo-frame {
+    order: -1;
+  }
+
+  .entry-title {
+    margin: 0 0 16px;
+    color: var(--primary);
+  }
+
+  .entry-content p {
+    color: var(--text-soft);
+  }
+
+  .entry-content p + p {
+    margin-top: 14px;
   }
 
   .photo-frame {
-    aspect-ratio: 1;
-    background: var(--surface);
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(137deg, var(--primary-soft), var(--surface));
     border-radius: var(--radius-md);
-    transition: box-shadow var(--ease);
+    overflow: hidden;
   }
 
-  .photo-frame:hover {
-    box-shadow: var(--shadow-inset);
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 760px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 40px 0;
+    }
+    .entry:nth-of-type(even) .photo-frame {
+      order: 0;
+    }
   }
 
   @media (max-width: 480px) {
-    .personal-placeholder {
+    .personal {
       padding-left: 16px;
-    }
-    .photo-grid {
-      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
