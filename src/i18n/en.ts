@@ -126,7 +126,7 @@ export default {
     heading: "Who I am",
     intro: [
       "I'm Cristo, a backend and AI developer based near Barcelona.",
-      "I got into this out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Away from the screen, though, there are a few other things I'm passionate about.",
+      "I got into this out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Besides coding, there are a few other things I'm passionate about, and here are some of them.",
     ],
     // TODO: add the photos to /public/personal/ and set the path in `image` (e.g. '/personal/keyboards.jpg')
     sections: [
@@ -144,6 +144,7 @@ export default {
           "Spending so much time in the terminal eventually led me to Neovim, and with it a whole world of configs. My terminal is Ghostty, which lets me add shaders to make everything look nicer, and I use Starship for the prompt, always chasing as much customization as possible.",
           "After trying so many configs and color palettes, I found the one: vague. Now I use it for everything: the editor, the terminal and pretty much any tool that supports it.",
         ],
+        note: "And yes, in case you noticed: this whole portfolio is built with the vague palette too.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
         link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '',

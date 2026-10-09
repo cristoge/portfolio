@@ -34,6 +34,7 @@ const t = getDictionary(lang);
             </p>
           );
         })}
+        {entry.note && <p class="entry-note">{entry.note}</p>}
         {entry.link && (
           <a class="entry-link" href={entry.link.href} target="_blank" rel="noopener noreferrer">
             {entry.link.label} →
@@ -92,9 +93,8 @@ const t = getDictionary(lang);
     margin-top: 14px;
   }
 
-  /* Colores propios de la paleta vague, no del tema del sitio */
   .inline-link {
-    color: #d8647e;
+    color: var(--primary);
     font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -102,7 +102,17 @@ const t = getDictionary(lang);
   }
 
   .inline-link:hover {
-    color: #b84a64;
+    color: var(--accent);
+  }
+
+  .entry-content .entry-note {
+    margin-top: 20px;
+    padding: 12px 16px;
+    border-left: 2px solid var(--primary);
+    background: var(--surface);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text);
+    font-style: italic;
   }
 
   .entry-link {

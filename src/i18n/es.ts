@@ -126,7 +126,7 @@ export default {
     heading: "Quién soy",
     intro: [
       "Soy Cristo, desarrollador backend y de IA de cerca de Barcelona.",
-      "Me metí en esto por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Fuera de la pantalla, eso sí, también hay otras cosas que me apasionan.",
+      "Me metí en esto por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Además de programar, hay otras cosas que me apasionan, y aquí te cuento algunas.",
     ],
     // TODO: añade las fotos en /public/personal/ y pon la ruta en `image` (p. ej. '/personal/teclados.jpg')
     sections: [
@@ -144,6 +144,7 @@ export default {
           "De tanto usar la terminal acabé descubriendo Neovim, y con él todo un mundo de configuraciones. Como terminal uso Ghostty, que me permite añadirle shaders para que todo sea más bonito visualmente, y Starship para el prompt, buscando siempre la máxima personalización.",
           "De tanto probar configuraciones y paletas de colores, encontré la definitiva: vague. Ahora la uso para todo: el editor, la terminal y prácticamente cualquier herramienta que lo permita.",
         ],
+        note: "Y sí, por si te habías fijado: todo este portfolio también está hecho con la paleta vague.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
         link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '',

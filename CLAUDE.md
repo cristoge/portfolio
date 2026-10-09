@@ -23,7 +23,7 @@ Portfolio personal — Astro estático, sin backend, deploy en GitHub Pages.
 - `src/views/` — cuerpo de cada página (`HomeView`, `PersonalView`, `ContactView`, `ProjectDetailView`), reciben `lang` (y `slug` cuando aplica) como prop.
 - `src/components/` — `Nav`, `LanguageSwitcher`, `ProjectCard`, `EducationItem`.
 - `src/layouts/BaseLayout.astro` — head, Nav, Footer. Acepta `page` (para resaltar el nav) y `path` opcional (para rutas dinámicas como `/projects/:slug`).
-- `src/styles/global.css` — design tokens (paleta blanca con azul marino `--primary` y acento violeta, tipografías Fira Sans para titulares + Source Sans 3 para texto).
+- `src/styles/global.css` — design tokens (tema oscuro con la paleta vague — `--primary` rosado `#C48282`, acento dorado `#E8B589`, texto sobre primary con `--on-primary` —, tipografías Fira Sans para titulares + Source Sans 3 para texto).
 
 ## Convenciones
 
