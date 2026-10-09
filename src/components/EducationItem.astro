@@ -34,9 +34,20 @@ const { institution, degree, dates, note, grade, coursework, gradeLabel, coursew
 
 <style>
   .education-item {
-    padding-left: 14px;
-    border-left: 2px solid var(--line);
-    margin-bottom: 22px;
+    position: relative;
+    padding: 4px 0 4px 22px;
+    border-left: 1px solid var(--grey);
+    margin-bottom: 32px;
+  }
+  .education-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 10px;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--primary);
   }
   .education-item:last-child {
     margin-bottom: 0;
@@ -52,30 +63,34 @@ const { institution, degree, dates, note, grade, coursework, gradeLabel, coursew
 
   .education-institution {
     margin: 0;
-    font-size: 18px;
+    font-size: 19px;
   }
 
   .education-dates {
     font-family: var(--font-ui);
     font-size: 12px;
-    color: var(--ink-soft);
+    color: var(--primary);
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 3px 8px;
     white-space: nowrap;
   }
 
   .education-degree {
-    color: var(--forest);
+    color: var(--primary);
     font-size: 15px;
-    margin-top: 4px;
+    font-weight: 400;
+    margin-top: 6px;
   }
 
   .education-note {
-    color: var(--ink-soft);
+    color: var(--text-soft);
     font-size: 14px;
     margin-top: 6px;
   }
 
   .education-detail {
-    color: var(--ink-soft);
+    color: var(--text-soft);
     font-size: 14px;
     margin-top: 4px;
   }

@@ -50,13 +50,17 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 5;
-    row-gap: 12px;
+    row-gap: 14px;
+    background: var(--surface);
+  }
+
+  .project-card:hover {
+    background: var(--bg);
   }
 
   .project-image {
     aspect-ratio: 16 / 9;
-    background: var(--paper);
-    border: 1px dashed var(--line);
+    background: var(--bg);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
@@ -64,12 +68,23 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
     font-family: var(--font-ui);
     font-size: 11px;
     letter-spacing: 0.08em;
-    color: var(--ink-soft);
+    color: var(--grey);
     text-decoration: none;
+    overflow: hidden;
+    transition: transform var(--ease), box-shadow var(--ease);
+  }
+
+  .project-card:hover .project-image {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-soft);
   }
 
   .project-title {
     margin: 0;
+    font-family: var(--font-display);
+    font-size-adjust: none;
+    font-size: 24px;
+    font-weight: 300;
   }
 
   .project-title-link {
@@ -78,44 +93,58 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
   }
 
   .project-title-link:hover {
-    color: var(--forest);
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
   }
 
   .project-description {
-    color: var(--ink-soft);
-    font-size: 15px;
+    color: var(--text-soft);
+    font-size: 14px;
   }
 
   .project-stack {
     align-content: start;
   }
 
+  .project-stack .pill {
+    background: var(--bg);
+  }
+
   .project-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 18px;
     margin-top: 4px;
   }
 
   .project-link {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     white-space: nowrap;
     font-family: var(--font-ui);
     font-size: 13px;
-    font-weight: 500;
-    color: var(--forest);
+    font-weight: 400;
+    color: var(--primary);
     text-decoration: none;
   }
 
   .project-link:hover {
-    color: var(--forest-dim);
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .project-link-arrow {
     width: 13px;
     height: 13px;
     flex-shrink: 0;
+    transition: transform var(--ease);
+  }
+
+  .project-link:hover .project-link-arrow {
+    transform: translateX(3px);
   }
 </style>

@@ -22,30 +22,37 @@ const t = getDictionary(lang);
 
 <style>
   .personal-placeholder {
-    padding: 56px 0;
+    padding: 72px 0 72px 20px;
   }
 
   .personal-body {
-    margin-top: 16px;
+    margin-top: 20px;
     max-width: 52ch;
-    color: var(--ink-soft);
+    color: var(--text-soft);
   }
 
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 36px;
+    gap: 20px;
+    margin-top: 44px;
   }
 
   .photo-frame {
     aspect-ratio: 1;
-    background: var(--paper-raised);
-    border: 1px dashed var(--line);
-    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    transition: box-shadow var(--ease);
+  }
+
+  .photo-frame:hover {
+    box-shadow: var(--shadow-inset);
   }
 
   @media (max-width: 480px) {
+    .personal-placeholder {
+      padding-left: 16px;
+    }
     .photo-grid {
       grid-template-columns: repeat(2, 1fr);
     }
