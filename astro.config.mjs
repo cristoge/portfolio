@@ -1,9 +1,8 @@
 import { defineConfig } from 'astro/config';
 
 // Desplegado en Vercel (sirve desde la raíz -> base: '/').
-// TODO: sustituir `site` por la URL final de Vercel o del dominio propio.
 export default defineConfig({
-  site: 'https://cristoge.github.io',
+  site: 'https://cristoge-portfolio.vercel.app',
   base: '/',
   trailingSlash: 'ignore',
   i18n: {
