@@ -139,6 +139,16 @@ export default {
         image: '',
       },
       {
+        title: "El meu setup",
+        body: [
+          "De tant fer servir la terminal vaig acabar descobrint Neovim, i amb ell tot un món de configuracions. Com a terminal faig servir Ghostty, que em permet afegir-hi shaders perquè tot sigui més bonic visualment, i Starship per al prompt, buscant sempre la màxima personalització.",
+          "De tant provar configuracions i paletes de colors, vaig trobar la definitiva: vague. Ara la faig servir per a tot: l'editor, la terminal i pràcticament qualsevol eina que ho permeti.",
+        ],
+        inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
+        link: { label: 'Veure els meus dotfiles a GitHub', href: 'https://github.com/cristoge/dotfiles' },
+        image: '',
+      },
+      {
         title: "Música",
         body: [
           "Vaig començar a tocar el violí als 12 anys, a l'escola, gràcies a un programa de l'ajuntament que apropava la música i la cultura als alumnes.",

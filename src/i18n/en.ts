@@ -139,6 +139,16 @@ export default {
         image: '',
       },
       {
+        title: "My setup",
+        body: [
+          "Spending so much time in the terminal eventually led me to Neovim, and with it a whole world of configs. My terminal is Ghostty, which lets me add shaders to make everything look nicer, and I use Starship for the prompt, always chasing as much customization as possible.",
+          "After trying so many configs and color palettes, I found the one: vague. Now I use it for everything: the editor, the terminal and pretty much any tool that supports it.",
+        ],
+        inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
+        link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
+        image: '',
+      },
+      {
         title: "Music",
         body: [
           "I started playing the violin at 12, at school, thanks to a city council programme that brought music and culture closer to students.",

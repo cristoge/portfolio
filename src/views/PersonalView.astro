@@ -22,7 +22,23 @@ const t = getDictionary(lang);
     <article class="entry">
       <div class="entry-content">
         <h2 class="entry-title">{entry.title}</h2>
-        {entry.body.map((paragraph) => <p>{paragraph}</p>)}
+        {entry.body.map((paragraph) => {
+          const inline = entry.inlineLink;
+          if (!inline || !paragraph.includes(inline.text)) return <p>{paragraph}</p>;
+          const [before, ...after] = paragraph.split(inline.text);
+          return (
+            <p>
+              {before}
+              <a class="inline-link" href={inline.href} target="_blank" rel="noopener noreferrer">{inline.text}</a>
+              {after.join(inline.text)}
+            </p>
+          );
+        })}
+        {entry.link && (
+          <a class="entry-link" href={entry.link.href} target="_blank" rel="noopener noreferrer">
+            {entry.link.label} →
+          </a>
+        )}
       </div>
       <div class="photo-frame">
         {entry.image && <img src={entry.image} alt={entry.title} loading="lazy" />}
@@ -74,6 +90,35 @@ const t = getDictionary(lang);
 
   .entry-content p + p {
     margin-top: 14px;
+  }
+
+  /* Colores propios de la paleta vague, no del tema del sitio */
+  .inline-link {
+    color: #d8647e;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .inline-link:hover {
+    color: #b84a64;
+  }
+
+  .entry-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .entry-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .photo-frame {

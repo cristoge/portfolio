@@ -139,6 +139,16 @@ export default {
         image: '',
       },
       {
+        title: "Mi setup",
+        body: [
+          "De tanto usar la terminal acabé descubriendo Neovim, y con él todo un mundo de configuraciones. Como terminal uso Ghostty, que me permite añadirle shaders para que todo sea más bonito visualmente, y Starship para el prompt, buscando siempre la máxima personalización.",
+          "De tanto probar configuraciones y paletas de colores, encontré la definitiva: vague. Ahora la uso para todo: el editor, la terminal y prácticamente cualquier herramienta que lo permita.",
+        ],
+        inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
+        link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
+        image: '',
+      },
+      {
         title: "Música",
         body: [
           "Empecé a tocar el violín a los 12 años, en el colegio, gracias a un programa del ayuntamiento que acercaba la música y la cultura a los alumnos.",
