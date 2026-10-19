@@ -6,17 +6,20 @@ interface Props {
   detailHref: string;
   repoHref: string;
   demoHref?: string;
+  image?: string;
   detailLabel: string;
   repoLabel: string;
   demoLabel: string;
 }
 
-const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, repoLabel, demoLabel } =
+const { title, description, stack, detailHref, repoHref, demoHref, image, detailLabel, repoLabel, demoLabel } =
   Astro.props;
 ---
 
 <article class="project-card card">
-  <a href={detailHref} class="project-image" aria-hidden="true">IMG</a>
+  <a href={detailHref} class="project-image" aria-hidden="true" tabindex="-1">
+    {image ? <img src={image} alt="" loading="lazy" /> : 'IMG'}
+  </a>
   <h3 class="project-title">
     <a href={detailHref} class="project-title-link">{title}</a>
   </h3>
@@ -71,6 +74,13 @@ const { title, description, stack, detailHref, repoHref, demoHref, detailLabel, 
     color: var(--grey);
     text-decoration: none;
     overflow: hidden;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .project-card:hover .project-title-link {

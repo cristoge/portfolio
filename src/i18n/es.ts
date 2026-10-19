@@ -15,8 +15,7 @@ export default {
     // TODO: tags reales separados por "|"
     tagline: ['Backend', 'Frontend', 'DevOps'],
     cta: 'Ver el CV',
-    // TODO: enlaza el fichero real del CV en /public/cv.pdf
-    ctaHref: '/cv.pdf',
+    ctaHref: '/CV_Cristopher_Gordon.pdf',
     outro: 'me alegra que estés aquí 🌌',
     exploreCta: 'Ver todo',
   },
@@ -91,6 +90,7 @@ export default {
         outcome: 'Nota final: 9/10. Trabajo de fin de especialización acompañado de un paper que documenta el diseño, la evolución del agente y sus limitaciones.',
         repoHref: 'https://github.com/cristoge/TIC_project',
         demoHref: '',
+        image: '/rag.webp',
       },
       {
         slug: 'bikeshare',
@@ -108,6 +108,7 @@ export default {
         outcome: 'Nota final: 9,84/10. Proyecto final del ciclo, entregado con memoria técnica y manual de usuario.',
         repoHref: 'https://github.com/cristoge/bikeshare',
         demoHref: '',
+        image: '/bikeshare.webp',
       },
     ],
   },
@@ -128,7 +129,6 @@ export default {
       "Me llamo Cristopher y soy desarrollador backend, con conocimientos en agentes de IA y moviéndome cada vez más en el entorno cloud.",
       "Me metí en el mundo de la informática por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Aparte de programar, hay otras cosas que me apasionan, y aquí te cuento algunas.",
     ],
-    // TODO: añade las fotos en /public/personal/ y pon la ruta en `image` (p. ej. '/personal/teclados.jpg')
     sections: [
       {
         title: "Mecanografía y teclados",
@@ -136,7 +136,7 @@ export default {
           "Cuando empecé a programar me pasaba el rato mirando el teclado para encontrar cada tecla. Me propuse dejar de hacerlo y empecé a practicar mecanografía en distintas páginas, poco a poco, hasta que un día me di cuenta de que ya no miraba el teclado y que, encima, me lo pasaba bien escribiendo.",
           "De ahí salté al mundo de los teclados mecánicos custom. Fui descubriendo distintos layouts y todo tipo de teclados, y sin darme cuenta he acabado coleccionándolos: cada vez tengo más, y siempre hay alguno raro o exclusivo que quiero probar.",
         ],
-        image: '',
+        image: '/keyboard.webp',
       },
       {
         title: "Mi setup",
@@ -147,7 +147,7 @@ export default {
         note: "Y sí, por si te habías fijado: todo este portfolio también está hecho con la paleta vague.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
         link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
-        image: '',
+        image: '/setup.webp',
       },
       {
         title: "Música",
@@ -156,7 +156,7 @@ export default {
           "Con los años lo fui dejando, pero ahora lo estoy retomando y aprendiendo sin prisa. Más que una afición, es mi forma de desintoxicarme de lo digital, que de vez en cuando no viene nada mal.",
           "El violín también despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
         ],
-        image: '',
+        image: '/music.webp',
       },
       {
         title: "Ahora mismo",
@@ -164,7 +164,7 @@ export default {
           "Estoy en una etapa en la que estoy buscando trabajo y, a la vez, sigo formándome. Decidí profundizar en cloud porque es de lo que más se pide hoy en día, así que estoy con el curso de especialización y me paso el día trasteando con AWS.",
           "El curso me prepara para la certificación AWS Solutions Architect – Associate, y en paralelo, por mi cuenta, me estoy preparando la certificación AWS Developer – Associate. Me las voy sacando paso a paso, y cuando me queda tiempo me meto de lleno con los agentes de IA.",
         ],
-        image: '',
+        image: '/now.webp',
       },
     ],
   },
@@ -174,7 +174,7 @@ export default {
     body: 'Si quieres hablar de un proyecto, tienes alguna duda o simplemente quieres saludar, aquí me encuentras.',
     links: [
       { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-marrasquin', href: 'https://www.linkedin.com/in/cristopher-marrasquin/' },
+      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },
       { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
     ],
     map: {

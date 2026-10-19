@@ -20,7 +20,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
     <h1>{t.hero.greeting} {t.hero.name}</h1>
     <p class="tagline">{t.hero.tagline.join(' | ')}</p>
     <div class="hero-actions">
-      <a href={t.hero.ctaHref} class="btn btn-primary">{t.hero.cta}</a>
+      <a href={t.hero.ctaHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">{t.hero.cta}</a>
       {github && (
         <a href={github.href} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
           GitHub
@@ -69,6 +69,7 @@ const github = t.contact.links.find((l) => l.label === 'GitHub');
             detailHref={projectDetailPath(lang, project.slug)}
             repoHref={project.repoHref}
             demoHref={project.demoHref}
+            image={project.image}
             detailLabel={t.projects.viewDetail}
             repoLabel={repoLabel}
             demoLabel={demoLabel}

@@ -25,7 +25,11 @@ const d = t.projects.detail;
   <h1>{project.title}</h1>
   <p class="project-summary">{project.description}</p>
 
-  <div class="project-hero-image" aria-hidden="true">IMG</div>
+  {project.image ? (
+    <img src={project.image} alt={project.title} class="project-hero-image project-hero-photo" />
+  ) : (
+    <div class="project-hero-image" aria-hidden="true">IMG</div>
+  )}
 
   <p class="project-context">{project.context}</p>
 
@@ -96,6 +100,13 @@ const d = t.projects.detail;
     letter-spacing: 0.08em;
     color: var(--grey);
     margin: 36px 0;
+  }
+
+  .project-hero-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
 
   .project-context {

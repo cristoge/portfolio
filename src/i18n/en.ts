@@ -15,8 +15,7 @@ export default {
     // TODO: real tags separated by "|"
     tagline: ['Backend', 'Frontend', 'DevOps'],
     cta: 'View CV',
-    // TODO: link the real CV file at /public/cv.pdf
-    ctaHref: '/cv.pdf',
+    ctaHref: '/CV_Cristopher_Gordon.pdf',
     outro: "glad you're here 🌌",
     exploreCta: 'See it all',
   },
@@ -91,6 +90,7 @@ export default {
         outcome: 'Final grade: 9/10. Final specialization project, accompanied by a paper documenting the design, the evolution of the agent and its limitations.',
         repoHref: 'https://github.com/cristoge/TIC_project',
         demoHref: '',
+        image: '/rag.webp',
       },
       {
         slug: 'bikeshare',
@@ -108,6 +108,7 @@ export default {
         outcome: 'Final grade: 9.84/10. Final project of the programme, delivered with a technical report and user manual.',
         repoHref: 'https://github.com/cristoge/bikeshare',
         demoHref: '',
+        image: '/bikeshare.webp',
       },
     ],
   },
@@ -128,7 +129,6 @@ export default {
       "My name is Cristopher and I'm a backend developer, with knowledge of AI agents and moving more and more into the cloud space.",
       "I got into the world of computing out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Besides coding, there are a few other things I'm passionate about, and here are some of them.",
     ],
-    // TODO: add the photos to /public/personal/ and set the path in `image` (e.g. '/personal/keyboards.jpg')
     sections: [
       {
         title: "Touch typing and keyboards",
@@ -136,7 +136,7 @@ export default {
           "When I started coding I spent most of the time looking down at the keyboard to find each key. I set out to stop doing that and began practicing touch typing on different sites, little by little, until one day I realized I wasn't looking at the keyboard anymore and, on top of that, I was actually having fun typing.",
           "From there I fell into the world of custom mechanical keyboards. I discovered different layouts and all kinds of boards, and before I knew it I'd started collecting them: the collection keeps growing, and there's always some rare or exclusive one I want to try.",
         ],
-        image: '',
+        image: '/keyboard.webp',
       },
       {
         title: "My setup",
@@ -147,7 +147,7 @@ export default {
         note: "And yes, in case you noticed: this whole portfolio is built with the vague palette too.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
         link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
-        image: '',
+        image: '/setup.webp',
       },
       {
         title: "Music",
@@ -156,7 +156,7 @@ export default {
           "Over the years I gradually drifted away from it, but I'm picking it back up now and learning at my own pace. More than a hobby, it's my way to detox from all things digital, which every now and then doesn't hurt at all.",
           "The violin also sparked my curiosity to learn more about music: discovering different genres, how a song is put together and everything behind it.",
         ],
-        image: '',
+        image: '/music.webp',
       },
       {
         title: "Right now",
@@ -164,7 +164,7 @@ export default {
           "I'm at a stage where I'm looking for a job while I keep learning. I decided to go deeper into cloud because it's one of the most in-demand skills these days, so I'm doing the specialization course and spending my days tinkering with AWS.",
           "The course is preparing me for the AWS Solutions Architect – Associate certification, and in parallel, on my own, I'm studying for the AWS Developer – Associate certification. I'm working through them step by step, and whenever I have some time left I dive into AI agents.",
         ],
-        image: '',
+        image: '/now.webp',
       },
     ],
   },
@@ -174,7 +174,7 @@ export default {
     body: 'If you want to talk about a project, have a question, or just want to say hi, you can find me here.',
     links: [
       { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-marrasquin', href: 'https://www.linkedin.com/in/cristopher-marrasquin/' },
+      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },
       { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
     ],
     map: {

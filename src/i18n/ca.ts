@@ -15,8 +15,7 @@ export default {
     // TODO: tags reals separats per "|"
     tagline: ['Backend', 'Frontend', 'DevOps'],
     cta: 'Veure el CV',
-    // TODO: enllaça el fitxer real del CV a /public/cv.pdf
-    ctaHref: '/cv.pdf',
+    ctaHref: '/CV_Cristopher_Gordon.pdf',
     outro: "m'alegra que hi siguis 🌌",
     exploreCta: 'Veure-ho tot',
   },
@@ -91,6 +90,7 @@ export default {
         outcome: "Nota final: 9/10. Treball de final d'especialització acompanyat d'un paper que documenta el disseny, l'evolució de l'agent i les seves limitacions.",
         repoHref: 'https://github.com/cristoge/TIC_project',
         demoHref: '',
+        image: '/rag.webp',
       },
       {
         slug: 'bikeshare',
@@ -108,6 +108,7 @@ export default {
         outcome: "Nota final: 9,84/10. Projecte final del cicle, lliurat amb memòria tècnica i manual d'usuari.",
         repoHref: 'https://github.com/cristoge/bikeshare',
         demoHref: '',
+        image: '/bikeshare.webp',
       },
     ],
   },
@@ -128,7 +129,6 @@ export default {
       "Em dic Cristopher i sóc desenvolupador backend, amb coneixements en agents d'IA i movent-me cada vegada més en l'entorn cloud.",
       "Em vaig ficar en el món de la informàtica per pura curiositat. Des de petit m'agradava la tecnologia i entendre com funcionava tot per dins, i programar va ser la manera natural de continuar fent-ho. A part de programar, hi ha altres coses que m'apassionen, i aquí t'explico algunes.",
     ],
-    // TODO: afegeix les fotos a /public/personal/ i posa la ruta a `image` (p. ex. '/personal/teclats.jpg')
     sections: [
       {
         title: "Mecanografia i teclats",
@@ -136,7 +136,7 @@ export default {
           "Quan vaig començar a programar em passava l'estona mirant el teclat per trobar cada tecla. Em vaig proposar deixar de fer-ho i vaig començar a practicar mecanografia en diferents pàgines, a poc a poc, fins que un dia em vaig adonar que ja no mirava el teclat i que, a sobre, m'ho passava bé escrivint.",
           "D'aquí vaig saltar al món dels teclats mecànics custom. Vaig anar descobrint layouts diferents i tota mena de teclats, i sense adonar-me'n he acabat fent-ne col·lecció: cada vegada en tinc més, i sempre n'hi ha algun de rar o exclusiu que vull provar.",
         ],
-        image: '',
+        image: '/keyboard.webp',
       },
       {
         title: "El meu setup",
@@ -147,7 +147,7 @@ export default {
         note: "I sí, si t'hi has fixat: tot aquest portfolio també està fet amb la paleta vague.",
         inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
         link: { label: 'Veure els meus dotfiles a GitHub', href: 'https://github.com/cristoge/dotfiles' },
-        image: '',
+        image: '/setup.webp',
       },
       {
         title: "Música",
@@ -156,7 +156,7 @@ export default {
           "Amb els anys el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Més que una afició, és la meva manera de desintoxicar-me del digital, que de tant en tant no va gens malament.",
           "El violí també em va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
         ],
-        image: '',
+        image: '/music.webp',
       },
       {
         title: "Ara mateix",
@@ -164,7 +164,7 @@ export default {
           "Estic en una etapa en què estic buscant feina i, alhora, continuo formant-me. Vaig decidir aprofundir en cloud perquè és una de les coses que més es demana avui dia, així que estic fent el curs d'especialització i em passo el dia trastejant amb AWS.",
           "El curs em prepara per a la certificació AWS Solutions Architect – Associate, i en paral·lel, pel meu compte, m'estic preparant la certificació AWS Developer – Associate. Les vaig traient pas a pas, i quan em queda temps em fico de ple amb els agents d'IA.",
         ],
-        image: '',
+        image: '/now.webp',
       },
     ],
   },
@@ -174,7 +174,7 @@ export default {
     body: "Si vols parlar d'un projecte, tens algun dubte o simplement vols saludar, aquí em trobaràs.",
     links: [
       { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-marrasquin', href: 'https://www.linkedin.com/in/cristopher-marrasquin/' },
+      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },
       { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
     ],
     map: {
