@@ -64,7 +64,7 @@ export default {
   },
   projects: {
     heading: 'Projects',
-    note: 'A selection of academic projects.',
+    note: 'A selection of academic and personal projects.',
     viewDetail: 'View details',
     detail: {
       back: 'Back to projects',
@@ -74,6 +74,24 @@ export default {
       outcome: 'Outcome',
     },
     items: [
+      {
+        slug: 'safe-reply',
+        title: 'AI support tickets for a bank',
+        description: 'Backend that classifies the support tickets of a fictional digital bank and decides which ones AI can safely answer and which ones need a call from a person.',
+        context: 'Ongoing personal project. A bank gets many repetitive questions that can be answered automatically, but others (fraud, stolen cards, unrecognised charges) leave no room for a wrong answer. The challenge is not answering, but knowing when not to: when in doubt, the ticket always goes to a person. v1 works without an LLM, using canned answers: more privacy (banking data never leaves the server) and no per-request cost.',
+        depthTopics: [
+          'Intent classifier with scikit-learn (TF-IDF and logistic regression) trained on Banking77: 77 intents and 90% accuracy, in milliseconds and with no per-request cost',
+          'Router with ordered rules (sensitive keywords, intents that always go to a person, confidence thresholds) and all business rules in a YAML file validated with Pydantic; thresholds were chosen by measuring, with the same code that runs in production',
+          "Human queue with priorities and deadlines: agents ask for the next ticket (FOR UPDATE SKIP LOCKED, never two agents on the same one), call, resolve and correct the classification; customers can escalate if the answer doesn't help",
+          'Async layered backend with FastAPI and PostgreSQL: JWT with rotating refresh tokens, Redis rate limiting, Idempotency-Key, IDOR protection and JSON logs with no personal data',
+          '57 canned answers whose figures all come from a single bank facts document, checked by tests, and 470 tests against a real database',
+        ],
+        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
+        outcome: 'v1 complete. On the Banking77 test set (3,080 tickets), no automatic answer reached a ticket that needed a person, and AI answered none of the out-of-scope or two-problem messages. Next step (v2): RAG with pgvector and a local LLM, an ARQ worker and a judge that reviews every answer.',
+        repoHref: 'https://github.com/cristoge/rag_revision',
+        demoHref: '',
+        image: '/docs.webp',
+      },
       {
         slug: 'rag-pdf',
         title: 'RAG study assistant',

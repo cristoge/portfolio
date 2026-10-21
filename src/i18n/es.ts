@@ -64,7 +64,7 @@ export default {
   },
   projects: {
     heading: 'Proyectos',
-    note: 'Una selección de proyectos académicos.',
+    note: 'Una selección de proyectos académicos y personales.',
     viewDetail: 'Ver detalle',
     detail: {
       back: 'Volver a proyectos',
@@ -74,6 +74,24 @@ export default {
       outcome: 'Resultado',
     },
     items: [
+      {
+        slug: 'safe-reply',
+        title: 'Tickets de soporte con IA para un banco',
+        description: 'Backend que clasifica los tickets de soporte de un banco digital ficticio y decide cuáles puede contestar la IA sin riesgo y cuáles necesitan la llamada de una persona.',
+        context: 'Proyecto personal en curso. Un banco recibe muchas consultas repetidas que se pueden contestar solas, pero otras (fraude, robo de tarjeta, cargos no reconocidos) no admiten una respuesta equivocada. El reto no es contestar, sino saber cuándo no hacerlo: ante la duda, el ticket siempre va a una persona. La v1 funciona sin LLM, con respuestas predefinidas: más privacidad (los datos bancarios no salen del servidor) y ningún coste por petición.',
+        depthTopics: [
+          'Clasificador de intenciones con scikit-learn (TF-IDF y regresión logística) entrenado con Banking77: 77 intenciones y un 90 % de acierto, en milisegundos y sin coste por petición',
+          'Router con reglas en orden (palabras sensibles, intenciones que siempre van a una persona, umbrales de confianza) y todas las reglas de negocio en un YAML validado con Pydantic; los umbrales se eligieron midiendo, con el mismo código que se ejecuta en producción',
+          'Cola humana con prioridades y plazos: el agente pide el siguiente ticket (FOR UPDATE SKIP LOCKED, nunca dos agentes con el mismo), llama, resuelve y corrige la clasificación; el cliente puede escalar si la respuesta no le sirve',
+          'Backend asíncrono con FastAPI y PostgreSQL por capas: JWT con refresh tokens rotados, rate limiting con Redis, Idempotency-Key, protección contra IDOR y logs JSON sin datos personales',
+          '57 respuestas predefinidas con todas las cifras sacadas de un único documento de datos del banco, comprobado por tests, y 470 tests contra una base de datos real',
+        ],
+        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
+        outcome: 'v1 terminada. En el test de Banking77 (3.080 tickets), ninguna respuesta automática llegó a un ticket que debía atender una persona, y la IA no contestó ningún mensaje fuera de ámbito ni ninguno con dos problemas a la vez. Siguiente paso (v2): RAG con pgvector y un LLM local, un worker con ARQ y un juez que revisa cada respuesta.',
+        repoHref: 'https://github.com/cristoge/rag_revision',
+        demoHref: '',
+        image: '/docs.webp',
+      },
       {
         slug: 'rag-pdf',
         title: 'Asistente de estudio con RAG',

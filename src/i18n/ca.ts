@@ -64,7 +64,7 @@ export default {
   },
   projects: {
     heading: 'Projectes',
-    note: 'Una selecció de projectes acadèmics.',
+    note: 'Una selecció de projectes acadèmics i personals.',
     viewDetail: 'Veure detall',
     detail: {
       back: 'Tornar a projectes',
@@ -74,6 +74,24 @@ export default {
       outcome: 'Resultat',
     },
     items: [
+      {
+        slug: 'safe-reply',
+        title: 'Tiquets de suport amb IA per a un banc',
+        description: "Backend que classifica els tiquets de suport d'un banc digital fictici i decideix quins pot respondre la IA sense risc i quins necessiten la trucada d'una persona.",
+        context: "Projecte personal en curs. Un banc rep moltes consultes repetides que es poden respondre soles, però d'altres (frau, robatori de targeta, càrrecs no reconeguts) no admeten una resposta equivocada. El repte no és respondre, sinó saber quan no fer-ho: davant el dubte, el tiquet sempre va a una persona. La v1 funciona sense LLM, amb respostes predefinides: més privacitat (les dades bancàries no surten del servidor) i cap cost per petició.",
+        depthTopics: [
+          "Classificador d'intencions amb scikit-learn (TF-IDF i regressió logística) entrenat amb Banking77: 77 intencions i un 90 % d'encert, en mil·lisegons i sense cost per petició",
+          "Router amb regles en ordre (paraules sensibles, intencions que sempre van a una persona, llindars de confiança) i totes les regles de negoci en un YAML validat amb Pydantic; els llindars es van triar mesurant, amb el mateix codi que s'executa en producció",
+          "Cua humana amb prioritats i terminis: l'agent demana el tiquet següent (FOR UPDATE SKIP LOCKED, mai dos agents amb el mateix), truca, resol i corregeix la classificació; el client pot escalar si la resposta no li serveix",
+          'Backend asíncron amb FastAPI i PostgreSQL per capes: JWT amb refresh tokens rotats, rate limiting amb Redis, Idempotency-Key, protecció contra IDOR i logs JSON sense dades personals',
+          "57 respostes predefinides amb totes les xifres extretes d'un únic document de dades del banc, comprovat per tests, i 470 tests contra una base de dades real",
+        ],
+        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
+        outcome: "v1 acabada. Al test de Banking77 (3.080 tiquets), cap resposta automàtica va arribar a un tiquet que havia d'atendre una persona, i la IA no va respondre cap missatge fora d'àmbit ni cap amb dos problemes alhora. Següent pas (v2): RAG amb pgvector i un LLM local, un worker amb ARQ i un jutge que revisa cada resposta.",
+        repoHref: 'https://github.com/cristoge/rag_revision',
+        demoHref: '',
+        image: '/docs.webp',
+      },
       {
         slug: 'rag-pdf',
         title: "Assistent d'estudi amb RAG",
