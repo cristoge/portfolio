@@ -5,11 +5,12 @@ interface Props {
   degree: string;
   dates: string;
   note: string;
-  coursework?: string[];
+  coursework?: readonly string[];
   courseworkLabel?: string;
+  link?: { label: string; href: string };
 }
 
-const { institution, institutionHref, degree, dates, note, coursework, courseworkLabel } = Astro.props;
+const { institution, institutionHref, degree, dates, note, coursework, courseworkLabel, link } = Astro.props;
 ---
 
 <div class="education-item reveal">
@@ -31,6 +32,11 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
         <span class="education-label">{courseworkLabel}</span>
         {coursework.join(', ')}
       </p>
+    )}
+    {link && (
+      <a class="education-link arrow-link" href={link.href} target="_blank" rel="noopener noreferrer">
+        {link.label} <span class="arrow" aria-hidden="true">↗</span>
+      </a>
     )}
   </div>
 </div>
@@ -127,6 +133,10 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
   .education-coursework {
     margin-top: 18px;
     font-size: 15px;
+  }
+
+  .education-link {
+    margin-top: 20px;
   }
 
   .education-label {

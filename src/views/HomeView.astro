@@ -87,6 +87,7 @@ const greetingWords = t.hero.greeting.split(' ');
             note={item.note}
             coursework={item.coursework}
             courseworkLabel={t.education.courseworkLabel}
+            link={'link' in item ? item.link : undefined}
           />
         ))}
       </div>
