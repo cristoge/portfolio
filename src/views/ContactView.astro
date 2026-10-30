@@ -7,7 +7,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = getDictionary(lang);
-const contactEmail = t.contact.links.find((l) => l.label === 'Email')?.value ?? '';
+const email = t.contact.links.find((l) => l.label === 'Email');
+const contactEmail = email?.value ?? '';
 const linkedin = t.contact.links.find((l) => l.label === 'LinkedIn');
 const linkedinHandle = linkedin?.value.split('/').pop() ?? '';
 
@@ -28,10 +29,21 @@ const icons: Record<string, string> = {
     <h1>{t.contact.heading}</h1>
     <p class="contact-body lead">{t.contact.body}</p>
     <div class="contact-links">
-      <span class="contact-link contact-email" title={contactEmail}>
-        <span class="contact-link-icon" set:html={icons.Email} />
-        <span>{contactEmail}</span>
-      </span>
+      <div class="contact-email">
+        <a href={email?.href} class="contact-link">
+          <span class="contact-link-icon" set:html={icons.Email} />
+          <span>{contactEmail}</span>
+        </a>
+        <button
+          type="button"
+          class="copy-email"
+          aria-label={t.contact.copyEmail.ariaLabel}
+          data-email={contactEmail}
+          data-done={t.contact.copyEmail.done}
+        >
+          <span class="copy-email-label" aria-live="polite">{t.contact.copyEmail.label}</span>
+        </button>
+      </div>
       {linkedin && (
         <a
           href={linkedin.href}
@@ -141,6 +153,28 @@ const icons: Record<string, string> = {
   });
 </script>
 
+<script>
+  const copyButton = document.querySelector<HTMLButtonElement>('.copy-email');
+  const copyLabel = copyButton?.querySelector('.copy-email-label');
+  const originalLabel = copyLabel?.textContent ?? '';
+  let resetTimer: number | undefined;
+
+  copyButton?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(copyButton.dataset.email ?? '');
+    } catch {
+      return;
+    }
+    if (copyLabel) copyLabel.textContent = copyButton.dataset.done ?? '';
+    copyButton.classList.add('is-done');
+    window.clearTimeout(resetTimer);
+    resetTimer = window.setTimeout(() => {
+      if (copyLabel) copyLabel.textContent = originalLabel;
+      copyButton.classList.remove('is-done');
+    }, 2000);
+  });
+</script>
+
 <style>
   .contact-section {
     padding: 90px 0 clamp(70px, 8vw, 120px);
@@ -209,8 +243,32 @@ const icons: Record<string, string> = {
   }
 
   .contact-email {
-    cursor: text;
-    user-select: all;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .copy-email {
+    padding: 6px 10px;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+  }
+
+  .copy-email:hover {
+    border-color: var(--ink);
+  }
+
+  .copy-email.is-done {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--page);
   }
 
   .contact-block {

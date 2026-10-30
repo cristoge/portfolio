@@ -25,23 +25,22 @@ export default {
   },
   education: {
     heading: 'Education',
-    gradeLabel: 'Grade',
     courseworkLabel: 'Relevant coursework',
     items: [
       {
         institution: 'ITIC Barcelona',
+        institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Specialization Course in Cloud Resources and Environments',
         dates: '2026 — present',
         note: 'Ongoing — cloud infrastructure deployment and management.',
-        grade: '',
         coursework: [],
       },
       {
         institution: 'ITIC Barcelona',
+        institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Specialization Course in Artificial Intelligence and Big Data',
         dates: '2025 — 2026',
         note: 'Model development, data systems and large-scale processing.',
-        grade: '8.6/10',
         coursework: [
           'Artificial Intelligence Models',
           'Machine Learning Systems',
@@ -52,10 +51,10 @@ export default {
       },
       {
         institution: 'Prat FP',
+        institutionHref: 'https://pratfp.com/es/inicio/',
         degree: 'Higher Vocational Training in Multiplatform Application Development (DAM)',
         dates: '2023 — 2025',
         note: '',
-        grade: '9.1/10',
         coursework: [
           'Programming',
           'Databases',
@@ -69,7 +68,6 @@ export default {
   projects: {
     heading: 'Projects',
     note: 'A selection of academic and personal projects.',
-    viewDetail: 'View details',
     detail: {
       back: 'Back to projects',
       context: 'Context',
@@ -194,6 +192,11 @@ export default {
     kicker: 'Contact',
     heading: "Let's talk",
     body: 'If you want to talk about a project, have a question, or just want to say hi, you can find me here.',
+    copyEmail: {
+      label: 'Copy',
+      ariaLabel: 'Copy email address',
+      done: 'Copied!',
+    },
     links: [
       { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
       { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },

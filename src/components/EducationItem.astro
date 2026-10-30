@@ -1,46 +1,48 @@
 ---
 interface Props {
   institution: string;
+  institutionHref?: string;
   degree: string;
   dates: string;
   note: string;
-  grade?: string;
   coursework?: string[];
-  gradeLabel?: string;
   courseworkLabel?: string;
 }
 
-const { institution, degree, dates, note, grade, coursework, gradeLabel, courseworkLabel } = Astro.props;
+const { institution, institutionHref, degree, dates, note, coursework, courseworkLabel } = Astro.props;
 ---
 
 <div class="education-item reveal">
-  <span class="education-dates">{dates}</span>
-  <div class="education-main">
-    <h3 class="education-institution">{institution}</h3>
-    <p class="education-degree">{degree}</p>
-  </div>
-  <div class="education-meta">
-    {note && <p class="education-note">{note}</p>}
-    {grade && (
-      <p class="education-detail">
-        <span class="education-label">{gradeLabel}</span> {grade}
-      </p>
+  <div class="education-aside">
+    <span class="education-dates">{dates}</span>
+    {institutionHref ? (
+      <a class="education-institution" href={institutionHref} target="_blank" rel="noopener noreferrer">
+        {institution} <span class="education-institution-arrow" aria-hidden="true">↗</span>
+      </a>
+    ) : (
+      <span class="education-institution">{institution}</span>
     )}
+  </div>
+  <div class="education-main">
+    <h3 class="education-degree">{degree}</h3>
+    {note && <p class="education-note">{note}</p>}
     {coursework && coursework.length > 0 && (
-      <p class="education-detail">
-        <span class="education-label">{courseworkLabel}</span> {coursework.join(', ')}
+      <p class="education-coursework">
+        <span class="education-label">{courseworkLabel}</span>
+        {coursework.join(', ')}
       </p>
     )}
   </div>
 </div>
 
 <style>
+  /* Columna estrecha con fecha y centro; el contenido se lee de arriba abajo a la derecha. */
   .education-item {
     display: grid;
-    grid-template-columns: 150px minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: 200px minmax(0, 1fr);
     align-items: start;
-    gap: 28px;
-    padding: 30px 0 34px;
+    gap: 40px;
+    padding: 32px 0 36px;
     border-top: 1px solid var(--line-strong);
   }
 
@@ -48,17 +50,61 @@ const { institution, degree, dates, note, grade, coursework, gradeLabel, coursew
     border-bottom: 1px solid var(--line-strong);
   }
 
-  .education-dates {
+  .education-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     padding-top: 6px;
+  }
+
+  .education-dates {
     font-size: 12px;
     color: var(--muted);
     transition: color 0.3s;
   }
 
   .education-institution {
-    font-size: clamp(25px, 3vw, 42px);
-    letter-spacing: -0.03em;
-    line-height: 1.05;
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  a.education-institution {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 3px;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.35s var(--ease-out);
+  }
+
+  a.education-institution:hover {
+    background-size: 100% 1px;
+  }
+
+  .education-institution-arrow {
+    font-size: 13px;
+    letter-spacing: 0;
+    transition: transform 0.2s;
+  }
+
+  a.education-institution:hover .education-institution-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  /* Bloque de 720px pegado al borde derecho; el texto sigue alineado a la izquierda. */
+  .education-main {
+    justify-self: end;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .education-degree {
+    font-size: clamp(20px, 1.9vw, 26px);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
     transition: transform 0.4s var(--ease-out);
   }
 
@@ -66,33 +112,26 @@ const { institution, degree, dates, note, grade, coursework, gradeLabel, coursew
     .education-item:hover .education-dates {
       color: var(--ink);
     }
-    .education-item:hover .education-institution {
+    .education-item:hover .education-degree {
       transform: translateX(8px);
     }
   }
 
-  .education-degree {
-    margin-top: 12px;
-    font-size: 17px;
-    line-height: 1.45;
-  }
-
-  .education-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 6px;
-  }
-
   .education-note,
-  .education-detail {
+  .education-coursework {
+    margin-top: 12px;
     color: var(--copy);
+    font-size: 16px;
+  }
+
+  .education-coursework {
+    margin-top: 18px;
     font-size: 15px;
   }
 
   .education-label {
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -106,9 +145,18 @@ const { institution, degree, dates, note, grade, coursework, gradeLabel, coursew
       gap: 14px;
       padding: 26px 0 30px;
     }
-    .education-dates,
-    .education-meta {
+    .education-main {
+      justify-self: stretch;
+      max-width: none;
+    }
+    .education-aside {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 14px;
       padding-top: 0;
+    }
+    .education-institution {
+      align-self: auto;
     }
   }
 </style>

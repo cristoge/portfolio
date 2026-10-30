@@ -7,19 +7,17 @@ interface Props {
   repoHref: string;
   demoHref?: string;
   image?: string;
-  detailLabel: string;
   repoLabel: string;
   demoLabel: string;
 }
 
-const { title, description, stack, detailHref, repoHref, demoHref, image, detailLabel, repoLabel, demoLabel } =
-  Astro.props;
+const { title, description, stack, detailHref, repoHref, demoHref, image, repoLabel, demoLabel } = Astro.props;
 ---
 
 <article class="project-card reveal">
-  <a href={detailHref} class="project-image" aria-hidden="true" tabindex="-1">
+  <div class="project-image" aria-hidden="true">
     {image ? <img src={image} alt="" loading="lazy" /> : 'IMG'}
-  </a>
+  </div>
   <h3 class="project-title">
     <a href={detailHref} class="project-title-link">{title}</a>
   </h3>
@@ -28,9 +26,6 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, detail
     {stack.map((tech) => <span class="pill">{tech}</span>)}
   </div>
   <div class="project-links">
-    <a href={detailHref} class="project-link">
-      {detailLabel} <span class="project-link-arrow" aria-hidden="true">→</span>
-    </a>
     <a href={repoHref} class="project-link" target="_blank" rel="noopener noreferrer">
       {repoLabel} <span class="project-link-arrow" aria-hidden="true">↗</span>
     </a>
@@ -105,14 +100,30 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, detail
   }
 
   .project-title {
-    font-size: clamp(24px, 2.4vw, 32px);
+    font-size: clamp(21px, 1.9vw, 26px);
     letter-spacing: -0.033em;
     line-height: 1.08;
   }
 
-  .project-title-link:hover {
+  .project-card:hover .project-title-link {
     text-decoration: underline 1px;
     text-underline-offset: 0.12em;
+  }
+
+  /* El enlace del título cubre toda la tarjeta; los enlaces de abajo quedan por encima. */
+  .project-title-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .project-title-link:focus-visible {
+    outline: none;
+  }
+
+  .project-card:has(.project-title-link:focus-visible) {
+    outline: 2px solid var(--panel-ink);
+    outline-offset: 4px;
   }
 
   .project-description {
@@ -138,6 +149,8 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, detail
   }
 
   .project-link {
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     gap: 8px;

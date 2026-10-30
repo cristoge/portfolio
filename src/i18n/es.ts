@@ -25,23 +25,22 @@ export default {
   },
   education: {
     heading: 'Educación',
-    gradeLabel: 'Nota media',
     courseworkLabel: 'Asignaturas relevantes',
     items: [
       {
         institution: 'ITIC Barcelona',
+        institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Curso de Especialización en Recursos y Entornos Cloud',
         dates: '2026 — actualidad',
         note: 'En curso — despliegue y gestión de infraestructura cloud.',
-        grade: '',
         coursework: [],
       },
       {
         institution: 'ITIC Barcelona',
+        institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Curso de Especialización en Inteligencia Artificial y Big Data',
         dates: '2025 — 2026',
         note: 'Desarrollo de modelos, sistemas de datos y procesamiento a gran escala.',
-        grade: '8,6/10',
         coursework: [
           'Modelos de Inteligencia Artificial',
           'Sistemas de Aprendizaje Automático',
@@ -52,10 +51,10 @@ export default {
       },
       {
         institution: 'Prat FP',
+        institutionHref: 'https://pratfp.com/es/inicio/',
         degree: 'Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)',
         dates: '2023 — 2025',
         note: '',
-        grade: '9,1/10',
         coursework: [
           'Programación',
           'Bases de Datos',
@@ -69,7 +68,6 @@ export default {
   projects: {
     heading: 'Proyectos',
     note: 'Una selección de proyectos académicos y personales.',
-    viewDetail: 'Ver detalle',
     detail: {
       back: 'Volver a proyectos',
       context: 'Contexto',
@@ -194,6 +192,11 @@ export default {
     kicker: 'Contacto',
     heading: 'Hablemos',
     body: 'Si quieres hablar de un proyecto, tienes alguna duda o simplemente quieres saludar, aquí me encuentras.',
+    copyEmail: {
+      label: 'Copiar',
+      ariaLabel: 'Copiar el correo electrónico',
+      done: '¡Copiado!',
+    },
     links: [
       { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
       { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },
