@@ -14,11 +14,10 @@ export default {
     description: 'Portfolio personal de Cristo.',
   },
   hero: {
-    kicker: 'Desarrollador Backend & IA',
+    kicker: 'AI Engineer',
     greeting: 'Hola, soy',
     name: 'Cristo',
-    // TODO: tags reales separados por "|"
-    tagline: ['Backend', 'Frontend', 'DevOps'],
+    tagline: 'Agentes de IA, backend y cloud.',
     cta: 'Ver el CV',
     ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'Ver todo',
@@ -88,8 +87,8 @@ export default {
           'Backend asíncrono con FastAPI y PostgreSQL por capas: JWT con refresh tokens rotados, rate limiting con Redis, Idempotency-Key, protección contra IDOR y logs JSON sin datos personales',
           '57 respuestas predefinidas con todas las cifras sacadas de un único documento de datos del banco, comprobado por tests, y 470 tests contra una base de datos real',
         ],
-        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
-        outcome: 'v1 terminada. En el test de Banking77 (3.080 tickets), ninguna respuesta automática llegó a un ticket que debía atender una persona, y la IA no contestó ningún mensaje fuera de ámbito ni ninguno con dos problemas a la vez. Siguiente paso (v2): RAG con pgvector y un LLM local, un worker con ARQ y un juez que revisa cada respuesta.',
+        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
+        outcome: 'v1 terminada. En el test de Banking77 (3.080 tickets), ninguna respuesta automática llegó a un ticket que debía atender una persona, y la IA no contestó ningún mensaje fuera de ámbito ni ninguno con dos problemas a la vez. Siguiente paso (v2): RAG con pgvector y un LLM local, un sistema de colas y un juez que revisa cada respuesta.',
         repoHref: 'https://github.com/cristoge/rag_revision',
         demoHref: '',
         image: '/docs.webp',
@@ -135,11 +134,11 @@ export default {
   stack: {
     heading: 'Tecnologías',
     groups: [
-      { label: 'Lenguajes', items: ['Python', 'JavaScript'] },
-      { label: 'IA / ML', items: ['LangChain', 'LangGraph', 'scikit-learn', 'Langfuse'] },
-      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'Celery', 'ARQ', 'pytest', 'uv'] },
-      { label: 'Bases de datos', items: ['PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic'] },
-      { label: 'DevOps / Cloud', items: ['Docker', 'GitHub Actions', 'Nginx', 'AWS (VPC, IAM, EC2, S3)'] },
+      { label: 'IA / ML', items: ['LangChain', 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'Lenguajes', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
+      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
+      { label: 'Bases de datos', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
+      { label: 'Cloud e infraestructura', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
     ],
   },
   personal: {
@@ -218,6 +217,7 @@ export default {
     },
   },
   footer: {
-    rights: 'Todos los derechos reservados.',
+    owner: 'Cristopher Gordon',
+    builtWith: 'Hecho con Astro',
   },
 } as const;

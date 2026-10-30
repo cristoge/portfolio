@@ -1,5 +1,5 @@
 ---
-import { getDictionary, localePath, type Lang, type Page } from '../i18n/utils';
+import { getDictionary, type Lang } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -8,37 +8,14 @@ interface Props {
 const { lang } = Astro.props;
 const t = getDictionary(lang);
 const year = new Date().getFullYear();
-
-const pages: { page: Page; label: string }[] = [
-  { page: 'home', label: t.nav.home },
-  { page: 'personal', label: t.nav.personal },
-  { page: 'contact', label: t.nav.contact },
-];
-const externalLinks = t.contact.links.filter((l) => l.label !== 'Email');
 ---
 
 <footer class="site-footer" id="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <span class="footer-brand">{t.hero.name}</span>
-        <p class="footer-kicker">{t.hero.kicker}</p>
-      </div>
-      <nav class="footer-links">
-        {pages.map((item) => <a href={localePath(lang, item.page)}>{item.label}</a>)}
-      </nav>
-      <div class="footer-links">
-        {externalLinks.map((link) => (
-          <a href={link.href} target="_blank" rel="noopener noreferrer">
-            {link.label} <span aria-hidden="true">↗</span>
-          </a>
-        ))}
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© {year} {t.hero.name}</span>
-      <span>{t.footer.rights}</span>
-    </div>
+  <div class="container footer-bottom">
+    <span>© {year} {t.footer.owner}</span>
+    <a href="https://astro.build" class="footer-link" target="_blank" rel="noopener noreferrer">
+      {t.footer.builtWith} <span aria-hidden="true">↗</span>
+    </a>
   </div>
 </footer>
 
@@ -46,72 +23,36 @@ const externalLinks = t.contact.links.filter((l) => l.label !== 'Email');
   .site-footer {
     background: var(--panel);
     color: var(--panel-ink);
-    padding: 70px 0 22px;
+    padding: 26px 0;
   }
 
   :global(:root[data-theme='dark']) .site-footer {
     border-top: 1px solid var(--panel-line);
   }
 
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
-    padding-bottom: 85px;
-  }
-
-  .footer-brand {
-    font-size: clamp(32px, 3.4vw, 48px);
-    font-weight: 500;
-    letter-spacing: -0.045em;
-    line-height: 1;
-  }
-
-  .footer-kicker {
-    margin-top: 22px;
-    font-size: 13px;
-    color: var(--panel-muted);
-  }
-
-  .footer-links {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 16px;
-    font-size: 13px;
-  }
-
-  .footer-links a {
-    padding-bottom: 3px;
-    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
-    transition: background-size 0.35s var(--ease-out);
-  }
-
-  .footer-links a:hover {
-    background-size: 100% 1px;
-  }
-
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    padding-top: 18px;
-    border-top: 1px solid var(--panel-line);
     color: var(--panel-muted);
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
+  .footer-link {
+    align-self: flex-start;
+    padding-bottom: 2px;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: color 0.2s, background-size 0.35s var(--ease-out);
+  }
+
+  .footer-link:hover {
+    color: var(--panel-ink);
+    background-size: 100% 1px;
+  }
+
   @media (max-width: 640px) {
-    .footer-top {
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
-      padding-bottom: 50px;
-    }
-    .footer-top > :first-child {
-      grid-column: 1 / -1;
-    }
     .footer-bottom {
       flex-direction: column;
       gap: 4px;

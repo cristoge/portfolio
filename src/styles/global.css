@@ -188,6 +188,7 @@ p {
 
 .section-head .note {
   margin-top: 18px;
+  font-size: 15px;
 }
 
 /* Panel oscuro a sangre completa aunque viva dentro de .container. */

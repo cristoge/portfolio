@@ -25,7 +25,7 @@ const greetingWords = t.hero.greeting.split(' ');
       </h1>
     </div>
     <div class="hero-side">
-      <p class="lead">{t.hero.tagline.join(' / ')}</p>
+      <p class="lead">{t.hero.tagline}</p>
       <div class="hero-actions">
         <a href={t.hero.ctaHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
           {t.hero.cta} <span aria-hidden="true">↗</span>
@@ -47,29 +47,9 @@ const greetingWords = t.hero.greeting.split(' ');
 
 <div class="reveal-wrap" id="reveal-wrap">
   <div class="reveal-inner" id="reveal-content">
-    <section class="section" id="education">
-      <div class="section-head reveal">
-        <span class="eyebrow">01</span>
-        <h2>{t.education.heading}</h2>
-      </div>
-      <div class="education-list">
-        {t.education.items.map((item) => (
-          <EducationItem
-            institution={item.institution}
-            institutionHref={item.institutionHref}
-            degree={item.degree}
-            dates={item.dates}
-            note={item.note}
-            coursework={item.coursework}
-            courseworkLabel={t.education.courseworkLabel}
-          />
-        ))}
-      </div>
-    </section>
-
     <section class="section dark-panel" id="projects">
       <div class="section-head reveal">
-        <span class="eyebrow">02</span>
+        <span class="eyebrow">01</span>
         <div>
           <h2>{t.projects.heading}</h2>
           <p class="note">{t.projects.note}</p>
@@ -87,6 +67,26 @@ const greetingWords = t.hero.greeting.split(' ');
             image={project.image}
             repoLabel={repoLabel}
             demoLabel={demoLabel}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <div class="section-head reveal">
+        <span class="eyebrow">02</span>
+        <h2>{t.education.heading}</h2>
+      </div>
+      <div class="education-list">
+        {t.education.items.map((item) => (
+          <EducationItem
+            institution={item.institution}
+            institutionHref={item.institutionHref}
+            degree={item.degree}
+            dates={item.dates}
+            note={item.note}
+            coursework={item.coursework}
+            courseworkLabel={t.education.courseworkLabel}
           />
         ))}
       </div>

@@ -14,11 +14,10 @@ export default {
     description: "Cristo's personal portfolio.",
   },
   hero: {
-    kicker: 'Backend & AI Developer',
+    kicker: 'AI Engineer',
     greeting: "Hello, I'm",
     name: 'Cristo',
-    // TODO: real tags separated by "|"
-    tagline: ['Backend', 'Frontend', 'DevOps'],
+    tagline: 'AI agents, backend and cloud.',
     cta: 'View CV',
     ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'See it all',
@@ -88,8 +87,8 @@ export default {
           'Async layered backend with FastAPI and PostgreSQL: JWT with rotating refresh tokens, Redis rate limiting, Idempotency-Key, IDOR protection and JSON logs with no personal data',
           '57 canned answers whose figures all come from a single bank facts document, checked by tests, and 470 tests against a real database',
         ],
-        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
-        outcome: 'v1 complete. On the Banking77 test set (3,080 tickets), no automatic answer reached a ticket that needed a person, and AI answered none of the out-of-scope or two-problem messages. Next step (v2): RAG with pgvector and a local LLM, an ARQ worker and a judge that reviews every answer.',
+        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
+        outcome: 'v1 complete. On the Banking77 test set (3,080 tickets), no automatic answer reached a ticket that needed a person, and AI answered none of the out-of-scope or two-problem messages. Next step (v2): RAG with pgvector and a local LLM, a queue system and a judge that reviews every answer.',
         repoHref: 'https://github.com/cristoge/rag_revision',
         demoHref: '',
         image: '/docs.webp',
@@ -135,11 +134,11 @@ export default {
   stack: {
     heading: 'Technologies',
     groups: [
-      { label: 'Languages', items: ['Python', 'JavaScript'] },
-      { label: 'AI / ML', items: ['LangChain', 'LangGraph', 'scikit-learn', 'Langfuse'] },
-      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'Celery', 'ARQ', 'pytest', 'uv'] },
-      { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic'] },
-      { label: 'DevOps / Cloud', items: ['Docker', 'GitHub Actions', 'Nginx', 'AWS (VPC, IAM, EC2, S3)'] },
+      { label: 'AI / ML', items: ['LangChain', 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
+      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
+      { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
+      { label: 'Cloud & infrastructure', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
     ],
   },
   personal: {
@@ -218,6 +217,7 @@ export default {
     },
   },
   footer: {
-    rights: 'All rights reserved.',
+    owner: 'Cristopher Gordon',
+    builtWith: 'Built with Astro',
   },
 } as const;
