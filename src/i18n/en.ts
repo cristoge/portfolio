@@ -116,7 +116,7 @@ export default {
         outcome: 'Final grade: 9/10. Final specialization project, accompanied by a paper documenting the design, the evolution of the agent and its limitations.',
         repoHref: 'https://github.com/cristoge/TIC_project',
         demoHref: '',
-        image: '/rag.webp',
+        image: '/rag2.webp',
       },
       {
         slug: 'bikeshare',
@@ -134,7 +134,7 @@ export default {
         outcome: 'Final grade: 9.84/10. Final project of the programme, delivered with a technical report and user manual.',
         repoHref: 'https://github.com/cristoge/bikeshare',
         demoHref: '',
-        image: '/bikeshare.webp',
+        image: '/bike2.webp',
       },
     ],
   },

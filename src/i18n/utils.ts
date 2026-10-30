@@ -9,7 +9,7 @@ export type Lang = keyof typeof dictionaries;
 export const languages: Lang[] = ['ca', 'es', 'en'];
 
 export const languageLabels: Record<Lang, string> = {
-  ca: 'CA',
+  ca: 'CAT',
   es: 'ES',
   en: 'EN',
 };

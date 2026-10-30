@@ -116,7 +116,7 @@ export default {
         outcome: 'Nota final: 9/10. Trabajo de fin de especialización acompañado de un paper que documenta el diseño, la evolución del agente y sus limitaciones.',
         repoHref: 'https://github.com/cristoge/TIC_project',
         demoHref: '',
-        image: '/rag.webp',
+        image: '/rag2.webp',
       },
       {
         slug: 'bikeshare',
@@ -134,7 +134,7 @@ export default {
         outcome: 'Nota final: 9,84/10. Proyecto final del ciclo, entregado con memoria técnica y manual de usuario.',
         repoHref: 'https://github.com/cristoge/bikeshare',
         demoHref: '',
-        image: '/bikeshare.webp',
+        image: '/bike2.webp',
       },
     ],
   },
