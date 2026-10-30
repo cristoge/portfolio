@@ -20,8 +20,13 @@ const greetingWords = t.hero.greeting.split(' ');
     <div class="hero-main">
       <p class="eyebrow">{t.hero.kicker}</p>
       <h1>
-        <span class="hero-muted">{greetingWords.map((word, i) => <><span class="word"><span style={`--i:${i}`}>{word}</span></span>{' '}</>)}</span>
-        <span class="word"><span style={`--i:${greetingWords.length}`}>{t.hero.name}</span></span>
+        {greetingWords.map((word, i) => <><span class="word"><span style={`--i:${i}`}>{word}</span></span>{' '}</>)}
+        <span class="squiggle">
+          <span class="word"><span style={`--i:${greetingWords.length}`}>{t.hero.name}</span></span>
+          <svg class="squiggle-line" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M2 6 C 30 2, 60 9, 95 5 S 160 2, 198 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="1" />
+          </svg>
+        </span>
       </h1>
     </div>
     <div class="hero-side">
@@ -96,10 +101,13 @@ const greetingWords = t.hero.greeting.split(' ');
         <h2>{t.stack.heading}</h2>
       </div>
       <div class="stack-list">
-        {t.stack.groups.map((group) => (
-          <div class="stack-row card reveal">
-            <span class="stack-label">{group.label}</span>
-            <span class="stack-items">{group.items.join(' · ')}</span>
+        {t.stack.groups.map((group, i) => (
+          <div class="stack-cell reveal">
+            <span class="mono stack-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="stack-label">{group.label}</h3>
+            <ul class="stack-items">
+              {group.items.map((item) => <li>{item}</li>)}
+            </ul>
           </div>
         ))}
       </div>
@@ -154,8 +162,8 @@ const greetingWords = t.hero.greeting.split(' ');
   }
 
   .hero-intro {
-    height: calc(100dvh - var(--nav-h, 66px));
-    max-height: calc(100dvh - var(--nav-h, 66px));
+    height: calc(100dvh - var(--nav-h, 60px));
+    max-height: calc(100dvh - var(--nav-h, 60px));
     display: flex;
     flex-direction: column;
     position: relative;
@@ -163,50 +171,33 @@ const greetingWords = t.hero.greeting.split(' ');
     overflow: hidden;
   }
 
-  /* Portada centrada: etiqueta, titular enorme y debajo la frase con los botones. */
+  /* Portada alineada a la izquierda: etiqueta, titular grande, entradilla y botones. */
   .hero-intro-body {
     margin: auto 0;
-    padding-bottom: 8vh;
+    padding-bottom: 6vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 36px;
-    text-align: center;
-  }
-
-  .hero-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 32px;
   }
 
   .hero-intro h1 {
-    margin-top: 28px;
+    max-width: 16ch;
+    margin-top: 32px;
     font-size: var(--fs-display);
-    letter-spacing: -0.04em;
-    line-height: 0.9;
-  }
-
-  .hero-muted {
-    color: var(--hero-muted);
-  }
-
-  .hero-side {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    letter-spacing: -0.02em;
+    line-height: 1.06;
   }
 
   .hero-side .lead {
-    max-width: 560px;
+    max-width: 56ch;
   }
 
   .hero-actions {
-    margin-top: 28px;
+    margin-top: 32px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
+    align-items: center;
+    gap: 12px 24px;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -216,6 +207,10 @@ const greetingWords = t.hero.greeting.split(' ');
     .hero-intro h1 .word > span {
       animation: word-up 0.9s var(--ease-out) both;
       animation-delay: calc(0.25s + var(--i) * 90ms);
+    }
+    .hero-intro .squiggle-line path {
+      stroke-dasharray: 1;
+      animation: draw 0.9s var(--ease-out) 0.9s both;
     }
     .hero-side {
       animation: fade-up 0.9s var(--ease-out) 0.65s both;
@@ -236,83 +231,108 @@ const greetingWords = t.hero.greeting.split(' ');
     align-items: center;
     gap: 8px;
     min-height: 44px;
-    padding: 0 20px;
+    padding: 0;
     background: none;
     border: 0;
-    color: var(--ink);
+    color: var(--copy);
     cursor: pointer;
-    font-size: var(--fs-sm);
-    font-weight: 800;
-    letter-spacing: 0.02em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .scroll-cta:hover {
+    color: var(--accent);
   }
 
   .scroll-cta:hover .arrow-down {
-    transform: translateY(4px);
+    transform: translateY(3px);
   }
 
   .reveal-wrap,
   .section {
-    scroll-margin-top: var(--nav-h, 66px);
+    scroll-margin-top: var(--nav-h, 60px);
   }
 
-  /* Dos columnas desplazadas: la segunda columna empieza más abajo. */
-  .projects-grid {
+  /* Rejillas de 3 columnas: proyectos como tarjetas separadas, tecnologías con bordes compartidos. */
+  .projects-grid,
+  .stack-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-    gap: 80px clamp(40px, 8vw, 140px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .projects-grid > :global(:nth-child(even)) {
-    margin-top: 200px;
+  .projects-grid {
+    gap: 20px;
+  }
+
+  .projects-grid > :global(*) {
+    border: 1px solid var(--line-strong);
   }
 
   .stack-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
+    border-top: 1px solid var(--line-strong);
+    border-left: 1px solid var(--line-strong);
   }
 
-  .stack-row {
+  .stack-cell {
+    border-right: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .stack-cell {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 28px;
-    transition: border-color 0.2s;
+    gap: 12px;
+    padding: 28px 24px;
   }
 
-  .stack-row:hover {
-    border-color: var(--ink);
-  }
-
-  .stack-label {
-    font-size: var(--fs-2xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+  .stack-num {
+    color: var(--accent);
   }
 
   .stack-items {
-    font-size: var(--fs-read);
-    font-weight: 500;
-    line-height: 1.4;
+    margin: 4px 0 0;
+    padding: 12px 0 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px solid var(--line);
+    color: var(--copy);
+    font-size: var(--fs-sm);
+  }
+
+  .stack-items li {
+    position: relative;
+    padding-left: 18px;
+  }
+
+  /* Rombo pequeño como viñeta. */
+  .stack-items li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--muted);
+    transform: rotate(45deg);
   }
 
   @media (max-width: 900px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
-      gap: 56px;
-    }
-    .projects-grid > :global(:nth-child(even)) {
-      margin-top: 0;
+    .projects-grid,
+    .stack-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 640px) {
     .hero-intro {
-      padding: 20px 0 20px;
+      padding: 20px 0;
     }
+    .projects-grid,
     .stack-list {
       grid-template-columns: 1fr;
     }

@@ -41,10 +41,12 @@ function linkify(paragraph: string, links: readonly InlineLink[] = []): (string 
     </div>
   </header>
 
-  {t.personal.sections.map((entry) => (
+  <div class="entries">
+  {t.personal.sections.map((entry, i) => (
     <article class="entry reveal">
+      <span class="mono entry-num">{String(i + 1).padStart(2, '0')}</span>
+      <h2 class="entry-title">{entry.title}</h2>
       <div class="entry-content">
-        <h2 class="entry-title">{entry.title}</h2>
         {entry.body.map((paragraph) => (
           <p>
             {linkify(paragraph, 'inlineLinks' in entry ? entry.inlineLinks : []).map((part) =>
@@ -68,6 +70,7 @@ function linkify(paragraph: string, links: readonly InlineLink[] = []): (string 
       </div>
     </article>
   ))}
+  </div>
 </section>
 
 <style>
@@ -107,20 +110,38 @@ function linkify(paragraph: string, links: readonly InlineLink[] = []): (string 
     }
   }
 
-  .entry {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: clamp(32px, 6vw, 80px);
-    padding: 56px 0;
+  /* Filas de currículum: número a la izquierda, texto en el centro y foto pequeña a la derecha,
+     alineada con el primer párrafo y no con el título. */
+  .entries {
+    border-bottom: 1px solid var(--line-strong);
   }
 
-  .entry:nth-of-type(even) .photo-frame {
-    order: -1;
+  .entry {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr) minmax(0, 340px);
+    grid-template-areas:
+      'num title .'
+      'num content photo';
+    align-items: start;
+    gap: 20px 32px;
+    padding: 40px 0;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .entry-num {
+    grid-area: num;
+    padding-top: 8px;
+    color: var(--accent);
+  }
+
+  .entry-content {
+    grid-area: content;
+    max-width: 62ch;
   }
 
   .entry-title {
-    margin: 0 0 20px;
+    grid-area: title;
+    margin: 0;
     font-size: var(--fs-h2);
   }
 
@@ -135,33 +156,32 @@ function linkify(paragraph: string, links: readonly InlineLink[] = []): (string 
   }
 
   .inline-link {
-    color: var(--ink);
-    font-weight: 700;
-    text-decoration: underline 2px;
+    color: var(--accent);
+    text-decoration: underline 1px;
     text-underline-offset: 4px;
   }
 
   .inline-link:hover {
-    color: var(--muted);
+    text-decoration-thickness: 2px;
   }
 
   .entry-content .entry-note {
     margin-top: 24px;
     padding: 14px 18px;
-    border-left: 2px solid var(--ink);
+    border-left: 2px solid var(--accent);
     color: var(--ink);
     font-size: var(--fs-base);
   }
 
   .entry-link {
-    margin-top: 28px;
+    margin-top: 20px;
   }
 
   .photo-frame {
+    grid-area: photo;
     aspect-ratio: 4 / 3;
     overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border: 1px solid var(--ink);
     background: var(--surface);
   }
 
@@ -176,14 +196,25 @@ function linkify(paragraph: string, links: readonly InlineLink[] = []): (string 
     transform: scale(1.03);
   }
 
+  @media (max-width: 1000px) {
+    .entry {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 280px);
+      grid-template-areas:
+        'num num'
+        'title .'
+        'content photo';
+    }
+    .entry-num {
+      padding-top: 0;
+    }
+  }
+
   @media (max-width: 760px) {
     .entry {
       grid-template-columns: 1fr;
-      gap: 28px;
-      padding: 44px 0;
-    }
-    .entry:nth-of-type(even) .photo-frame {
-      order: 0;
+      grid-template-areas: 'num' 'title' 'content' 'photo';
+      gap: 20px;
+      padding: 32px 0;
     }
   }
 </style>

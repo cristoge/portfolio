@@ -149,6 +149,7 @@ export default {
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
       { label: 'Cloud & infrastructure', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
+      { label: 'Tools', items: ['Git', 'Linux', 'Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr'] },
     ],
   },
   personal: {

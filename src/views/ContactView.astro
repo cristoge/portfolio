@@ -217,23 +217,22 @@ const icons: Record<string, string> = {
     gap: 12px;
   }
 
-  /* Email y LinkedIn en píldoras con borde. */
+  /* Email y LinkedIn en bloques rectos con línea fina. */
   .contact-link {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    min-height: 52px;
-    padding: 0 20px;
-    border: 2px solid var(--ink);
-    border-radius: 999px;
+    min-height: 48px;
+    padding: 0 18px;
+    border: 1px solid var(--line-strong);
     font-size: var(--fs-base);
-    font-weight: 700;
-    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
   }
 
   .contact-link:hover {
-    background: var(--ink);
-    color: var(--page);
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .contact-link-icon {
@@ -246,21 +245,20 @@ const icons: Record<string, string> = {
     height: 16px;
   }
 
-  /* Píldora del email con el botón de copiar (icono redondo) dentro. */
+  /* Bloque del email con el botón de copiar dentro. */
   .contact-email {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    min-height: 52px;
-    padding: 2px 2px 2px 0;
-    border: 2px solid var(--ink);
-    border-radius: 999px;
-    transition: background-color 0.2s, color 0.2s;
+    min-height: 48px;
+    padding: 1px 1px 1px 0;
+    border: 1px solid var(--line-strong);
+    transition: border-color 0.2s, color 0.2s;
   }
 
   .contact-email:has(.contact-email-link:hover) {
-    background: var(--ink);
-    color: var(--page);
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .contact-email-link {
@@ -268,9 +266,9 @@ const icons: Record<string, string> = {
     align-items: center;
     gap: 10px;
     align-self: stretch;
-    padding-left: 20px;
+    padding-left: 18px;
     font-size: var(--fs-base);
-    font-weight: 700;
+    font-weight: 500;
   }
 
   .copy-email {
@@ -279,9 +277,9 @@ const icons: Record<string, string> = {
     width: 44px;
     height: 44px;
     padding: 0;
-    background: var(--page);
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
+    background: var(--surface);
+    border: 0;
+    border-left: 1px solid var(--line-strong);
     color: var(--ink);
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s;
@@ -289,9 +287,8 @@ const icons: Record<string, string> = {
 
   .copy-email:hover,
   .copy-email.is-done {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--page);
+    background: var(--accent);
+    color: var(--on-accent);
   }
 
   .copy-icon,
@@ -360,9 +357,11 @@ const icons: Record<string, string> = {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    font-weight: 400;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
@@ -373,13 +372,14 @@ const icons: Record<string, string> = {
   .form-field input,
   .form-field textarea {
     width: 100%;
-    min-height: 48px;
-    padding: 12px 20px;
+    min-height: 52px;
+    padding: 14px 16px;
     background: var(--field);
-    border: 1px solid var(--ink);
-    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
     color: var(--ink);
-    font-size: var(--fs-base);
+    font-family: var(--font);
+    font-size: var(--fs-read);
     font-weight: 400;
     letter-spacing: normal;
     text-transform: none;
@@ -387,14 +387,22 @@ const icons: Record<string, string> = {
     transition: border-color 0.2s;
   }
 
-  .form-field textarea {
-    border-radius: var(--radius);
+  .form-field input:hover,
+  .form-field textarea:hover {
+    border-color: var(--ink);
   }
 
   .form-field input:focus,
   .form-field textarea:focus {
-    outline: 1px solid var(--ink);
+    border-color: var(--accent);
+    outline: 1px solid var(--accent);
     outline-offset: 0;
+  }
+
+  /* Botón de enviar a todo el ancho del formulario. */
+  .contact-form .btn {
+    width: 100%;
+    min-height: 48px;
   }
 
   .contact-form .btn:disabled {
