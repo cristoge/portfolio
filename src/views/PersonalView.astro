@@ -7,6 +7,29 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = getDictionary(lang);
+
+type InlineLink = { text: string; href: string };
+
+// Parte un párrafo en trozos de texto y enlaces, enlazando cada aparición de los textos indicados.
+function linkify(paragraph: string, links: readonly InlineLink[] = []): (string | InlineLink)[] {
+  const parts: (string | InlineLink)[] = [];
+  let rest = paragraph;
+  while (rest) {
+    let next: { index: number; link: InlineLink } | undefined;
+    for (const link of links) {
+      const index = rest.indexOf(link.text);
+      if (index !== -1 && (!next || index < next.index)) next = { index, link };
+    }
+    if (!next) {
+      parts.push(rest);
+      break;
+    }
+    if (next.index > 0) parts.push(rest.slice(0, next.index));
+    parts.push(next.link);
+    rest = rest.slice(next.index + next.link.text.length);
+  }
+  return parts;
+}
 ---
 
 <section class="personal">
@@ -23,18 +46,17 @@ const t = getDictionary(lang);
       <div class="entry-content">
         <span class="entry-num">{String(i + 1).padStart(2, '0')}</span>
         <h2 class="entry-title">{entry.title}</h2>
-        {entry.body.map((paragraph) => {
-          const inline = entry.inlineLink;
-          if (!inline || !paragraph.includes(inline.text)) return <p>{paragraph}</p>;
-          const [before, ...after] = paragraph.split(inline.text);
-          return (
-            <p>
-              {before}
-              <a class="inline-link" href={inline.href} target="_blank" rel="noopener noreferrer">{inline.text}</a>
-              {after.join(inline.text)}
-            </p>
-          );
-        })}
+        {entry.body.map((paragraph) => (
+          <p>
+            {linkify(paragraph, 'inlineLinks' in entry ? entry.inlineLinks : []).map((part) =>
+              typeof part === 'string' ? (
+                part
+              ) : (
+                <a class="inline-link" href={part.href} target="_blank" rel="noopener noreferrer">{part.text}</a>
+              ),
+            )}
+          </p>
+        ))}
         {entry.note && <p class="entry-note">{entry.note}</p>}
         {entry.link && (
           <a class="entry-link arrow-link" href={entry.link.href} target="_blank" rel="noopener noreferrer">

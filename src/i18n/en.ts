@@ -17,7 +17,7 @@ export default {
     kicker: 'AI Engineer',
     greeting: "Hello, I'm",
     name: 'Cristo',
-    tagline: 'AI agents, backend and cloud.',
+    tagline: 'Designing agents and the infrastructure behind them.',
     cta: 'View CV',
     ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'See it all',
@@ -160,11 +160,17 @@ export default {
       {
         title: "My setup",
         body: [
-          "Spending so much time in the terminal eventually led me to Neovim, and with it a whole world of configs. These days I use Ghostty, which lets me throw shaders on it so everything looks nicer. I also discovered Starship, which lets me customize the prompt in tons of different ways instead of staring at the same plain prompt all the time.",
+          "When I started programming I used VS Code and kept switching themes, never quite happy with any of them. Then I found out you could edit code right from the terminal, and with it a whole world of customisation and configs: that led me to Neovim, Starship and a handful of different terminals, until I realised I was much more comfortable programming from the terminal. These days I use Ghostty, which even lets me add shaders.",
+          "Lately I've added herdr, a terminal multiplexer built for AI agents. It lets me run several agents at once, each in its own space, and see at a glance which one needs my attention, which has made my workflow with agents much better.",
           "After trying so many configs and color palettes, I found the one: vague. Now it's on everything: my editor, my terminal and any other tool that lets me customize the colors.",
         ],
-        note: "And yes, in case you noticed: this whole portfolio is built with the vague palette too.",
-        inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
+        inlineLinks: [
+          { text: 'Neovim', href: 'https://github.com/neovim/neovim' },
+          { text: 'Starship', href: 'https://github.com/starship/starship' },
+          { text: 'Ghostty', href: 'https://github.com/ghostty-org/ghostty' },
+          { text: 'herdr', href: 'https://github.com/ogulcancelik/herdr' },
+          { text: 'vague', href: 'https://github.com/vague-theme' },
+        ],
         link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
       },
@@ -181,7 +187,7 @@ export default {
         title: "Right now",
         body: [
           "I'm at a stage where I'm looking for a job while I keep learning. I decided to go deeper into cloud because it's one of the most in-demand skills these days, so I'm doing the specialization course and spending my days tinkering with AWS.",
-          "The course is preparing me for the AWS Solutions Architect – Associate certification, and in parallel, on my own, I'm studying for the AWS Developer – Associate certification. I'm working through them step by step, and whenever I have some time left I dive into AI agents.",
+          "The course is preparing me for the AWS Solutions Architect – Associate certification, which I'll get in a few months. In parallel, on my own, I keep building projects with AI agents and dig deeper into their more technical concepts and how to design workflows with them.",
         ],
         image: '/now.webp',
       },

@@ -17,7 +17,7 @@ export default {
     kicker: 'AI Engineer',
     greeting: 'Hola, sóc',
     name: 'Cristo',
-    tagline: "Agents d'IA, backend i cloud.",
+    tagline: "Disseny d'agents i de la infraestructura que els sosté.",
     cta: 'Veure el CV',
     ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'Veure-ho tot',
@@ -160,11 +160,17 @@ export default {
       {
         title: "El meu setup",
         body: [
-          "De tant fer servir la terminal vaig acabar descobrint Neovim, i amb ell tot un món de configuracions. Ara faig servir Ghostty, que em deixa posar-hi shaders perquè tot quedi més bonic. També vaig descobrir Starship, que em permet personalitzar el prompt de mil maneres diferents i no haver de veure sempre el típic prompt senzill.",
+          "Quan vaig començar a programar feia servir VS Code i em passava el dia canviant de tema sense estar mai del tot content. Després vaig descobrir que des de la mateixa terminal també es podia editar codi, i amb això tot un món de personalització i configuracions: d'aquí van sortir Neovim, Starship i unes quantes terminals diferents, fins que em vaig adonar que programant des de la terminal estava molt més còmode. Ara faig servir Ghostty, que fins i tot em deixa posar-hi shaders.",
+          "Últimament hi he afegit herdr, un multiplexor de terminal pensat per a agents d'IA. Em permet tenir diversos agents treballant alhora, cadascun al seu espai, i veure d'un cop d'ull quin necessita la meva atenció, cosa que ha millorat molt el meu flux de treball amb agents.",
           "Després de provar moltes configuracions i paletes de colors, vaig trobar la definitiva: vague. Ara la poso a tot arreu: a l'editor, a la terminal i a qualsevol eina que em deixi personalitzar els colors.",
         ],
-        note: "I sí, si t'hi has fixat: tot aquest portfolio també està fet amb la paleta vague.",
-        inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
+        inlineLinks: [
+          { text: 'Neovim', href: 'https://github.com/neovim/neovim' },
+          { text: 'Starship', href: 'https://github.com/starship/starship' },
+          { text: 'Ghostty', href: 'https://github.com/ghostty-org/ghostty' },
+          { text: 'herdr', href: 'https://github.com/ogulcancelik/herdr' },
+          { text: 'vague', href: 'https://github.com/vague-theme' },
+        ],
         link: { label: 'Veure els meus dotfiles a GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
       },
@@ -181,7 +187,7 @@ export default {
         title: "Ara mateix",
         body: [
           "Estic en una etapa en què estic buscant feina i, alhora, continuo formant-me. Vaig decidir aprofundir en cloud perquè és una de les coses que més es demana avui dia, així que estic fent el curs d'especialització i em passo el dia trastejant amb AWS.",
-          "El curs em prepara per a la certificació AWS Solutions Architect – Associate, i en paral·lel, pel meu compte, m'estic preparant la certificació AWS Developer – Associate. Les vaig traient pas a pas, i quan em queda temps em fico de ple amb els agents d'IA.",
+          "El curs em prepara per a la certificació AWS Solutions Architect – Associate, que em trauré d'aquí a uns mesos. En paral·lel, pel meu compte, continuo fent projectes amb agents d'IA i aprofundeixo en els seus conceptes més tècnics i en com dissenyar workflows amb ells.",
         ],
         image: '/now.webp',
       },

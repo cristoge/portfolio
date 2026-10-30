@@ -17,7 +17,7 @@ export default {
     kicker: 'AI Engineer',
     greeting: 'Hola, soy',
     name: 'Cristo',
-    tagline: 'Agentes de IA, backend y cloud.',
+    tagline: 'Diseño de agentes y de la infraestructura que los sostiene.',
     cta: 'Ver el CV',
     ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'Ver todo',
@@ -160,11 +160,17 @@ export default {
       {
         title: "Mi setup",
         body: [
-          "De tanto usar la terminal acabé descubriendo Neovim, y con él todo un mundo de configuraciones. Ahora uso Ghostty, que me deja meterle shaders para que todo quede más bonito. También descubrí Starship, que me permite personalizar el prompt de mil maneras distintas y no tener que ver siempre el típico prompt sencillo.",
+          "Cuando empecé a programar usaba VS Code y me pasaba el día cambiando de tema sin acabar de estar nunca conforme. Luego descubrí que desde la propia terminal también se podía editar código, y con ello todo un mundo de personalización y configuraciones: de ahí salieron Neovim, Starship y unas cuantas terminales distintas, hasta que me di cuenta de que programando desde la terminal estaba mucho más cómodo. Ahora uso Ghostty, que incluso me deja ponerle shaders.",
+          "Últimamente le he añadido herdr, un multiplexor de terminal pensado para agentes de IA. Me permite tener varios agentes trabajando a la vez, cada uno en su espacio, y ver de un vistazo cuál necesita mi atención, lo que ha mejorado mucho mi flujo de trabajo con agentes.",
           "Después de probar muchas configuraciones y paletas de colores, encontré la definitiva: vague. Ahora la pongo en todas partes: en el editor, en la terminal y en cualquier herramienta que me deje personalizar los colores.",
         ],
-        note: "Y sí, por si te habías fijado: todo este portfolio también está hecho con la paleta vague.",
-        inlineLink: { text: 'vague', href: 'https://github.com/vague-theme' },
+        inlineLinks: [
+          { text: 'Neovim', href: 'https://github.com/neovim/neovim' },
+          { text: 'Starship', href: 'https://github.com/starship/starship' },
+          { text: 'Ghostty', href: 'https://github.com/ghostty-org/ghostty' },
+          { text: 'herdr', href: 'https://github.com/ogulcancelik/herdr' },
+          { text: 'vague', href: 'https://github.com/vague-theme' },
+        ],
         link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
       },
@@ -181,7 +187,7 @@ export default {
         title: "Ahora mismo",
         body: [
           "Estoy en una etapa en la que estoy buscando trabajo y, a la vez, sigo formándome. Decidí profundizar en cloud porque es de lo que más se pide hoy en día, así que estoy con el curso de especialización y me paso el día trasteando con AWS.",
-          "El curso me prepara para la certificación AWS Solutions Architect – Associate, y en paralelo, por mi cuenta, me estoy preparando la certificación AWS Developer – Associate. Me las voy sacando paso a paso, y cuando me queda tiempo me meto de lleno con los agentes de IA.",
+          "El curso me prepara para la certificación AWS Solutions Architect – Associate, que me sacaré en unos meses. En paralelo, por mi cuenta, sigo haciendo proyectos con agentes de IA y profundizo en sus conceptos más técnicos y en cómo diseñar workflows con ellos.",
         ],
         image: '/now.webp',
       },
