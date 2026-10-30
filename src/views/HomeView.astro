@@ -298,7 +298,11 @@ const greetingWords = t.hero.greeting.split(' ');
     text-transform: uppercase;
   }
 
+  /* Mismo bloque de 720px pegado a la derecha que el contenido de Educació. */
   .stack-items {
+    justify-self: end;
+    width: 100%;
+    max-width: 720px;
     font-size: clamp(17px, 1.5vw, 20px);
     font-weight: 500;
     letter-spacing: -0.024em;
@@ -329,6 +333,8 @@ const greetingWords = t.hero.greeting.split(' ');
     }
     .stack-items {
       grid-column: 2;
+      justify-self: stretch;
+      max-width: none;
     }
   }
 

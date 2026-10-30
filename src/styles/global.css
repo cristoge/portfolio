@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&display=swap');
 
 /* Estética editorial monocroma: fondo hueso, tinta casi negra, líneas finas
    y paneles oscuros. Tema claro por defecto, oscuro con [data-theme=dark]. */
@@ -26,7 +26,7 @@
   --button-ink: #fff;
   --button-hover: #fff;
 
-  --font: 'Inter Tight', Arial, Helvetica, sans-serif;
+  --font: 'Hanken Grotesk', Arial, Helvetica, sans-serif;
 
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-in-out: cubic-bezier(0.6, 0, 0.2, 1);
