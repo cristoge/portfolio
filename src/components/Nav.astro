@@ -20,48 +20,33 @@ const navItems: { page: Page; label: string }[] = [
 ---
 
 <header class="nav">
-  <div class="container nav-inner">
-    <a href={localePath(lang, 'home')} class="brand">
-      <svg class="brand-icon" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" fill="currentColor" />
-        <path d="M8 10.5 13.5 16 8 21.5M16 22h8" fill="none" stroke="var(--page)" stroke-width="2.4" stroke-linecap="square" />
-      </svg>
-      <span>{t.hero.name}</span>
-    </a>
+  <div class="nav-inner">
+    <a href={t.hero.ctaHref} class="nav-cta" target="_blank" rel="noopener noreferrer">{t.hero.cta}</a>
 
-    <button
-      type="button"
-      class="menu-toggle"
-      aria-expanded="false"
-      aria-controls="site-menu"
-      aria-label={t.nav.menuOpen}
-      data-label-open={t.nav.menuOpen}
-      data-label-close={t.nav.menuClose}
-    ></button>
-
-    <nav id="site-menu" class="menu" aria-label="Main navigation" aria-hidden="true" inert>
-      <ul class="menu-nav">
-        {navItems.map((item) => (
-          <li>
-            <a href={localePath(lang, item.page)} aria-current={item.page === page ? 'page' : undefined}>{item.label}</a>
-          </li>
-        ))}
-      </ul>
-      <div class="menu-meta">
-        <LanguageSwitcher lang={lang} path={currentPath} />
-        <button
-          type="button"
-          class="theme-toggle"
-          aria-label={t.theme.toggle}
-          aria-pressed="false"
-          data-label-dark={t.theme.dark}
-          data-label-light={t.theme.light}
-        >
-          <span class="theme-toggle-icon" aria-hidden="true"></span>
-          <span class="theme-toggle-label">{t.theme.dark}</span>
-        </button>
-      </div>
+    <nav class="nav-links" aria-label={t.nav.ariaLabel}>
+      {navItems.map((item) => (
+        <a
+          href={localePath(lang, item.page)}
+          class="nav-link"
+          aria-current={item.page === page ? 'page' : undefined}
+        >{item.label}</a>
+      ))}
     </nav>
+
+    <div class="nav-actions">
+      <LanguageSwitcher lang={lang} path={currentPath} />
+      <button
+        type="button"
+        class="theme-toggle"
+        aria-label={t.theme.toggle}
+        aria-pressed="false"
+        title={t.theme.dark}
+        data-label-dark={t.theme.dark}
+        data-label-light={t.theme.light}
+      >
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -78,46 +63,14 @@ const navItems: { page: Page; label: string }[] = [
   setNavHeight();
   window.addEventListener('resize', setNavHeight);
 
-  // Menú desplegable: tarjeta que crece desde el botón (pantalla completa en móvil).
-  const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-  const menu = document.getElementById('site-menu');
-
-  const isOpen = () => menuToggle?.getAttribute('aria-expanded') === 'true';
-
-  const setMenu = (open: boolean) => {
-    if (!menuToggle || !menu) return;
-    menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.setAttribute('aria-label', (open ? menuToggle.dataset.labelClose : menuToggle.dataset.labelOpen) ?? '');
-    menuToggle.classList.toggle('is-open', open);
-    menu.classList.toggle('is-open', open);
-    menu.setAttribute('aria-hidden', String(!open));
-    menu.toggleAttribute('inert', !open);
-    root.classList.toggle('menu-open', open);
-  };
-
-  menuToggle?.addEventListener('click', () => setMenu(!isOpen()));
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && isOpen()) {
-      setMenu(false);
-      menuToggle?.focus();
-    }
-  });
-
-  document.addEventListener('click', (event) => {
-    const target = event.target as Node;
-    if (isOpen() && !menu?.contains(target) && !menuToggle?.contains(target)) setMenu(false);
-  });
-
-  // Botón de tema: la etiqueta muestra el modo al que se cambiará.
+  // Botón de tema: el título indica el modo al que se cambiará.
   const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
-  const label = toggle?.querySelector('.theme-toggle-label');
 
   const syncToggle = () => {
     const isDark = root.dataset.theme === 'dark';
     toggle?.setAttribute('aria-pressed', String(isDark));
-    if (toggle && label) {
-      label.textContent = (isDark ? toggle.dataset.labelLight : toggle.dataset.labelDark) ?? '';
+    if (toggle) {
+      toggle.title = (isDark ? toggle.dataset.labelLight : toggle.dataset.labelDark) ?? '';
     }
   };
 
@@ -137,188 +90,98 @@ const navItems: { page: Page; label: string }[] = [
 </script>
 
 <style>
+  /* Barra blanca fija arriba con línea fina debajo, como la de orea.uk. */
   .nav {
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 20;
+    background: var(--page);
+    border-bottom: 1px solid var(--line);
   }
 
   .nav-inner {
-    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-block: 48px;
-    font-size: 14.4px;
+    gap: 24px;
+    min-height: 66px;
+    padding: 0 20px;
   }
 
-  .brand {
-    position: relative;
-    z-index: 2;
+  .nav-cta {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--page);
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: opacity 0.2s;
   }
 
-  .brand-icon {
-    width: 34px;
-    height: 34px;
+  .nav-cta:hover {
+    opacity: 0.82;
   }
 
-  /* Dos rayas (la de abajo más corta) que se cruzan en una X al abrir. */
-  .menu-toggle {
-    position: relative;
-    z-index: 2;
-    width: 2.78em;
-    height: 2.09em;
-    margin-top: 0.699em;
-    padding: 0;
-    background: none;
-    border: 0;
-    color: var(--ink);
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-
-  .menu-toggle::before,
-  .menu-toggle::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    width: 100%;
-    height: 2px;
-    background: currentColor;
-    transition: transform 0.2s, top 0.2s, width 0.2s;
-  }
-
-  .menu-toggle::before {
-    top: 0;
-  }
-
-  .menu-toggle::after {
-    top: 1.13em;
-    width: 72%;
-  }
-
-  .menu-toggle.is-open {
-    transform: scale(0.9);
-  }
-
-  .menu-toggle.is-open::before {
-    transform: rotate(45deg);
-  }
-
-  .menu-toggle.is-open::after {
-    top: 0;
-    width: 100%;
-    transform: rotate(-45deg);
-  }
-
-  /* Móvil: panel a pantalla completa. */
-  .menu {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
+  .nav-links {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 100vw;
-    height: 100vh;
-    padding: 3.473em;
-    background: var(--field);
-    font-size: 17.6px;
-    user-select: none;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s, visibility 0.3s;
+    margin-left: auto;
   }
 
-  .menu.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+  .nav-link {
+    padding: 22px 16px;
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
-  .menu ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .nav-link:hover,
+  .nav-link[aria-current] {
+    text-decoration: underline 2px;
+    text-underline-offset: 4px;
   }
 
-  .menu-nav {
-    line-height: 2.5;
-  }
-
-  .menu-meta {
+  .nav-actions {
     display: flex;
     align-items: center;
-    gap: 2.5em;
-    font-size: 0.9em;
+    gap: 16px;
   }
 
-  .menu a {
-    position: relative;
-    color: var(--ink);
-  }
-
-  .menu-nav a[aria-current] {
-    color: var(--muted);
-  }
-
-  /* Bloque translúcido que se desliza al pasar el ratón por un enlace. */
-  @media (hover: hover) and (any-pointer: fine) {
-    .menu-nav a::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 20%;
-      min-width: 1em;
-      height: 100%;
-      background: currentColor;
-      opacity: 0;
-      transform-origin: 0;
-      pointer-events: none;
-      transition: all 0.3s;
-    }
-
-    .menu-nav a:hover::after {
-      opacity: 0.2;
-      transform: translateX(0.5em);
-    }
-  }
-
-  .menu-meta :global(.lang-switcher) {
-    gap: 2.5em;
-  }
-
-  .menu-meta :global(.lang-option) {
-    min-width: 0;
-    min-height: 0;
-    font-size: inherit;
-    font-weight: 400;
-    letter-spacing: 0.04em;
+  .nav-actions :global(.lang-option) {
+    min-width: 36px;
+    min-height: 44px;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
   }
 
   .theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
     padding: 0;
     background: none;
-    border: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
     color: var(--ink);
     cursor: pointer;
-    font-size: inherit;
+    transition: border-color 0.2s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--ink);
   }
 
   .theme-toggle-icon {
-    flex: 0 0 14px;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border: 1.5px solid;
     border-radius: 50%;
     background: linear-gradient(90deg, currentColor 50%, transparent 50%);
@@ -329,109 +192,40 @@ const navItems: { page: Page; label: string }[] = [
     transform: rotate(180deg);
   }
 
-  .theme-toggle:hover .theme-toggle-label {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  :global(html.menu-open) {
-    overflow: hidden;
-  }
-
-  /* Escritorio: tarjeta que crece desde la esquina del botón y contenido escalonado. */
-  @media (min-width: 701px) {
-    :global(html.menu-open) {
-      overflow: visible;
-    }
-
-    .menu {
-      position: absolute;
-      inset: 1.39em calc(-3.473em + 1.39em) auto auto;
-      justify-content: flex-start;
-      width: 22.223em;
-      height: auto;
-      padding: 3.473em;
-      background: none;
-      font-size: 1.1em;
-      transition: opacity 0.25s, visibility 0s 0.3s, box-shadow 0.25s;
-    }
-
-    .menu::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--field);
-      transform: scale(0.3826, 0.27);
-      transform-origin: 100% 0;
-      transition: transform 0.3s;
-    }
-
-    .menu > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .menu.is-open {
-      box-shadow: 0 10px 53px rgba(0, 0, 0, 0.06);
-      transition-delay: 0s;
-    }
-
-    .menu.is-open::before {
-      transform: scale(1);
-    }
-
-    .menu-nav,
-    .menu-meta {
-      opacity: 0;
-      transition: opacity 0.16s, transform 0.22s;
-    }
-
-    .menu-nav {
-      margin: 1.2em 0;
-      font-size: 1.15em;
-      transform: translateY(50px);
-    }
-
-    .menu-meta {
-      margin-top: 2em;
-      transform: translateY(30px);
-    }
-
-    .menu.is-open .menu-nav,
-    .menu.is-open .menu-meta {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .menu.is-open .menu-nav {
-      transition: opacity 0s 0.2s, transform 0.3s 0.2s;
-    }
-
-    .menu.is-open .menu-meta {
-      transition: opacity 0s 0.4s, transform 0.3s 0.4s;
-    }
-  }
-
-  @media (max-width: 700px) {
+  /* Sin menú hamburguesa: en pantallas pequeñas los enlaces pasan a una segunda fila. */
+  @media (max-width: 900px) {
     .nav-inner {
-      padding-block: 32px;
-    }
-    .brand {
-      font-size: 19px;
-    }
-    .brand-icon {
-      width: 28px;
-      height: 28px;
-    }
-    .menu-meta {
       flex-wrap: wrap;
-      gap: 1.5em 2.5em;
+      gap: 0 12px;
+      padding: 10px 16px 0;
+    }
+    .nav-actions {
+      margin-left: auto;
+    }
+    .nav-links {
+      order: 3;
+      width: calc(100% + 32px);
+      margin: 8px -16px 0;
+      padding: 0 4px;
+      border-top: 1px solid var(--line);
+    }
+    .nav-link {
+      padding: 14px 12px;
     }
   }
 
-  @media (max-width: 350px) {
-    .menu {
-      padding: 2.473em;
+  @media (max-width: 480px) {
+    .nav-cta {
+      padding: 0 14px;
+    }
+    .nav-actions {
+      gap: 8px;
+    }
+    .nav-actions :global(.lang-switcher) {
+      gap: 0;
+    }
+    .nav-actions :global(.lang-option) {
+      min-width: 32px;
     }
   }
 </style>

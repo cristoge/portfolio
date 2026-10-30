@@ -19,7 +19,7 @@ const d = t.projects.detail;
 ---
 
 <article class="project-detail">
-  <a href={`${localePath(lang, 'home')}#projects`} class="back-link"><span class="prompt prompt-back" aria-hidden="true">&lt;</span> {d.back}</a>
+  <a href={`${localePath(lang, 'home')}#projects`} class="back-link"><span class="arrow arrow-back" aria-hidden="true">←</span> {d.back}</a>
 
   <header class="project-header">
     <p class="eyebrow">{d.context}</p>
@@ -62,10 +62,10 @@ const d = t.projects.detail;
   )}
 
   <div class="project-actions">
-    <a href={project.repoHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer"><span class="prompt" aria-hidden="true">&gt;</span> {repoLabel}</a>
+    <a href={project.repoHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">{repoLabel} <span class="arrow" aria-hidden="true">→</span></a>
     {project.demoHref && (
-      <a href={project.demoHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-        <span class="prompt" aria-hidden="true">&gt;</span> {demoLabel}
+      <a href={project.demoHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+        {demoLabel} <span class="arrow" aria-hidden="true">→</span>
       </a>
     )}
   </div>
@@ -73,23 +73,24 @@ const d = t.projects.detail;
 
 <style>
   .project-detail {
-    padding: 64px 0 clamp(70px, 8vw, 120px);
+    padding: var(--page-top) 0 clamp(70px, 8vw, 120px);
     max-width: 960px;
   }
 
   .back-link {
     display: inline-flex;
     gap: 10px;
-    margin-bottom: 56px;
-    font-size: 13px;
-    font-weight: 700;
+    margin-block: -11px 45px;
+    padding-block: 11px;
+    font-size: var(--fs-sm);
+    font-weight: 800;
     letter-spacing: 0.02em;
-    text-decoration: underline 1px;
-    text-underline-offset: 4px;
+    text-transform: uppercase;
   }
 
   .back-link:hover {
-    color: var(--muted);
+    text-decoration: underline 2px;
+    text-underline-offset: 4px;
   }
 
   .project-header h1 {
@@ -98,7 +99,7 @@ const d = t.projects.detail;
 
   .project-summary {
     margin-top: 24px;
-    max-width: 760px;
+    max-width: 68ch;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -120,10 +121,11 @@ const d = t.projects.detail;
     align-items: center;
     justify-content: center;
     margin: 56px 0;
-    border: 1px solid var(--line-strong);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-size: var(--fs-2xs);
+    font-weight: 800;
     color: var(--muted);
   }
 
@@ -135,9 +137,9 @@ const d = t.projects.detail;
   }
 
   .project-context {
-    max-width: 760px;
+    max-width: 68ch;
     color: var(--copy);
-    font-size: 17px;
+    font-size: var(--fs-read);
     line-height: 1.65;
   }
 
@@ -147,31 +149,38 @@ const d = t.projects.detail;
 
   .detail-heading {
     margin-bottom: 28px;
-    font-size: clamp(24px, 2.6vw, 34px);
-    letter-spacing: -0.03em;
+    font-size: var(--fs-h3);
   }
 
   .depth-list {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid var(--line-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .depth-list li {
     display: grid;
     grid-template-columns: 56px minmax(0, 1fr);
     gap: 16px;
-    padding: 20px 0;
-    border-top: 1px solid var(--line-strong);
+    padding: 20px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
     color: var(--copy);
-    font-size: 17px;
+    font-size: var(--fs-read);
     line-height: 1.6;
   }
 
+  .depth-list li > span:last-child {
+    max-width: 72ch;
+  }
+
   .depth-num {
-    padding-top: 4px;
-    font-size: 12px;
+    padding-top: 3px;
+    font-size: var(--fs-sm);
+    font-weight: 800;
     color: var(--muted);
   }
 
@@ -179,18 +188,10 @@ const d = t.projects.detail;
     gap: 8px;
   }
 
-  .detail-block .pill {
-    padding: 6px 11px;
-    font-size: 12px;
-    opacity: 1;
-    border-color: var(--line-strong);
-  }
-
   .outcome-text {
-    max-width: 760px;
-    font-size: clamp(17px, 1.3vw, 19px);
-    letter-spacing: -0.012em;
-    line-height: 1.5;
+    max-width: 68ch;
+    font-size: var(--fs-md);
+    line-height: 1.6;
   }
 
   .project-actions {
@@ -204,7 +205,7 @@ const d = t.projects.detail;
     .depth-list li {
       grid-template-columns: 28px minmax(0, 1fr);
       gap: 12px;
-      font-size: 16px;
+      font-size: var(--fs-base);
     }
   }
 </style>

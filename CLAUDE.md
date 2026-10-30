@@ -23,11 +23,11 @@ Portfolio personal — Astro estático, sin backend, deploy en GitHub Pages.
 - `src/views/` — cuerpo de cada página (`HomeView`, `PersonalView`, `ContactView`, `ProjectDetailView`), reciben `lang` (y `slug` cuando aplica) como prop.
 - `src/components/` — `Nav`, `LanguageSwitcher`, `ProjectCard`, `EducationItem`.
 - `src/layouts/BaseLayout.astro` — head, Nav, Footer. Acepta `page` (para resaltar el nav) y `path` opcional (para rutas dinámicas como `/projects/:slug`).
-- `src/styles/global.css` — design tokens. Estética editorial monocroma inspirada en lakbast.com: fondo hueso `--page` + tinta `--ink`, líneas finas (`--line`, `--line-strong`), paneles oscuros (`--panel*`, clase `.dark-panel`), tipografía Hanken Grotesk. Tema claro u oscuro según la preferencia del sistema; el oscuro se activa con `:root[data-theme='dark']` (botón en `Nav`, guardado en `localStorage`). Utilidades: `.eyebrow`, `.lead`, `.note`, `.section-head`, `.btn`, `.arrow-link`, `.pill`, `.reveal` (aparece al hacer scroll).
+- `src/styles/global.css` — design tokens. Estilo inspirado en orea.uk: fondo blanco `--page`, tinta negra `--ink`, titulares en mayúsculas muy gruesos (Hanken Grotesk 800), tarjetas redondeadas con borde fino (clase `.card`, `--radius`, `--line`), botones en píldora con flecha (`.btn`, `.arrow-link`, `.arrow`) y etiquetas `.pill` sobre `--surface`. Tema claro u oscuro según la preferencia del sistema; el oscuro se activa con `:root[data-theme='dark']` (botón en `Nav`, guardado en `localStorage`). Utilidades: `.eyebrow` (píldora con borde), `.lead`, `.note`, `.section-head`, `.card`, `.btn`, `.arrow-link`, `.arrow`, `.pill`, `.reveal` (aparece al hacer scroll).
 
 ## Convenciones
 
 - No añadir dependencias nuevas sin justificación clara — el sitio es 100% estático.
-- Respetar los tokens de `global.css` (colores, `--ease-*`, `--content-width`) en vez de valores sueltos; esquinas rectas, sin border-radius.
+- Respetar los tokens de `global.css` (colores, `--radius`, `--radius-sm`, `--ease-*`, `--content-width`) en vez de valores sueltos.
 - Cada proyecto tiene un `slug` usado en `/projects/:slug` — debe coincidir exactamente en los 3 idiomas.
 - Los campos marcados con comentarios `// TODO` en los archivos de i18n son placeholders reales (rol, tagline, CV, contacto, educación, proyectos) pendientes de rellenar con contenido definitivo.

@@ -20,7 +20,7 @@ const greetingWords = t.hero.greeting.split(' ');
     <div class="hero-main">
       <p class="eyebrow">{t.hero.kicker}</p>
       <h1>
-        <em>{greetingWords.map((word, i) => <><span class="word"><span style={`--i:${i}`}>{word}</span></span>{' '}</>)}</em>
+        <span class="hero-muted">{greetingWords.map((word, i) => <><span class="word"><span style={`--i:${i}`}>{word}</span></span>{' '}</>)}</span>
         <span class="word"><span style={`--i:${greetingWords.length}`}>{t.hero.name}</span></span>
       </h1>
     </div>
@@ -28,11 +28,11 @@ const greetingWords = t.hero.greeting.split(' ');
       <p class="lead">{t.hero.tagline}</p>
       <div class="hero-actions">
         <a href={t.hero.ctaHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          <span class="prompt" aria-hidden="true">&gt;</span> {t.hero.cta}
+          {t.hero.cta} <span class="arrow" aria-hidden="true">→</span>
         </a>
         {github && (
           <a href={github.href} class="arrow-link" target="_blank" rel="noopener noreferrer">
-            <span class="prompt" aria-hidden="true">&gt;</span> GitHub
+            GitHub <span class="arrow" aria-hidden="true">→</span>
           </a>
         )}
       </div>
@@ -40,14 +40,14 @@ const greetingWords = t.hero.greeting.split(' ');
   </div>
 
   <button type="button" id="reveal-toggle" class="scroll-cta" aria-expanded="false" aria-controls="reveal-content">
-    <span class="prompt" aria-hidden="true">&gt;</span>
     <span>{t.hero.exploreCta}</span>
+    <span class="arrow arrow-down" aria-hidden="true">↓</span>
   </button>
 </section>
 
 <div class="reveal-wrap" id="reveal-wrap">
   <div class="reveal-inner" id="reveal-content">
-    <section class="section dark-panel" id="projects">
+    <section class="section" id="projects">
       <div class="section-head reveal">
         <div>
           <h2>{t.projects.heading}</h2>
@@ -97,7 +97,7 @@ const greetingWords = t.hero.greeting.split(' ');
       </div>
       <div class="stack-list">
         {t.stack.groups.map((group) => (
-          <div class="stack-row reveal">
+          <div class="stack-row card reveal">
             <span class="stack-label">{group.label}</span>
             <span class="stack-items">{group.items.join(' · ')}</span>
           </div>
@@ -141,75 +141,77 @@ const greetingWords = t.hero.greeting.split(' ');
 </script>
 
 <style>
-  :global(html[data-hero-lock]:not(.home-revealed)),
-  :global(html[data-hero-lock]:not(.home-revealed) body) {
+  :global(html.js[data-hero-lock]:not(.home-revealed)),
+  :global(html.js[data-hero-lock]:not(.home-revealed) body) {
     height: 100%;
     overflow: hidden;
     overscroll-behavior: none;
   }
 
-  :global(html[data-hero-lock]:not(.home-revealed) #reveal-wrap),
-  :global(html[data-hero-lock]:not(.home-revealed) #site-footer) {
+  :global(html.js[data-hero-lock]:not(.home-revealed) #reveal-wrap),
+  :global(html.js[data-hero-lock]:not(.home-revealed) #site-footer) {
     display: none;
   }
 
   .hero-intro {
-    height: calc(100dvh - var(--nav-h, 85px));
-    max-height: calc(100dvh - var(--nav-h, 85px));
+    height: calc(100dvh - var(--nav-h, 66px));
+    max-height: calc(100dvh - var(--nav-h, 66px));
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: 40px 0 28px;
+    padding: 24px 0 28px;
     overflow: hidden;
   }
 
-  /* Centrado vertical, pero el padding inferior lo sube un poco. */
+  /* Portada centrada: etiqueta, titular enorme y debajo la frase con los botones. */
   .hero-intro-body {
     margin: auto 0;
-    padding-bottom: 14vh;
-    display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.55fr);
-    align-items: start;
-    gap: 56px;
+    padding-bottom: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    text-align: center;
+  }
+
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-intro h1 {
     margin-top: 28px;
-    font-size: clamp(48px, 7.4vw, 112px);
-    letter-spacing: -0.046em;
-    line-height: 0.92;
+    font-size: var(--fs-display);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
   }
 
-  .hero-intro h1 em {
-    font-style: normal;
+  .hero-muted {
     color: var(--hero-muted);
   }
 
-  /* Empieza a la altura del h1, no de la eyebrow. */
   .hero-side {
-    margin-top: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-side .lead {
-    font-size: clamp(19px, 1.6vw, 23px);
-    line-height: 1.4;
+    max-width: 560px;
   }
 
   .hero-actions {
-    margin-top: 32px;
+    margin-top: 28px;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 20px 32px;
+    justify-content: center;
+    gap: 12px;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .hero-main .eyebrow {
       animation: fade-up 0.7s var(--ease-out) 0.1s both;
-    }
-    .hero-main .eyebrow::before {
-      transform-origin: left;
-      animation: line-grow 0.7s var(--ease-out) both;
     }
     .hero-intro h1 .word > span {
       animation: word-up 0.9s var(--ease-out) both;
@@ -232,88 +234,86 @@ const greetingWords = t.hero.greeting.split(' ');
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 0 0 8px;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
     background: none;
     border: 0;
-    border-bottom: 1px solid;
     color: var(--ink);
     cursor: pointer;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: var(--fs-sm);
+    font-weight: 800;
     letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
+  .scroll-cta:hover .arrow-down {
+    transform: translateY(4px);
+  }
+
+  .reveal-wrap,
+  .section {
+    scroll-margin-top: var(--nav-h, 66px);
+  }
+
+  /* Dos columnas desplazadas: la segunda columna empieza más abajo. */
   .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 80px clamp(40px, 8vw, 140px);
+  }
+
+  .projects-grid > :global(:nth-child(even)) {
+    margin-top: 200px;
+  }
+
+  .stack-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 16px;
   }
 
   .stack-row {
-    display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
-    align-items: baseline;
-    gap: 28px;
-    padding: 26px 0;
-    border-top: 1px solid var(--line-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px;
+    transition: border-color 0.2s;
   }
 
-  .stack-row:last-child {
-    border-bottom: 1px solid var(--line-strong);
+  .stack-row:hover {
+    border-color: var(--ink);
   }
 
   .stack-label {
-    font-size: 12px;
+    font-size: var(--fs-2xs);
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
-  /* Mismo bloque de 720px pegado a la derecha que el contenido de Educació. */
   .stack-items {
-    justify-self: end;
-    width: 100%;
-    max-width: 720px;
-    font-size: clamp(17px, 1.5vw, 20px);
+    font-size: var(--fs-read);
     font-weight: 500;
-    letter-spacing: -0.024em;
-    line-height: 1.25;
-    transition: transform 0.4s var(--ease-out);
-  }
-
-  @media (hover: hover) {
-    .stack-row:hover .stack-items {
-      transform: translateX(8px);
-    }
+    line-height: 1.4;
   }
 
   @media (max-width: 900px) {
-    .hero-intro-body {
+    .projects-grid {
       grid-template-columns: 1fr;
-      gap: 32px;
+      gap: 56px;
     }
-    .hero-side {
+    .projects-grid > :global(:nth-child(even)) {
       margin-top: 0;
-    }
-    .stack-row {
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    .stack-items {
-      justify-self: stretch;
-      max-width: none;
     }
   }
 
   @media (max-width: 640px) {
     .hero-intro {
-      padding: 28px 0 20px;
+      padding: 20px 0 20px;
     }
-    .hero-intro h1 {
-      font-size: clamp(44px, 11.5vw, 72px);
-    }
-    .projects-grid {
+    .stack-list {
       grid-template-columns: 1fr;
     }
   }

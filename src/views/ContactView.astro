@@ -16,6 +16,10 @@ const linkedinHandle = linkedin?.value.split('/').pop() ?? '';
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 
 const icons: Record<string, string> = {
+  Copy:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+  Check:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>',
   Email:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>',
   LinkedIn:
@@ -30,7 +34,7 @@ const icons: Record<string, string> = {
     <p class="contact-body lead">{t.contact.body}</p>
     <div class="contact-links">
       <div class="contact-email">
-        <a href={email?.href} class="contact-link">
+        <a href={email?.href} class="contact-email-link">
           <span class="contact-link-icon" set:html={icons.Email} />
           <span>{contactEmail}</span>
         </a>
@@ -38,10 +42,13 @@ const icons: Record<string, string> = {
           type="button"
           class="copy-email"
           aria-label={t.contact.copyEmail.ariaLabel}
+          title={t.contact.copyEmail.label}
           data-email={contactEmail}
           data-done={t.contact.copyEmail.done}
         >
-          <span class="copy-email-label" aria-live="polite">{t.contact.copyEmail.label}</span>
+          <span class="copy-icon" set:html={icons.Copy} />
+          <span class="copy-done-icon" set:html={icons.Check} />
+          <span class="visually-hidden copy-email-label" aria-live="polite"></span>
         </button>
       </div>
       {linkedin && (
@@ -92,7 +99,7 @@ const icons: Record<string, string> = {
         </label>
         <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="form-field-full">
-          <button type="submit" class="btn btn-primary">{t.contact.form.submitLabel}</button>
+          <button type="submit" class="btn btn-primary"><span class="submit-label">{t.contact.form.submitLabel}</span> <span class="arrow" aria-hidden="true">→</span></button>
           <p class="form-status" role="status" aria-live="polite" hidden></p>
         </div>
       </form>
@@ -111,6 +118,7 @@ const icons: Record<string, string> = {
   const form = document.getElementById('contact-form');
   const button = form?.querySelector('button[type="submit"]');
   const status = form?.querySelector('.form-status');
+  const buttonLabel = button?.querySelector('.submit-label');
 
   const showStatus = (text, kind) => {
     status.textContent = text;
@@ -128,7 +136,7 @@ const icons: Record<string, string> = {
     data.append('from_name', name);
 
     button.disabled = true;
-    button.textContent = sendingLabel;
+    buttonLabel.textContent = sendingLabel;
     status.hidden = true;
 
     try {
@@ -146,7 +154,7 @@ const icons: Record<string, string> = {
       showStatus(errorMessage, 'error');
     } finally {
       button.disabled = false;
-      button.textContent = submitLabel;
+      buttonLabel.textContent = submitLabel;
     }
   });
 </script>
@@ -154,7 +162,6 @@ const icons: Record<string, string> = {
 <script>
   const copyButton = document.querySelector<HTMLButtonElement>('.copy-email');
   const copyLabel = copyButton?.querySelector('.copy-email-label');
-  const originalLabel = copyLabel?.textContent ?? '';
   let resetTimer: number | undefined;
 
   copyButton?.addEventListener('click', async () => {
@@ -167,7 +174,7 @@ const icons: Record<string, string> = {
     copyButton.classList.add('is-done');
     window.clearTimeout(resetTimer);
     resetTimer = window.setTimeout(() => {
-      if (copyLabel) copyLabel.textContent = originalLabel;
+      if (copyLabel) copyLabel.textContent = '';
       copyButton.classList.remove('is-done');
     }, 2000);
   });
@@ -175,11 +182,11 @@ const icons: Record<string, string> = {
 
 <style>
   .contact-section {
-    padding: 90px 0 clamp(70px, 8vw, 120px);
+    padding: var(--page-top) 0 clamp(70px, 8vw, 120px);
   }
 
   .contact-intro {
-    padding-bottom: 80px;
+    padding-bottom: var(--intro-gap);
   }
 
   .contact-intro h1 {
@@ -207,17 +214,26 @@ const icons: Record<string, string> = {
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 48px;
+    gap: 12px;
   }
 
+  /* Email y LinkedIn en píldoras con borde. */
   .contact-link {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid;
-    font-size: 18px;
-    letter-spacing: -0.012em;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font-size: var(--fs-base);
+    font-weight: 700;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .contact-link:hover {
+    background: var(--ink);
+    color: var(--page);
   }
 
   .contact-link-icon {
@@ -230,38 +246,86 @@ const icons: Record<string, string> = {
     height: 16px;
   }
 
+  /* Píldora del email con el botón de copiar (icono redondo) dentro. */
   .contact-email {
     display: inline-flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    min-height: 52px;
+    padding: 2px 2px 2px 0;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .contact-email:has(.contact-email-link:hover) {
+    background: var(--ink);
+    color: var(--page);
+  }
+
+  .contact-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    padding-left: 20px;
+    font-size: var(--fs-base);
+    font-weight: 700;
   }
 
   .copy-email {
-    padding: 6px 10px;
-    background: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: var(--page);
     border: 1px solid var(--line-strong);
+    border-radius: 999px;
     color: var(--ink);
     cursor: pointer;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   }
 
-  .copy-email:hover {
-    border-color: var(--ink);
-  }
-
+  .copy-email:hover,
   .copy-email.is-done {
     background: var(--ink);
     border-color: var(--ink);
     color: var(--page);
   }
 
+  .copy-icon,
+  .copy-done-icon {
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .copy-icon :global(svg),
+  .copy-done-icon :global(svg) {
+    width: 17px;
+    height: 17px;
+  }
+
+  .copy-done-icon,
+  .copy-email.is-done .copy-icon {
+    display: none;
+  }
+
+  .copy-email.is-done .copy-done-icon {
+    display: inline-flex;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .contact-block {
     padding: 64px 0;
-    border-top: 1px solid var(--line);
   }
 
   .contact-block .section-head {
@@ -295,10 +359,10 @@ const icons: Record<string, string> = {
   .form-field {
     display: flex;
     flex-direction: column;
-    gap: 7px;
-    font-size: 11px;
+    gap: 8px;
+    font-size: var(--fs-xs);
     font-weight: 700;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
@@ -309,12 +373,13 @@ const icons: Record<string, string> = {
   .form-field input,
   .form-field textarea {
     width: 100%;
-    padding: 11px 13px;
+    min-height: 48px;
+    padding: 12px 20px;
     background: var(--field);
-    border: 1px solid var(--field-border);
-    border-radius: 0;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
     color: var(--ink);
-    font-size: 15px;
+    font-size: var(--fs-base);
     font-weight: 400;
     letter-spacing: normal;
     text-transform: none;
@@ -322,11 +387,8 @@ const icons: Record<string, string> = {
     transition: border-color 0.2s;
   }
 
-  .form-field input:hover,
-  .form-field textarea:hover,
-  .form-field input:focus,
-  .form-field textarea:focus {
-    border-color: var(--ink);
+  .form-field textarea {
+    border-radius: var(--radius);
   }
 
   .form-field input:focus,
@@ -345,7 +407,7 @@ const icons: Record<string, string> = {
 
   .form-status {
     margin-top: 18px;
-    font-size: 14px;
+    font-size: var(--fs-sm);
   }
 
   .form-status[data-kind='error'] {
@@ -355,7 +417,13 @@ const icons: Record<string, string> = {
   .map-embed {
     min-height: 400px;
     overflow: hidden;
-    border: 1px solid var(--line-strong);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .map-embed:focus-within {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
   }
 
   .map-embed iframe {
@@ -391,12 +459,6 @@ const icons: Record<string, string> = {
   }
 
   @media (max-width: 640px) {
-    .contact-section {
-      padding-top: 70px;
-    }
-    .contact-intro {
-      padding-bottom: 55px;
-    }
     .contact-form {
       grid-template-columns: 1fr;
       grid-template-rows: none;

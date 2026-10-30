@@ -13,12 +13,12 @@ interface Props {
 const { institution, institutionHref, degree, dates, note, coursework, courseworkLabel, link } = Astro.props;
 ---
 
-<div class="education-item reveal">
+<div class="education-item card reveal">
   <div class="education-aside">
     <span class="education-dates">{dates}</span>
     {institutionHref ? (
       <a class="education-institution" href={institutionHref} target="_blank" rel="noopener noreferrer">
-        <span class="prompt" aria-hidden="true">&gt;</span> {institution}
+        {institution} <span class="arrow" aria-hidden="true">→</span>
       </a>
     ) : (
       <span class="education-institution">{institution}</span>
@@ -35,45 +35,48 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
     )}
     {link && (
       <a class="education-link arrow-link" href={link.href} target="_blank" rel="noopener noreferrer">
-        <span class="prompt" aria-hidden="true">&gt;</span> {link.label}
+        {link.label} <span class="arrow" aria-hidden="true">→</span>
       </a>
     )}
   </div>
 </div>
 
 <style>
-  /* Columna estrecha con fecha y centro; el contenido se lee de arriba abajo a la derecha. */
+  /* Tarjeta redondeada: fecha y centro a la izquierda, contenido de 720px pegado a la derecha. */
   .education-item {
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
     align-items: start;
     gap: 40px;
-    padding: 32px 0 36px;
-    border-top: 1px solid var(--line-strong);
+    padding: 36px;
+    transition: border-color 0.2s;
   }
 
-  .education-item:last-child {
-    border-bottom: 1px solid var(--line-strong);
+  .education-item + .education-item {
+    margin-top: 16px;
+  }
+
+  .education-item:hover {
+    border-color: var(--ink);
   }
 
   .education-aside {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding-top: 6px;
+    gap: 10px;
+    padding-top: 4px;
   }
 
   .education-dates {
-    font-size: 12px;
+    font-size: var(--fs-sm);
     color: var(--muted);
-    transition: color 0.3s;
   }
 
   .education-institution {
     align-self: flex-start;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
   }
 
@@ -81,16 +84,15 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding-bottom: 3px;
-    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
-    transition: background-size 0.35s var(--ease-out);
+    padding-block: 11px;
+    margin-block: -11px;
   }
 
   a.education-institution:hover {
-    background-size: 100% 1px;
+    text-decoration: underline 2px;
+    text-underline-offset: 4px;
   }
 
-  /* Bloque de 720px pegado al borde derecho; el texto sigue alineado a la izquierda. */
   .education-main {
     justify-self: end;
     width: 100%;
@@ -98,43 +100,31 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
   }
 
   .education-degree {
-    font-size: clamp(20px, 1.9vw, 26px);
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-    transition: transform 0.4s var(--ease-out);
-  }
-
-  @media (hover: hover) {
-    .education-item:hover .education-dates {
-      color: var(--ink);
-    }
-    .education-item:hover .education-degree {
-      transform: translateX(8px);
-    }
+    font-size: var(--fs-h3);
   }
 
   .education-note,
   .education-coursework {
-    margin-top: 12px;
+    margin-top: 14px;
     color: var(--copy);
-    font-size: 16px;
+    font-size: var(--fs-base);
   }
 
   .education-coursework {
     margin-top: 18px;
-    font-size: 15px;
+    font-size: var(--fs-base);
   }
 
   .education-link {
-    margin-top: 20px;
+    margin-top: 24px;
   }
 
   .education-label {
     display: block;
     margin-bottom: 4px;
-    font-size: 11px;
+    font-size: var(--fs-2xs);
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--ink);
   }
@@ -143,7 +133,7 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
     .education-item {
       grid-template-columns: 1fr;
       gap: 14px;
-      padding: 26px 0 30px;
+      padding: 26px;
     }
     .education-main {
       justify-self: stretch;
@@ -152,7 +142,8 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
     .education-aside {
       flex-direction: row;
       align-items: baseline;
-      gap: 14px;
+      flex-wrap: wrap;
+      gap: 8px 14px;
       padding-top: 0;
     }
     .education-institution {

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import type { Lang, Page } from '../i18n/utils';
+import { getDictionary, type Lang, type Page } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -14,6 +14,7 @@ interface Props {
 
 const { lang, page, path, title, description = '' } = Astro.props;
 const isHomeHero = page === 'home' && !path;
+const t = getDictionary(lang);
 ---
 
 <!doctype html>
@@ -48,8 +49,9 @@ const isHomeHero = page === 'home' && !path;
     </script>
   </head>
   <body>
+    <a href="#main" class="skip-link">{t.nav.skipLink}</a>
     <Nav lang={lang} page={page} path={path} />
-    <main class="container">
+    <main id="main" class="container">
       <slot />
     </main>
     <Footer lang={lang} />
