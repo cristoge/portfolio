@@ -149,15 +149,22 @@ export default {
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Bases de dades', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
       { label: 'Cloud i infraestructura', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
-      { label: 'Eines', items: ['Git', 'Linux', 'Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr'] },
+      { label: 'Eines', items: ['Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr', { label: 'Skills de Matt Pocock', href: 'https://github.com/mattpocock/skills' }] },
     ],
   },
   personal: {
     kicker: 'Personal',
     heading: "Qui sóc",
+    facts: [
+      { label: 'Ubicació', value: 'Esplugues de Llobregat' },
+      { label: 'Rol', value: 'Backend · AI Engineer' },
+      { label: 'Ara', value: 'Curs Cloud (AWS)' },
+      { label: 'Estat', value: 'Buscant feina' },
+      { label: 'Fora del codi', value: 'Teclats, terminal i violí' },
+    ],
     intro: [
-      "Em dic Cristopher i sóc desenvolupador backend, amb coneixements en agents d'IA i movent-me cada vegada més en l'entorn cloud.",
-      "Em vaig ficar en el món de la informàtica per pura curiositat. Des de petit m'agradava la tecnologia i entendre com funcionava tot per dins, i programar va ser la manera natural de continuar fent-ho. A part de programar, hi ha altres coses que m'apassionen, i aquí t'explico algunes.",
+      "Em dic Cristopher i sóc desenvolupador backend. Vaig començar al cicle de DAM programant la part del servidor i aplicacions mòbils, i a poc a poc vaig anar sentint parlar cada vegada més de la intel·ligència artificial.",
+      "La curiositat em va poder i em vaig apuntar al curs d'especialització en IA i Big Data, on vaig descobrir el món dels agents. Ara continuo formant-me en cloud per saber també on i com desplegar-los, i les meves aficions acaben cada cop més lligades a la programació, com t'ensenyo aquí sota.",
     ],
     sections: [
       {
@@ -167,6 +174,7 @@ export default {
           "D'aquí vaig saltar al món dels teclats mecànics custom. Vaig anar descobrint layouts diferents i tota mena de teclats, i sense adonar-me'n he acabat fent-ne col·lecció: cada vegada en tinc més, i sempre n'hi ha algun de rar o exclusiu que vull provar.",
         ],
         image: '/keyboard.webp',
+        caption: 'Teclat split custom',
       },
       {
         title: "El meu setup",
@@ -184,15 +192,17 @@ export default {
         ],
         link: { label: 'Veure els meus dotfiles a GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
+        caption: 'Neovim · Ghostty · tema vague',
       },
       {
         title: "Música",
         body: [
-          "Vaig començar a tocar el violí als 12 anys, a l'escola, gràcies a un programa de l'ajuntament que apropava la música i la cultura als alumnes.",
-          "Amb els anys el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Més que una afició, és la meva manera de desintoxicar-me del digital, que de tant en tant no va gens malament.",
-          "El violí també em va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
+          "Si gairebé totes les meves aficions acaben passant per la programació, la música és la meva manera d'evadir-me una mica de la tecnologia. Vaig començar a tocar el violí als 12 anys, a l'escola, gràcies a un programa de l'ajuntament que apropava la música i la cultura als alumnes.",
+          "Amb els anys el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Una estona amb el violí, sense pantalles ni notificacions, és el que em fa desconnectar de debò.",
+          "I gràcies al violí també se'm va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
         ],
         image: '/music.webp',
+        caption: 'Escola municipal de música',
       },
       {
         title: "Ara mateix",
@@ -201,6 +211,7 @@ export default {
           "El curs em prepara per a la certificació AWS Solutions Architect – Associate, que em trauré d'aquí a uns mesos. En paral·lel, pel meu compte, continuo fent projectes amb agents d'IA i aprofundeixo en els seus conceptes més tècnics i en com dissenyar workflows amb ells.",
         ],
         image: '/now.webp',
+        caption: 'AWS Cloud Quest: Cloud Practitioner',
       },
     ],
   },

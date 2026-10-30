@@ -121,12 +121,18 @@ const navItems: { page: Page; label: string }[] = [
     letter-spacing: 0.14em;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, opacity 0.4s var(--ease-out), visibility 0.4s;
   }
 
   .nav-cta:hover {
     background: var(--accent);
     color: var(--on-accent);
+  }
+
+  /* En la portada el CV ya está en el hero: el del header aparece al pulsar "Veure-ho tot". */
+  :global(html.js[data-hero-lock]:not(.home-revealed)) .nav-cta {
+    opacity: 0;
+    visibility: hidden;
   }
 
   .nav-links {

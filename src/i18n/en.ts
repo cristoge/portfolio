@@ -149,15 +149,22 @@ export default {
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
       { label: 'Cloud & infrastructure', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
-      { label: 'Tools', items: ['Git', 'Linux', 'Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr'] },
+      { label: 'Tools', items: ['Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr', { label: "Matt Pocock's skills", href: 'https://github.com/mattpocock/skills' }] },
     ],
   },
   personal: {
     kicker: 'Personal',
     heading: "Who I am",
+    facts: [
+      { label: 'Location', value: 'Esplugues de Llobregat' },
+      { label: 'Role', value: 'Backend · AI Engineer' },
+      { label: 'Now', value: 'Cloud course (AWS)' },
+      { label: 'Status', value: 'Open to work' },
+      { label: 'Off the clock', value: 'Keyboards, terminal and violin' },
+    ],
     intro: [
-      "My name is Cristopher and I'm a backend developer, with knowledge of AI agents and moving more and more into the cloud space.",
-      "I got into the world of computing out of pure curiosity. Since I was a kid I loved technology and figuring out how everything worked inside, and programming was the natural way to keep doing that. Besides coding, there are a few other things I'm passionate about, and here are some of them.",
+      "My name is Cristopher and I'm a backend developer. I started out in a vocational degree in multiplatform app development, building server-side code and mobile apps, and little by little I kept hearing more and more about artificial intelligence.",
+      "Curiosity got the better of me and I signed up for a specialisation course in AI and Big Data, where I discovered the world of agents. Now I'm training in cloud so I also know where and how to deploy them, and my hobbies end up more and more tied to programming, as I show below.",
     ],
     sections: [
       {
@@ -167,6 +174,7 @@ export default {
           "From there I fell into the world of custom mechanical keyboards. I discovered different layouts and all kinds of boards, and before I knew it I'd started collecting them: the collection keeps growing, and there's always some rare or exclusive one I want to try.",
         ],
         image: '/keyboard.webp',
+        caption: 'Custom split keyboard',
       },
       {
         title: "My setup",
@@ -184,15 +192,17 @@ export default {
         ],
         link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
+        caption: 'Neovim · Ghostty · vague theme',
       },
       {
         title: "Music",
         body: [
-          "I started playing the violin at 12, at school, thanks to a city council programme that brought music and culture closer to students.",
-          "Over the years I gradually drifted away from it, but I'm picking it back up now and learning at my own pace. More than a hobby, it's my way to detox from all things digital, which every now and then doesn't hurt at all.",
-          "The violin also sparked my curiosity to learn more about music: discovering different genres, how a song is put together and everything behind it.",
+          "If almost all my hobbies end up going through programming, music is my way to get away from technology for a while. I started playing the violin at 12, at school, thanks to a city council programme that brought music and culture closer to students.",
+          "Over the years I gradually drifted away from it, but I'm picking it back up now and learning at my own pace. Some time with the violin, with no screens or notifications, is what really helps me switch off.",
+          "And thanks to the violin, I also grew curious to learn more about music: discovering different genres, how a song is put together and everything behind it.",
         ],
         image: '/music.webp',
+        caption: 'Municipal music school',
       },
       {
         title: "Right now",
@@ -201,6 +211,7 @@ export default {
           "The course is preparing me for the AWS Solutions Architect – Associate certification, which I'll get in a few months. In parallel, on my own, I keep building projects with AI agents and dig deeper into their more technical concepts and how to design workflows with them.",
         ],
         image: '/now.webp',
+        caption: 'AWS Cloud Quest: Cloud Practitioner',
       },
     ],
   },

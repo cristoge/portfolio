@@ -149,15 +149,22 @@ export default {
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Bases de datos', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
       { label: 'Cloud e infraestructura', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
-      { label: 'Herramientas', items: ['Git', 'Linux', 'Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr'] },
+      { label: 'Herramientas', items: ['Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr', { label: 'Skills de Matt Pocock', href: 'https://github.com/mattpocock/skills' }] },
     ],
   },
   personal: {
     kicker: 'Personal',
     heading: "Quién soy",
+    facts: [
+      { label: 'Ubicación', value: 'Esplugues de Llobregat' },
+      { label: 'Rol', value: 'Backend · AI Engineer' },
+      { label: 'Ahora', value: 'Curso Cloud (AWS)' },
+      { label: 'Estado', value: 'Buscando trabajo' },
+      { label: 'Fuera del código', value: 'Teclados, terminal y violín' },
+    ],
     intro: [
-      "Me llamo Cristopher y soy desarrollador backend, con conocimientos en agentes de IA y moviéndome cada vez más en el entorno cloud.",
-      "Me metí en el mundo de la informática por pura curiosidad. Desde pequeño me gustaba la tecnología y entender cómo funcionaba todo por dentro, y programar fue la forma natural de seguir haciéndolo. Aparte de programar, hay otras cosas que me apasionan, y aquí te cuento algunas.",
+      "Me llamo Cristopher y soy desarrollador backend. Empecé en el ciclo de DAM programando la parte del servidor y aplicaciones móviles, y poco a poco fui oyendo hablar cada vez más de la inteligencia artificial.",
+      "La curiosidad pudo conmigo y me apunté al curso de especialización en IA y Big Data, donde descubrí el mundo de los agentes. Ahora sigo formándome en cloud para saber también dónde y cómo desplegarlos, y mis aficiones acaban cada vez más ligadas a la programación, como te enseño aquí abajo.",
     ],
     sections: [
       {
@@ -167,6 +174,7 @@ export default {
           "De ahí salté al mundo de los teclados mecánicos custom. Fui descubriendo distintos layouts y todo tipo de teclados, y sin darme cuenta he acabado coleccionándolos: cada vez tengo más, y siempre hay alguno raro o exclusivo que quiero probar.",
         ],
         image: '/keyboard.webp',
+        caption: 'Teclado split custom',
       },
       {
         title: "Mi setup",
@@ -184,15 +192,17 @@ export default {
         ],
         link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
+        caption: 'Neovim · Ghostty · tema vague',
       },
       {
         title: "Música",
         body: [
-          "Empecé a tocar el violín a los 12 años, en el colegio, gracias a un programa del ayuntamiento que acercaba la música y la cultura a los alumnos.",
-          "Con los años lo fui dejando, pero ahora lo estoy retomando y aprendiendo sin prisa. Más que una afición, es mi forma de desintoxicarme de lo digital, que de vez en cuando no viene nada mal.",
-          "El violín también despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
+          "Si casi todas mis aficiones acaban pasando por la programación, la música es mi forma de evadirme un poco de la tecnología. Empecé a tocar el violín a los 12 años, en el colegio, gracias a un programa del ayuntamiento que acercaba la música y la cultura a los alumnos.",
+          "Con los años lo fui dejando, pero ahora lo estoy retomando y aprendiendo sin prisa. Un rato con el violín, sin pantallas ni notificaciones, es lo que me hace desconectar de verdad.",
+          "Y gracias al violín también se despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
         ],
         image: '/music.webp',
+        caption: 'Escuela municipal de música',
       },
       {
         title: "Ahora mismo",
@@ -201,6 +211,7 @@ export default {
           "El curso me prepara para la certificación AWS Solutions Architect – Associate, que me sacaré en unos meses. En paralelo, por mi cuenta, sigo haciendo proyectos con agentes de IA y profundizo en sus conceptos más técnicos y en cómo diseñar workflows con ellos.",
         ],
         image: '/now.webp',
+        caption: 'AWS Cloud Quest: Cloud Practitioner',
       },
     ],
   },
