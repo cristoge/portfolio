@@ -87,7 +87,7 @@ export default {
     items: [
       {
         slug: 'safe-reply',
-        title: 'Tiquets de suport amb IA per a un banc',
+        title: 'Safe_reply',
         description: "Backend que classifica els tiquets de suport d'un banc digital fictici i decideix quins pot respondre la IA sense risc i quins necessiten la trucada d'una persona.",
         context: "Projecte personal en curs. Un banc rep moltes consultes repetides que es poden respondre soles, però d'altres (frau, robatori de targeta, càrrecs no reconeguts) no admeten una resposta equivocada. El repte no és respondre, sinó saber quan no fer-ho: davant el dubte, el tiquet sempre va a una persona. La v1 funciona sense LLM, amb respostes predefinides: més privacitat (les dades bancàries no surten del servidor) i cap cost per petició.",
         depthTopics: [

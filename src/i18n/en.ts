@@ -87,7 +87,7 @@ export default {
     items: [
       {
         slug: 'safe-reply',
-        title: 'AI support tickets for a bank',
+        title: 'Safe_reply',
         description: 'Backend that classifies the support tickets of a fictional digital bank and decides which ones AI can safely answer and which ones need a call from a person.',
         context: 'Ongoing personal project. A bank gets many repetitive questions that can be answered automatically, but others (fraud, stolen cards, unrecognised charges) leave no room for a wrong answer. The challenge is not answering, but knowing when not to: when in doubt, the ticket always goes to a person. v1 works without an LLM, using canned answers: more privacy (banking data never leaves the server) and no per-request cost.',
         depthTopics: [

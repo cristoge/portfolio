@@ -87,7 +87,7 @@ export default {
     items: [
       {
         slug: 'safe-reply',
-        title: 'Tickets de soporte con IA para un banco',
+        title: 'Safe_reply',
         description: 'Backend que clasifica los tickets de soporte de un banco digital ficticio y decide cuáles puede contestar la IA sin riesgo y cuáles necesitan la llamada de una persona.',
         context: 'Proyecto personal en curso. Un banco recibe muchas consultas repetidas que se pueden contestar solas, pero otras (fraude, robo de tarjeta, cargos no reconocidos) no admiten una respuesta equivocada. El reto no es contestar, sino saber cuándo no hacerlo: ante la duda, el ticket siempre va a una persona. La v1 funciona sin LLM, con respuestas predefinidas: más privacidad (los datos bancarios no salen del servidor) y ningún coste por petición.',
         depthTopics: [
