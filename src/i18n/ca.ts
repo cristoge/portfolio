@@ -21,7 +21,6 @@ export default {
     tagline: ['Backend', 'Frontend', 'DevOps'],
     cta: 'Veure el CV',
     ctaHref: '/CV_Cristopher_Gordon.pdf',
-    outro: "m'alegra que hi siguis 🌌",
     exploreCta: 'Veure-ho tot',
   },
   education: {
@@ -205,7 +204,6 @@ export default {
       caption: 'Esplugues de Llobregat, prop de Barcelona.',
     },
     form: {
-      heading: 'Formulari de contacte',
       nameLabel: 'Nom complet',
       emailLabel: 'Correu electrònic',
       messageLabel: 'El teu missatge',

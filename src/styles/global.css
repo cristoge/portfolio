@@ -117,7 +117,7 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: clamp(40px, 5.4vw, 80px);
+  font-size: clamp(36px, 4.6vw, 68px);
   letter-spacing: -0.039em;
   line-height: 1.02;
 }
@@ -180,9 +180,10 @@ p {
 }
 
 .section-head {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
   margin-bottom: 54px;
 }
 
@@ -343,13 +344,6 @@ p {
 
   .js .reveal.is-visible {
     animation: fade-up 0.8s var(--reveal-delay, 0s) var(--ease-out) backwards;
-  }
-}
-
-@media (max-width: 900px) {
-  .section-head {
-    grid-template-columns: 1fr;
-    gap: 24px;
   }
 }
 

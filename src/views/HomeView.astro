@@ -36,7 +36,6 @@ const greetingWords = t.hero.greeting.split(' ');
           </a>
         )}
       </div>
-      <p class="hero-outro">{t.hero.outro}</p>
     </div>
   </div>
 
@@ -169,17 +168,19 @@ const greetingWords = t.hero.greeting.split(' ');
     overflow: hidden;
   }
 
+  /* Centrado vertical, pero el padding inferior lo sube un poco. */
   .hero-intro-body {
     margin: auto 0;
+    padding-bottom: 14vh;
     display: grid;
     grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.55fr);
-    align-items: end;
+    align-items: start;
     gap: 56px;
   }
 
   .hero-intro h1 {
     margin-top: 28px;
-    font-size: clamp(54px, 8.7vw, 132px);
+    font-size: clamp(48px, 7.4vw, 112px);
     letter-spacing: -0.046em;
     line-height: 0.92;
   }
@@ -189,8 +190,9 @@ const greetingWords = t.hero.greeting.split(' ');
     color: var(--hero-muted);
   }
 
+  /* Empieza a la altura del h1, no de la eyebrow. */
   .hero-side {
-    padding-bottom: 8px;
+    margin-top: 44px;
   }
 
   .hero-actions {
@@ -199,12 +201,6 @@ const greetingWords = t.hero.greeting.split(' ');
     flex-wrap: wrap;
     align-items: center;
     gap: 20px 32px;
-  }
-
-  .hero-outro {
-    margin-top: 32px;
-    color: var(--muted);
-    font-size: 14px;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -232,7 +228,7 @@ const greetingWords = t.hero.greeting.split(' ');
   }
 
   .scroll-cta {
-    align-self: flex-start;
+    align-self: center;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -320,6 +316,9 @@ const greetingWords = t.hero.greeting.split(' ');
       grid-template-columns: 1fr;
       gap: 32px;
     }
+    .hero-side {
+      margin-top: 0;
+    }
     .stack-row {
       grid-template-columns: 35px 1fr;
       gap: 10px 16px;
@@ -334,7 +333,7 @@ const greetingWords = t.hero.greeting.split(' ');
       padding: 28px 0 20px;
     }
     .hero-intro h1 {
-      font-size: clamp(48px, 13vw, 82px);
+      font-size: clamp(44px, 11.5vw, 72px);
     }
     .projects-grid {
       grid-template-columns: 1fr;

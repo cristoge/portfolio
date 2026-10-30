@@ -13,7 +13,7 @@ const t = getDictionary(lang);
   <header class="personal-intro">
     <p class="eyebrow">{t.personal.kicker}</p>
     <h1>{t.personal.heading}</h1>
-    <div class="personal-body lead">
+    <div class="personal-body">
       {t.personal.intro.map((paragraph) => <p>{paragraph}</p>)}
     </div>
   </header>
@@ -63,12 +63,15 @@ const t = getDictionary(lang);
   }
 
   .personal-body {
-    margin-top: 28px;
-    max-width: 760px;
+    margin-top: 24px;
+    max-width: 680px;
+    color: var(--copy);
+    font-size: clamp(17px, 1.3vw, 19px);
+    line-height: 1.65;
   }
 
   .personal-body p + p {
-    margin-top: 18px;
+    margin-top: 14px;
   }
 
   @media (prefers-reduced-motion: no-preference) {

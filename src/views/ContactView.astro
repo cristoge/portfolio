@@ -50,47 +50,43 @@ const icons: Record<string, string> = {
   </header>
 
   <div class="contact-block reveal">
-    <div class="contact-block-head">
+    <div class="section-head">
       <span class="eyebrow">01</span>
       <div>
         <h2>{t.contact.map.heading}</h2>
         <p class="note map-caption">{t.contact.map.caption}</p>
       </div>
     </div>
-    <div class="map-embed">
-      <iframe
-        src="https://www.google.com/maps?q=Esplugues+de+Llobregat&output=embed"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title={t.contact.map.heading}
-      ></iframe>
-    </div>
-  </div>
-
-  <div class="contact-block reveal">
-    <div class="contact-block-head">
-      <span class="eyebrow">02</span>
-      <h2>{t.contact.form.heading}</h2>
-    </div>
-    <form id="contact-form" class="contact-form">
-      <label class="form-field">
-        <span>{t.contact.form.nameLabel}</span>
-        <input type="text" name="name" autocomplete="name" required />
-      </label>
-      <label class="form-field">
-        <span>{t.contact.form.emailLabel}</span>
-        <input type="email" name="email" autocomplete="email" required />
-      </label>
-      <label class="form-field form-field-full">
-        <span>{t.contact.form.messageLabel}</span>
-        <textarea name="message" rows="6" required></textarea>
-      </label>
-      <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <div class="form-field-full">
-        <button type="submit" class="btn btn-primary">{t.contact.form.submitLabel}</button>
-        <p class="form-status" role="status" aria-live="polite" hidden></p>
+    <div class="contact-grid">
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps?q=Esplugues+de+Llobregat&z=13&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={t.contact.map.heading}
+        ></iframe>
       </div>
-    </form>
+
+      <form id="contact-form" class="contact-form">
+        <label class="form-field">
+          <span>{t.contact.form.nameLabel}</span>
+          <input type="text" name="name" autocomplete="name" required />
+        </label>
+        <label class="form-field">
+          <span>{t.contact.form.emailLabel}</span>
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label class="form-field form-field-full">
+          <span>{t.contact.form.messageLabel}</span>
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="form-field-full">
+          <button type="submit" class="btn btn-primary">{t.contact.form.submitLabel}</button>
+          <p class="form-status" role="status" aria-live="polite" hidden></p>
+        </div>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -218,52 +214,43 @@ const icons: Record<string, string> = {
   }
 
   .contact-block {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 40px;
     padding: 64px 0;
     border-top: 1px solid var(--line);
   }
 
-  .contact-block-head {
-    display: contents;
-  }
-
-  .contact-block-head h2 {
-    grid-column: 2;
-  }
-
-  .contact-block-head > div {
-    grid-column: 2;
-  }
-
-  .contact-block-head .eyebrow {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: start;
-    margin-top: 0.8em;
+  .contact-block .section-head {
+    margin-bottom: 36px;
   }
 
   .map-caption {
     margin-top: 14px;
   }
 
-  .contact-form,
-  .map-embed {
-    grid-column: 2;
+  /* Mapa a la izquierda y formulario a la derecha, a la misma altura. */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 48px;
   }
 
+  /* La fila del mensaje crece para que el formulario iguale la altura del mapa. */
   .contact-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 26px;
+    grid-template-rows: auto 1fr auto;
+    gap: 18px;
+  }
+
+  .contact-form textarea {
+    flex: 1;
   }
 
   .form-field {
     display: flex;
     flex-direction: column;
-    gap: 9px;
-    font-size: 12px;
+    gap: 7px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
@@ -276,12 +263,12 @@ const icons: Record<string, string> = {
   .form-field input,
   .form-field textarea {
     width: 100%;
-    padding: 15px 16px;
+    padding: 11px 13px;
     background: var(--field);
     border: 1px solid var(--field-border);
     border-radius: 0;
     color: var(--ink);
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 400;
     letter-spacing: normal;
     text-transform: none;
@@ -320,7 +307,7 @@ const icons: Record<string, string> = {
   }
 
   .map-embed {
-    aspect-ratio: 21 / 9;
+    min-height: 400px;
     overflow: hidden;
     border: 1px solid var(--line-strong);
   }
@@ -331,28 +318,29 @@ const icons: Record<string, string> = {
     height: 100%;
     border: 0;
     filter: grayscale(1) contrast(1.05);
+    transition: filter 0.6s var(--ease-in-out);
   }
 
   :global(:root[data-theme='dark']) .map-embed iframe {
     filter: grayscale(1) invert(0.92) contrast(0.9);
   }
 
+  .map-embed:hover iframe,
+  :global(:root[data-theme='dark']) .map-embed:hover iframe {
+    filter: none;
+  }
+
   @media (max-width: 900px) {
     .contact-block {
-      grid-template-columns: 1fr;
-      gap: 24px;
       padding: 48px 0;
     }
-    .contact-block-head .eyebrow {
-      margin-top: 0;
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
     }
-    .contact-block-head > *,
-    .contact-block-head h2,
-    .contact-block-head > div,
-    .contact-form,
     .map-embed {
-      grid-column: 1;
-      grid-row: auto;
+      min-height: 0;
+      aspect-ratio: 16 / 9;
     }
   }
 
@@ -365,6 +353,7 @@ const icons: Record<string, string> = {
     }
     .contact-form {
       grid-template-columns: 1fr;
+      grid-template-rows: none;
     }
     .map-embed {
       aspect-ratio: 4 / 3;

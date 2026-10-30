@@ -21,7 +21,6 @@ const navItems: { page: Page; label: string }[] = [
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href={localePath(lang, 'home')} class="brand">{t.hero.name}</a>
     <nav class="nav-links" aria-label="Main navigation">
       {navItems.map((item) => (
         <a
@@ -121,12 +120,6 @@ const navItems: { page: Page; label: string }[] = [
     align-items: center;
     gap: 32px;
     min-height: 84px;
-  }
-
-  .brand {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.04em;
   }
 
   .nav-links {
