@@ -4,6 +4,11 @@ export default {
     personal: 'Personal',
     contact: 'Contact',
   },
+  theme: {
+    dark: 'Dark',
+    light: 'Light',
+    toggle: 'Toggle theme',
+  },
   meta: {
     title: 'Cristo — Portfolio',
     description: "Cristo's personal portfolio.",

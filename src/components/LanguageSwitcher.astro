@@ -13,7 +13,9 @@ const { lang, path } = Astro.props;
   {languages.map((l) => (
     <a
       href={localizedPath(l, path)}
-      class={`lang-option ${l === lang ? 'active' : ''}`}
+      class="lang-option"
+      lang={l}
+      hreflang={l}
       aria-current={l === lang ? 'page' : undefined}
     >
       {languageLabels[l]}
@@ -24,29 +26,28 @@ const { lang, path } = Astro.props;
 <style>
   .lang-switcher {
     display: flex;
-    gap: 2px;
-    font-family: var(--font-ui);
-    font-size: 12px;
+    gap: 4px;
   }
 
   .lang-option {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: var(--radius-sm);
-    color: var(--text-soft);
-    text-decoration: none;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    transition: color var(--ease), background-color var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    min-height: 40px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
   }
 
   .lang-option:hover {
-    color: var(--accent);
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 5px;
   }
 
-  .lang-option.active {
-    background: var(--primary);
-    color: var(--on-primary);
+  .lang-option[aria-current] {
+    color: var(--ink);
   }
 </style>

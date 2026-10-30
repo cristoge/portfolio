@@ -4,6 +4,11 @@ export default {
     personal: 'Personal',
     contact: 'Contacto',
   },
+  theme: {
+    dark: 'Oscuro',
+    light: 'Claro',
+    toggle: 'Cambiar el tema',
+  },
   meta: {
     title: 'Cristo — Portfolio',
     description: 'Portfolio personal de Cristo.',

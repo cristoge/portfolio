@@ -16,7 +16,7 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, detail
   Astro.props;
 ---
 
-<article class="project-card card">
+<article class="project-card reveal">
   <a href={detailHref} class="project-image" aria-hidden="true" tabindex="-1">
     {image ? <img src={image} alt="" loading="lazy" /> : 'IMG'}
   </a>
@@ -29,17 +29,14 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, detail
   </div>
   <div class="project-links">
     <a href={detailHref} class="project-link">
-      {detailLabel}
-      <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+      {detailLabel} <span class="project-link-arrow" aria-hidden="true">→</span>
     </a>
-    <a href={repoHref} class="project-link">
-      {repoLabel}
-      <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+    <a href={repoHref} class="project-link" target="_blank" rel="noopener noreferrer">
+      {repoLabel} <span class="project-link-arrow" aria-hidden="true">↗</span>
     </a>
     {demoHref && (
-      <a href={demoHref} class="project-link">
-        {demoLabel}
-        <svg class="project-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+      <a href={demoHref} class="project-link" target="_blank" rel="noopener noreferrer">
+        {demoLabel} <span class="project-link-arrow" aria-hidden="true">↗</span>
       </a>
     )}
   </div>
@@ -50,109 +47,115 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, detail
      stack, links) via subgrid, so those rows line up across cards even when
      the text or the number of tags differs. */
   .project-card {
+    isolation: isolate;
+    position: relative;
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 5;
-    row-gap: 14px;
-    background: var(--surface);
+    row-gap: 18px;
+    padding: 26px;
+    border: 1px solid var(--panel-line);
+    transition: color 0.3s;
+  }
+
+  /* El fondo claro sube desde abajo e invierte la tarjeta. */
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--panel-hover);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.45s var(--ease-in-out);
   }
 
   .project-card:hover {
-    box-shadow: inset 0 0 0 1px var(--accent);
+    color: var(--panel-hover-ink);
+  }
+
+  .project-card:hover::before {
+    transform: none;
   }
 
   .project-image {
     aspect-ratio: 16 / 9;
-    background: var(--bg);
-    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-ui);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--grey);
-    text-decoration: none;
     overflow: hidden;
+    border: 1px solid var(--panel-line);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--panel-muted);
   }
 
   .project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    filter: grayscale(1);
+    transition: filter 0.45s var(--ease-in-out), transform 0.6s var(--ease-out);
   }
 
-  .project-card:hover .project-title-link {
-    color: var(--accent);
+  .project-card:hover .project-image img {
+    filter: none;
+    transform: scale(1.03);
   }
 
   .project-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size-adjust: none;
-    font-size: 24px;
-    font-weight: 300;
-  }
-
-  .project-title-link {
-    text-decoration: none;
-    color: inherit;
+    font-size: clamp(24px, 2.4vw, 32px);
+    letter-spacing: -0.033em;
+    line-height: 1.08;
   }
 
   .project-title-link:hover {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
+    text-decoration: underline 1px;
+    text-underline-offset: 0.12em;
   }
 
   .project-description {
-    color: var(--text-soft);
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--panel-muted);
+    transition: color 0.3s;
+  }
+
+  .project-card:hover .project-description {
+    color: var(--panel-hover-muted);
   }
 
   .project-stack {
     align-content: start;
   }
 
-  .project-stack .pill {
-    background: var(--bg);
-  }
-
   .project-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 18px;
-    margin-top: 4px;
+    gap: 14px 24px;
+    padding-top: 6px;
   }
 
   .project-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid;
     white-space: nowrap;
-    font-family: var(--font-ui);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--primary);
-    text-decoration: none;
-  }
-
-  .project-link:hover {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
 
   .project-link-arrow {
-    width: 13px;
-    height: 13px;
-    flex-shrink: 0;
-    transition: transform var(--ease);
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.2s;
   }
 
   .project-link:hover .project-link-arrow {
-    transform: translateX(3px);
+    transform: translate(2px, -2px);
   }
 </style>

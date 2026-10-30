@@ -23,11 +23,11 @@ Portfolio personal — Astro estático, sin backend, deploy en GitHub Pages.
 - `src/views/` — cuerpo de cada página (`HomeView`, `PersonalView`, `ContactView`, `ProjectDetailView`), reciben `lang` (y `slug` cuando aplica) como prop.
 - `src/components/` — `Nav`, `LanguageSwitcher`, `ProjectCard`, `EducationItem`.
 - `src/layouts/BaseLayout.astro` — head, Nav, Footer. Acepta `page` (para resaltar el nav) y `path` opcional (para rutas dinámicas como `/projects/:slug`).
-- `src/styles/global.css` — design tokens (tema oscuro con la paleta vague — `--primary` rosado `#C48282`, acento dorado `#E8B589`, texto sobre primary con `--on-primary` —, tipografías Fira Sans para titulares + Source Sans 3 para texto).
+- `src/styles/global.css` — design tokens. Estética editorial monocroma inspirada en lakbast.com: fondo hueso `--page` + tinta `--ink`, líneas finas (`--line`, `--line-strong`), paneles oscuros (`--panel*`, clase `.dark-panel`), tipografía Inter Tight. Tema claro u oscuro según la preferencia del sistema; el oscuro se activa con `:root[data-theme='dark']` (botón en `Nav`, guardado en `localStorage`). Utilidades: `.eyebrow`, `.lead`, `.note`, `.section-head`, `.btn`, `.arrow-link`, `.pill`, `.reveal` (aparece al hacer scroll).
 
 ## Convenciones
 
 - No añadir dependencias nuevas sin justificación clara — el sitio es 100% estático.
-- Respetar los tokens de `global.css` (colores, radios 4-6px, `--content-width`) en vez de valores sueltos.
+- Respetar los tokens de `global.css` (colores, `--ease-*`, `--content-width`) en vez de valores sueltos; esquinas rectas, sin border-radius.
 - Cada proyecto tiene un `slug` usado en `/projects/:slug` — debe coincidir exactamente en los 3 idiomas.
 - Los campos marcados con comentarios `// TODO` en los archivos de i18n son placeholders reales (rol, tagline, CV, contacto, educación, proyectos) pendientes de rellenar con contenido definitivo.

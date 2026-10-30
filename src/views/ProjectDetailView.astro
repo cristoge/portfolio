@@ -19,11 +19,13 @@ const d = t.projects.detail;
 ---
 
 <article class="project-detail">
-  <a href={`${localePath(lang, 'home')}#projects`} class="back-link">← {d.back}</a>
+  <a href={`${localePath(lang, 'home')}#projects`} class="back-link"><span aria-hidden="true">←</span> {d.back}</a>
 
-  <p class="kicker">{d.context}</p>
-  <h1>{project.title}</h1>
-  <p class="project-summary">{project.description}</p>
+  <header class="project-header">
+    <p class="eyebrow">{d.context}</p>
+    <h1>{project.title}</h1>
+    <p class="project-summary lead">{project.description}</p>
+  </header>
 
   {project.image ? (
     <img src={project.image} alt={project.title} class="project-hero-image project-hero-photo" />
@@ -33,73 +35,96 @@ const d = t.projects.detail;
 
   <p class="project-context">{project.context}</p>
 
-  <section class="detail-block">
-    <h2 class="section-heading">{d.depth}</h2>
-    <ul class="depth-list">
-      {project.depthTopics.map((topic) => <li>{topic}</li>)}
-    </ul>
+  <section class="detail-block reveal">
+    <h2 class="detail-heading">{d.depth}</h2>
+    <ol class="depth-list">
+      {project.depthTopics.map((topic, i) => (
+        <li>
+          <span class="depth-num">{String(i + 1).padStart(2, '0')}</span>
+          <span>{topic}</span>
+        </li>
+      ))}
+    </ol>
   </section>
 
-  <section class="detail-block">
-    <h2 class="section-heading">{d.stackLabel}</h2>
+  <section class="detail-block reveal">
+    <h2 class="detail-heading">{d.stackLabel}</h2>
     <div class="pill-row">
       {project.stack.map((tech) => <span class="pill">{tech}</span>)}
     </div>
   </section>
 
   {project.outcome && (
-    <section class="detail-block">
-      <h2 class="section-heading">{d.outcome}</h2>
+    <section class="detail-block reveal">
+      <h2 class="detail-heading">{d.outcome}</h2>
       <p class="outcome-text">{project.outcome}</p>
     </section>
   )}
 
   <div class="project-actions">
-    <a href={project.repoHref} class="btn btn-outline">{repoLabel} →</a>
-    {project.demoHref && <a href={project.demoHref} class="btn btn-primary">{demoLabel} →</a>}
+    <a href={project.repoHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer">{repoLabel} <span aria-hidden="true">↗</span></a>
+    {project.demoHref && (
+      <a href={project.demoHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+        {demoLabel} <span aria-hidden="true">↗</span>
+      </a>
+    )}
   </div>
 </article>
 
 <style>
   .project-detail {
-    padding: 64px 0 80px;
-    max-width: 760px;
-    margin: 0 auto;
+    padding: 64px 0 clamp(70px, 8vw, 120px);
+    max-width: 960px;
   }
 
   .back-link {
-    display: inline-block;
-    font-family: var(--font-ui);
+    display: inline-flex;
+    gap: 10px;
+    margin-bottom: 56px;
     font-size: 13px;
-    color: var(--text-soft);
-    text-decoration: none;
-    margin-bottom: 36px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: underline 1px;
+    text-underline-offset: 4px;
   }
 
   .back-link:hover {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    color: var(--muted);
+  }
+
+  .project-header h1 {
+    margin-top: 24px;
   }
 
   .project-summary {
-    margin-top: 16px;
-    font-size: 17px;
-    color: var(--text-soft);
+    margin-top: 24px;
+    max-width: 760px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .project-header > * {
+      animation: fade-up 0.9s var(--ease-out) both;
+    }
+    .project-header h1 {
+      animation-delay: 0.15s;
+    }
+    .project-header .project-summary,
+    .project-hero-image {
+      animation: fade-up 0.9s var(--ease-out) 0.3s both;
+    }
   }
 
   .project-hero-image {
     aspect-ratio: 16 / 6;
-    background: var(--surface);
-    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-ui);
+    margin: 56px 0;
+    border: 1px solid var(--line-strong);
     font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--grey);
-    margin: 36px 0;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--muted);
   }
 
   .project-hero-photo {
@@ -110,54 +135,76 @@ const d = t.projects.detail;
   }
 
   .project-context {
-    color: var(--text-soft);
-    font-size: 15px;
+    max-width: 760px;
+    color: var(--copy);
+    font-size: 17px;
+    line-height: 1.65;
   }
 
   .detail-block {
-    margin-top: 48px;
+    margin-top: 72px;
   }
 
-  .detail-block .section-heading {
-    font-size: 28px;
+  .detail-heading {
+    margin-bottom: 28px;
+    font-size: clamp(26px, 3vw, 40px);
+    letter-spacing: -0.03em;
   }
 
   .depth-list {
-    margin: 16px 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
-    color: var(--text-soft);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
   }
 
   .depth-list li {
-    position: relative;
-    padding-left: 22px;
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line-strong);
+    color: var(--copy);
+    font-size: 17px;
     line-height: 1.6;
   }
 
-  .depth-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.62em;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--primary);
+  .depth-num {
+    padding-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .detail-block .pill-row {
+    gap: 8px;
+  }
+
+  .detail-block .pill {
+    padding: 6px 11px;
+    font-size: 12px;
+    opacity: 1;
+    border-color: var(--line-strong);
   }
 
   .outcome-text {
-    margin-top: 12px;
-    color: var(--text-soft);
+    max-width: 760px;
+    font-size: clamp(18px, 1.8vw, 22px);
+    letter-spacing: -0.012em;
+    line-height: 1.5;
   }
 
   .project-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 56px;
+    margin-top: 72px;
+  }
+
+  @media (max-width: 640px) {
+    .depth-list li {
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 12px;
+      font-size: 16px;
+    }
   }
 </style>

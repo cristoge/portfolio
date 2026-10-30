@@ -13,85 +13,102 @@ interface Props {
 const { institution, degree, dates, note, grade, coursework, gradeLabel, courseworkLabel } = Astro.props;
 ---
 
-<div class="education-item">
-  <div class="education-header">
+<div class="education-item reveal">
+  <span class="education-dates">{dates}</span>
+  <div class="education-main">
     <h3 class="education-institution">{institution}</h3>
-    <span class="education-dates">{dates}</span>
+    <p class="education-degree">{degree}</p>
   </div>
-  <p class="education-degree">{degree}</p>
-  {note && <p class="education-note">{note}</p>}
-  {grade && (
-    <p class="education-detail">
-      <strong>{gradeLabel}:</strong> {grade}
-    </p>
-  )}
-  {coursework && coursework.length > 0 && (
-    <p class="education-detail">
-      <strong>{courseworkLabel}:</strong> {coursework.join(', ')}
-    </p>
-  )}
+  <div class="education-meta">
+    {note && <p class="education-note">{note}</p>}
+    {grade && (
+      <p class="education-detail">
+        <span class="education-label">{gradeLabel}</span> {grade}
+      </p>
+    )}
+    {coursework && coursework.length > 0 && (
+      <p class="education-detail">
+        <span class="education-label">{courseworkLabel}</span> {coursework.join(', ')}
+      </p>
+    )}
+  </div>
 </div>
 
 <style>
   .education-item {
-    position: relative;
-    padding: 4px 0 4px 22px;
-    border-left: 1px solid var(--grey);
-    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+    padding: 30px 0 34px;
+    border-top: 1px solid var(--line-strong);
   }
-  .education-item::before {
-    content: '';
-    position: absolute;
-    left: -5px;
-    top: 10px;
-    width: 9px;
-    height: 9px;
-    border-radius: 2px;
-    background: var(--primary);
-  }
+
   .education-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .education-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .education-institution {
-    margin: 0;
-    font-size: 19px;
+    border-bottom: 1px solid var(--line-strong);
   }
 
   .education-dates {
-    font-family: var(--font-ui);
+    padding-top: 6px;
     font-size: 12px;
-    color: var(--primary);
-    background: var(--surface);
-    border-radius: var(--radius-sm);
-    padding: 3px 8px;
-    white-space: nowrap;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .education-institution {
+    font-size: clamp(25px, 3vw, 42px);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .education-item:hover .education-dates {
+      color: var(--ink);
+    }
+    .education-item:hover .education-institution {
+      transform: translateX(8px);
+    }
   }
 
   .education-degree {
-    color: var(--primary);
-    font-size: 15px;
-    font-weight: 500;
-    margin-top: 6px;
+    margin-top: 12px;
+    font-size: 17px;
+    line-height: 1.45;
   }
 
-  .education-note {
-    color: var(--text-soft);
-    font-size: 14px;
-    margin-top: 6px;
+  .education-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 6px;
   }
 
+  .education-note,
   .education-detail {
-    color: var(--text-soft);
-    font-size: 14px;
-    margin-top: 4px;
+    color: var(--copy);
+    font-size: 15px;
+  }
+
+  .education-label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  @media (max-width: 900px) {
+    .education-item {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 26px 0 30px;
+    }
+    .education-dates,
+    .education-meta {
+      padding-top: 0;
+    }
   }
 </style>

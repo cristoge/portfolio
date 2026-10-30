@@ -11,15 +11,17 @@ const t = getDictionary(lang);
 
 <section class="personal">
   <header class="personal-intro">
+    <p class="eyebrow">{t.personal.kicker}</p>
     <h1>{t.personal.heading}</h1>
-    <div class="personal-body">
+    <div class="personal-body lead">
       {t.personal.intro.map((paragraph) => <p>{paragraph}</p>)}
     </div>
   </header>
 
-  {t.personal.sections.map((entry) => (
-    <article class="entry">
+  {t.personal.sections.map((entry, i) => (
+    <article class="entry reveal">
       <div class="entry-content">
+        <span class="entry-num">{String(i + 1).padStart(2, '0')}</span>
         <h2 class="entry-title">{entry.title}</h2>
         {entry.body.map((paragraph) => {
           const inline = entry.inlineLink;
@@ -35,8 +37,8 @@ const t = getDictionary(lang);
         })}
         {entry.note && <p class="entry-note">{entry.note}</p>}
         {entry.link && (
-          <a class="entry-link" href={entry.link.href} target="_blank" rel="noopener noreferrer">
-            {entry.link.label} →
+          <a class="entry-link arrow-link" href={entry.link.href} target="_blank" rel="noopener noreferrer">
+            {entry.link.label} <span class="arrow" aria-hidden="true">↗</span>
           </a>
         )}
       </div>
@@ -49,43 +51,73 @@ const t = getDictionary(lang);
 
 <style>
   .personal {
-    padding: 72px 0 72px 20px;
+    padding: 90px 0 clamp(70px, 8vw, 120px);
   }
 
   .personal-intro {
-    padding-bottom: 56px;
+    padding-bottom: 80px;
+  }
+
+  .personal-intro h1 {
+    margin-top: 24px;
   }
 
   .personal-body {
-    margin-top: 20px;
-    max-width: 62ch;
-    color: var(--text-soft);
+    margin-top: 28px;
+    max-width: 760px;
   }
 
   .personal-body p + p {
-    margin-top: 14px;
+    margin-top: 18px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .personal-intro > * {
+      animation: fade-up 0.9s var(--ease-out) both;
+    }
+    .personal-intro h1 {
+      animation-delay: 0.15s;
+    }
+    .personal-intro .personal-body {
+      animation-delay: 0.3s;
+    }
   }
 
   .entry {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 56px;
-    padding: 56px 0;
-    border-top: 1px solid var(--line);
+    gap: clamp(32px, 6vw, 80px);
+    padding: 64px 0;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .entry:last-child {
+    border-bottom: 1px solid var(--line-strong);
   }
 
   .entry:nth-of-type(even) .photo-frame {
     order: -1;
   }
 
+  .entry-num {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
   .entry-title {
-    margin: 0 0 16px;
-    color: var(--primary);
+    margin: 0 0 20px;
+    font-size: clamp(28px, 3.4vw, 48px);
+    letter-spacing: -0.035em;
+    line-height: 1.04;
   }
 
   .entry-content p {
-    color: var(--text-soft);
+    color: var(--copy);
+    font-size: 17px;
+    line-height: 1.65;
   }
 
   .entry-content p + p {
@@ -93,71 +125,64 @@ const t = getDictionary(lang);
   }
 
   .inline-link {
-    color: var(--primary);
-    font-weight: 500;
-    text-decoration: underline;
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline 1px;
     text-underline-offset: 3px;
-    text-decoration-thickness: 1px;
   }
 
   .inline-link:hover {
-    color: var(--accent);
+    color: var(--muted);
   }
 
   .entry-content .entry-note {
-    margin-top: 20px;
-    padding: 12px 16px;
-    border-left: 2px solid var(--primary);
-    background: var(--surface);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    color: var(--text);
-    font-style: italic;
+    margin-top: 24px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--ink);
+    color: var(--ink);
+    font-size: 15px;
   }
 
   .entry-link {
-    display: inline-block;
-    margin-top: 18px;
-    font-family: var(--font-ui);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--primary);
-    text-decoration: none;
-  }
-
-  .entry-link:hover {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    margin-top: 28px;
   }
 
   .photo-frame {
     aspect-ratio: 4 / 3;
-    background: linear-gradient(137deg, var(--primary-soft), var(--surface));
-    border-radius: var(--radius-md);
     overflow: hidden;
+    background: var(--line);
   }
 
   .photo-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    filter: grayscale(1);
+    transition: filter 0.6s var(--ease-in-out), transform 0.8s var(--ease-out);
+  }
+
+  .entry:hover .photo-frame img {
+    filter: none;
+    transform: scale(1.03);
   }
 
   @media (max-width: 760px) {
+    .personal {
+      padding-top: 70px;
+    }
+    .personal-intro {
+      padding-bottom: 55px;
+    }
     .entry {
       grid-template-columns: 1fr;
-      gap: 24px;
-      padding: 40px 0;
+      gap: 28px;
+      padding: 44px 0;
     }
     .entry:nth-of-type(even) .photo-frame {
       order: 0;
     }
-  }
-
-  @media (max-width: 480px) {
-    .personal {
-      padding-left: 16px;
+    .photo-frame img {
+      filter: none;
     }
   }
 </style>

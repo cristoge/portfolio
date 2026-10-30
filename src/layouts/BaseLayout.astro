@@ -27,6 +27,14 @@ const isHomeHero = page === 'home' && !path;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      } catch {}
       try {
         const [entry] = performance.getEntriesByType('navigation');
         const isReload = entry ? entry.type === 'reload' : performance.navigation?.type === 1;
@@ -45,5 +53,19 @@ const isHomeHero = page === 'home' && !path;
       <slot />
     </main>
     <Footer lang={lang} />
+    <script>
+      const revealed = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add('is-visible');
+            revealed.unobserve(entry.target);
+          }
+        },
+        { rootMargin: '0px 0px -8% 0px' },
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => revealed.observe(el));
+    </script>
   </body>
 </html>

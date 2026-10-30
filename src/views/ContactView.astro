@@ -23,31 +23,40 @@ const icons: Record<string, string> = {
 ---
 
 <section class="contact-section">
-  <h1>{t.contact.heading}</h1>
-  <p class="contact-body">{t.contact.body}</p>
-  <div class="contact-icons">
-    <span class="contact-pill contact-email" title={contactEmail}>
-      <span class="contact-pill-icon" set:html={icons.Email} />
-      <span class="contact-pill-value">{contactEmail}</span>
-    </span>
-    {linkedin && (
-      <a
-        href={linkedin.href}
-        class="contact-pill contact-icon"
-        aria-label={`LinkedIn: ${linkedin.value}`}
-        title={linkedin.value}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span class="contact-pill-icon" set:html={icons.LinkedIn} />
-        <span class="contact-pill-value">{linkedinHandle}</span>
-      </a>
-    )}
-  </div>
+  <header class="contact-intro">
+    <p class="eyebrow">{t.contact.kicker}</p>
+    <h1>{t.contact.heading}</h1>
+    <p class="contact-body lead">{t.contact.body}</p>
+    <div class="contact-links">
+      <span class="contact-link contact-email" title={contactEmail}>
+        <span class="contact-link-icon" set:html={icons.Email} />
+        <span>{contactEmail}</span>
+      </span>
+      {linkedin && (
+        <a
+          href={linkedin.href}
+          class="contact-link"
+          aria-label={`LinkedIn: ${linkedin.value}`}
+          title={linkedin.value}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="contact-link-icon" set:html={icons.LinkedIn} />
+          <span>{linkedinHandle}</span>
+          <span class="contact-link-arrow" aria-hidden="true">↗</span>
+        </a>
+      )}
+    </div>
+  </header>
 
-  <div class="card contact-box">
-    <h2 class="card-heading">{t.contact.map.heading}</h2>
-    <p class="map-caption">{t.contact.map.caption}</p>
+  <div class="contact-block reveal">
+    <div class="contact-block-head">
+      <span class="eyebrow">01</span>
+      <div>
+        <h2>{t.contact.map.heading}</h2>
+        <p class="note map-caption">{t.contact.map.caption}</p>
+      </div>
+    </div>
     <div class="map-embed">
       <iframe
         src="https://www.google.com/maps?q=Esplugues+de+Llobregat&output=embed"
@@ -56,26 +65,31 @@ const icons: Record<string, string> = {
         title={t.contact.map.heading}
       ></iframe>
     </div>
+  </div>
 
-    <h2 class="card-heading form-heading">{t.contact.form.heading}</h2>
+  <div class="contact-block reveal">
+    <div class="contact-block-head">
+      <span class="eyebrow">02</span>
+      <h2>{t.contact.form.heading}</h2>
+    </div>
     <form id="contact-form" class="contact-form">
-      <div class="form-row">
-        <label class="form-field">
-          <span>{t.contact.form.nameLabel}</span>
-          <input type="text" name="name" autocomplete="name" required />
-        </label>
-        <label class="form-field">
-          <span>{t.contact.form.emailLabel}</span>
-          <input type="email" name="email" autocomplete="email" required />
-        </label>
-      </div>
       <label class="form-field">
+        <span>{t.contact.form.nameLabel}</span>
+        <input type="text" name="name" autocomplete="name" required />
+      </label>
+      <label class="form-field">
+        <span>{t.contact.form.emailLabel}</span>
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <label class="form-field form-field-full">
         <span>{t.contact.form.messageLabel}</span>
-        <textarea name="message" rows="5" required></textarea>
+        <textarea name="message" rows="6" required></textarea>
       </label>
       <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <button type="submit" class="btn btn-primary">{t.contact.form.submitLabel}</button>
-      <p class="form-status" role="status" aria-live="polite" hidden></p>
+      <div class="form-field-full">
+        <button type="submit" class="btn btn-primary">{t.contact.form.submitLabel}</button>
+        <p class="form-status" role="status" aria-live="polite" hidden></p>
+      </div>
     </form>
   </div>
 </section>
@@ -133,50 +147,69 @@ const icons: Record<string, string> = {
 
 <style>
   .contact-section {
-    padding: 72px 0 56px 20px;
+    padding: 90px 0 clamp(70px, 8vw, 120px);
+  }
+
+  .contact-intro {
+    padding-bottom: 80px;
+  }
+
+  .contact-intro h1 {
+    margin-top: 24px;
   }
 
   .contact-body {
-    margin-top: 20px;
-    max-width: 52ch;
-    color: var(--text-soft);
+    margin-top: 28px;
+    max-width: 700px;
   }
 
-  .contact-icons {
-    margin-top: 24px;
+  @media (prefers-reduced-motion: no-preference) {
+    .contact-intro > * {
+      animation: fade-up 0.9s var(--ease-out) both;
+    }
+    .contact-intro h1 {
+      animation-delay: 0.15s;
+    }
+    .contact-intro > :nth-child(n + 3) {
+      animation-delay: 0.3s;
+    }
+  }
+
+  .contact-links {
+    margin-top: 40px;
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 20px 48px;
   }
 
-  .contact-pill {
+  .contact-link {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    height: 44px;
-    padding: 0 18px;
-    border-radius: 5px;
-    background: var(--surface);
-    color: var(--primary);
-    text-decoration: none;
+    gap: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid;
+    font-size: 18px;
+    letter-spacing: -0.012em;
   }
 
-  .contact-pill-icon {
+  .contact-link-icon {
     display: inline-flex;
-    flex-shrink: 0;
     line-height: 0;
   }
 
-  .contact-pill-icon :global(svg) {
-    width: 18px;
-    height: 18px;
+  .contact-link-icon :global(svg) {
+    width: 16px;
+    height: 16px;
   }
 
-  .contact-pill-value {
-    font-family: var(--font-ui);
-    font-size: 14px;
-    color: var(--text);
+  .contact-link-arrow {
+    font-size: 19px;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+
+  .contact-link:hover .contact-link-arrow {
+    transform: translate(3px, -3px);
   }
 
   .contact-email {
@@ -184,88 +217,92 @@ const icons: Record<string, string> = {
     user-select: all;
   }
 
-  .contact-icon {
-    transition: box-shadow var(--ease), color var(--ease);
+  .contact-block {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    padding: 64px 0;
+    border-top: 1px solid var(--line);
   }
 
-  .contact-icon:hover {
-    color: var(--accent);
-    box-shadow: var(--shadow-inset);
+  .contact-block-head {
+    display: contents;
   }
 
-  .contact-box {
-    margin-top: 48px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    background: var(--surface);
-    padding: 32px;
+  .contact-block-head h2 {
+    grid-column: 2;
   }
 
-  .contact-box:hover {
-    box-shadow: none;
+  .contact-block-head > div {
+    grid-column: 2;
   }
 
-  .card-heading {
-    font-size: 24px;
-    font-weight: 300;
+  .contact-block-head .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    margin-top: 0.8em;
   }
 
-  .form-heading {
-    margin-top: 16px;
+  .map-caption {
+    margin-top: 14px;
+  }
+
+  .contact-form,
+  .map-embed {
+    grid-column: 2;
   }
 
   .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 26px;
   }
 
   .form-field {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    font-family: var(--font-ui);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--primary);
+    gap: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .form-field-full {
+    grid-column: 1 / -1;
   }
 
   .form-field input,
   .form-field textarea {
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 300;
-    color: var(--text);
-    background: var(--bg);
-    border: 1px solid transparent;
-    border-bottom-color: var(--grey);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
+    width: 100%;
+    padding: 15px 16px;
+    background: var(--field);
+    border: 1px solid var(--field-border);
+    border-radius: 0;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
     resize: vertical;
-    transition: border-color var(--ease), box-shadow var(--ease);
+    transition: border-color 0.2s;
+  }
+
+  .form-field input:hover,
+  .form-field textarea:hover,
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--ink);
   }
 
   .form-field input:focus,
   .form-field textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .contact-form .btn {
-    align-self: flex-start;
-    margin-top: 4px;
+    outline: 1px solid var(--ink);
+    outline-offset: 0;
   }
 
   .contact-form .btn:disabled {
-    opacity: 0.6;
     cursor: wait;
   }
 
@@ -274,26 +311,18 @@ const icons: Record<string, string> = {
   }
 
   .form-status {
-    font-family: var(--font-ui);
+    margin-top: 18px;
     font-size: 14px;
-    color: var(--primary);
   }
 
   .form-status[data-kind='error'] {
     color: var(--danger);
   }
 
-  .map-caption {
-    margin-top: -8px;
-    font-family: var(--font-ui);
-    font-size: 13px;
-    color: var(--text-soft);
-  }
-
   .map-embed {
-    border-radius: var(--radius-md);
-    overflow: hidden;
     aspect-ratio: 21 / 9;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
   }
 
   .map-embed iframe {
@@ -301,20 +330,44 @@ const icons: Record<string, string> = {
     width: 100%;
     height: 100%;
     border: 0;
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  :global(:root[data-theme='dark']) .map-embed iframe {
+    filter: grayscale(1) invert(0.92) contrast(0.9);
+  }
+
+  @media (max-width: 900px) {
+    .contact-block {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 48px 0;
+    }
+    .contact-block-head .eyebrow {
+      margin-top: 0;
+    }
+    .contact-block-head > *,
+    .contact-block-head h2,
+    .contact-block-head > div,
+    .contact-form,
+    .map-embed {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 
   @media (max-width: 640px) {
     .contact-section {
-      padding-left: 16px;
+      padding-top: 70px;
     }
-    .contact-box {
-      padding: 20px;
+    .contact-intro {
+      padding-bottom: 55px;
+    }
+    .contact-form {
+      grid-template-columns: 1fr;
     }
     .map-embed {
       aspect-ratio: 4 / 3;
-    }
-    .form-row {
-      grid-template-columns: 1fr;
     }
   }
 </style>
