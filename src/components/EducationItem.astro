@@ -18,7 +18,7 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
     <span class="education-dates">{dates}</span>
     {institutionHref ? (
       <a class="education-institution" href={institutionHref} target="_blank" rel="noopener noreferrer">
-        {institution} <span class="education-institution-arrow" aria-hidden="true">↗</span>
+        <span class="prompt" aria-hidden="true">&gt;</span> {institution}
       </a>
     ) : (
       <span class="education-institution">{institution}</span>
@@ -35,7 +35,7 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
     )}
     {link && (
       <a class="education-link arrow-link" href={link.href} target="_blank" rel="noopener noreferrer">
-        {link.label} <span class="arrow" aria-hidden="true">↗</span>
+        <span class="prompt" aria-hidden="true">&gt;</span> {link.label}
       </a>
     )}
   </div>
@@ -88,16 +88,6 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
 
   a.education-institution:hover {
     background-size: 100% 1px;
-  }
-
-  .education-institution-arrow {
-    font-size: 13px;
-    letter-spacing: 0;
-    transition: transform 0.2s;
-  }
-
-  a.education-institution:hover .education-institution-arrow {
-    transform: translate(2px, -2px);
   }
 
   /* Bloque de 720px pegado al borde derecho; el texto sigue alineado a la izquierda. */

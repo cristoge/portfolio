@@ -3,6 +3,8 @@ export default {
     home: 'Professional',
     personal: 'Personal',
     contact: 'Contact',
+    menuOpen: 'Open menu',
+    menuClose: 'Close menu',
   },
   theme: {
     dark: 'Dark',

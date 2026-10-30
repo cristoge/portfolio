@@ -55,7 +55,6 @@ const icons: Record<string, string> = {
         >
           <span class="contact-link-icon" set:html={icons.LinkedIn} />
           <span>{linkedinHandle}</span>
-          <span class="contact-link-arrow" aria-hidden="true">↗</span>
         </a>
       )}
     </div>
@@ -63,7 +62,6 @@ const icons: Record<string, string> = {
 
   <div class="contact-block reveal">
     <div class="section-head">
-      <span class="eyebrow">01</span>
       <div>
         <h2>{t.contact.map.heading}</h2>
         <p class="note map-caption">{t.contact.map.caption}</p>
@@ -230,16 +228,6 @@ const icons: Record<string, string> = {
   .contact-link-icon :global(svg) {
     width: 16px;
     height: 16px;
-  }
-
-  .contact-link-arrow {
-    font-size: 19px;
-    line-height: 1;
-    transition: transform 0.2s;
-  }
-
-  .contact-link:hover .contact-link-arrow {
-    transform: translate(3px, -3px);
   }
 
   .contact-email {

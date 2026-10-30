@@ -272,11 +272,11 @@ p {
   display: none;
 }
 
-/* Enlace subrayado con flecha que se desplaza. */
+/* Enlace subrayado con prompt de terminal. */
 .arrow-link {
   display: inline-flex;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
   padding-bottom: 8px;
   border-bottom: 1px solid;
   font-size: 13px;
@@ -284,14 +284,21 @@ p {
   letter-spacing: 0.02em;
 }
 
-.arrow-link .arrow {
-  font-size: 19px;
-  line-height: 1;
-  transition: transform 0.2s;
+/* Prompt de terminal (>) delante del texto de los enlaces. */
+.prompt {
+  display: inline-block;
+  opacity: 0.55;
+  transition: transform 0.2s, opacity 0.2s;
 }
 
-.arrow-link:hover .arrow {
-  transform: translate(3px, -3px);
+a:hover .prompt,
+button:hover .prompt {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+a:hover .prompt-back {
+  transform: translateX(-3px);
 }
 
 .pill {

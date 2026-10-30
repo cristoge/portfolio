@@ -27,11 +27,11 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, repoLa
   </div>
   <div class="project-links">
     <a href={repoHref} class="project-link" target="_blank" rel="noopener noreferrer">
-      {repoLabel} <span class="project-link-arrow" aria-hidden="true">↗</span>
+      <span class="prompt" aria-hidden="true">&gt;</span> {repoLabel}
     </a>
     {demoHref && (
       <a href={demoHref} class="project-link" target="_blank" rel="noopener noreferrer">
-        {demoLabel} <span class="project-link-arrow" aria-hidden="true">↗</span>
+        <span class="prompt" aria-hidden="true">&gt;</span> {demoLabel}
       </a>
     )}
   </div>
@@ -159,15 +159,5 @@ const { title, description, stack, detailHref, repoHref, demoHref, image, repoLa
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.02em;
-  }
-
-  .project-link-arrow {
-    font-size: 16px;
-    line-height: 1;
-    transition: transform 0.2s;
-  }
-
-  .project-link:hover .project-link-arrow {
-    transform: translate(2px, -2px);
   }
 </style>

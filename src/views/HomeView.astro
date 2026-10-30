@@ -28,11 +28,11 @@ const greetingWords = t.hero.greeting.split(' ');
       <p class="lead">{t.hero.tagline}</p>
       <div class="hero-actions">
         <a href={t.hero.ctaHref} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          {t.hero.cta} <span aria-hidden="true">↗</span>
+          <span class="prompt" aria-hidden="true">&gt;</span> {t.hero.cta}
         </a>
         {github && (
           <a href={github.href} class="arrow-link" target="_blank" rel="noopener noreferrer">
-            GitHub <span class="arrow" aria-hidden="true">↗</span>
+            <span class="prompt" aria-hidden="true">&gt;</span> GitHub
           </a>
         )}
       </div>
@@ -40,8 +40,8 @@ const greetingWords = t.hero.greeting.split(' ');
   </div>
 
   <button type="button" id="reveal-toggle" class="scroll-cta" aria-expanded="false" aria-controls="reveal-content">
+    <span class="prompt" aria-hidden="true">&gt;</span>
     <span>{t.hero.exploreCta}</span>
-    <span class="scroll-arrow" aria-hidden="true">↓</span>
   </button>
 </section>
 
@@ -49,7 +49,6 @@ const greetingWords = t.hero.greeting.split(' ');
   <div class="reveal-inner" id="reveal-content">
     <section class="section dark-panel" id="projects">
       <div class="section-head reveal">
-        <span class="eyebrow">01</span>
         <div>
           <h2>{t.projects.heading}</h2>
           <p class="note">{t.projects.note}</p>
@@ -74,7 +73,6 @@ const greetingWords = t.hero.greeting.split(' ');
 
     <section class="section" id="education">
       <div class="section-head reveal">
-        <span class="eyebrow">02</span>
         <h2>{t.education.heading}</h2>
       </div>
       <div class="education-list">
@@ -95,13 +93,11 @@ const greetingWords = t.hero.greeting.split(' ');
 
     <section class="section" id="stack">
       <div class="section-head reveal">
-        <span class="eyebrow">03</span>
         <h2>{t.stack.heading}</h2>
       </div>
       <div class="stack-list">
-        {t.stack.groups.map((group, i) => (
+        {t.stack.groups.map((group) => (
           <div class="stack-row reveal">
-            <span class="stack-num">{String(i + 1).padStart(2, '0')}</span>
             <span class="stack-label">{group.label}</span>
             <span class="stack-items">{group.items.join(' · ')}</span>
           </div>
@@ -236,7 +232,7 @@ const greetingWords = t.hero.greeting.split(' ');
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
-    gap: 18px;
+    gap: 10px;
     padding: 0 0 8px;
     background: none;
     border: 0;
@@ -248,24 +244,6 @@ const greetingWords = t.hero.greeting.split(' ');
     letter-spacing: 0.02em;
   }
 
-  .scroll-arrow {
-    font-size: 19px;
-    line-height: 1;
-    transition: transform 0.2s;
-  }
-
-  .scroll-cta:hover .scroll-arrow {
-    transform: translateY(4px);
-  }
-
-  .reveal-wrap {
-    scroll-margin-top: var(--nav-h, 85px);
-  }
-
-  .section {
-    scroll-margin-top: var(--nav-h, 85px);
-  }
-
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -274,7 +252,7 @@ const greetingWords = t.hero.greeting.split(' ');
 
   .stack-row {
     display: grid;
-    grid-template-columns: 70px 220px minmax(0, 1fr);
+    grid-template-columns: 220px minmax(0, 1fr);
     align-items: baseline;
     gap: 28px;
     padding: 26px 0;
@@ -283,12 +261,6 @@ const greetingWords = t.hero.greeting.split(' ');
 
   .stack-row:last-child {
     border-bottom: 1px solid var(--line-strong);
-  }
-
-  .stack-num {
-    font-size: 12px;
-    color: var(--muted);
-    transition: color 0.3s;
   }
 
   .stack-label {
@@ -311,9 +283,6 @@ const greetingWords = t.hero.greeting.split(' ');
   }
 
   @media (hover: hover) {
-    .stack-row:hover .stack-num {
-      color: var(--ink);
-    }
     .stack-row:hover .stack-items {
       transform: translateX(8px);
     }
@@ -328,11 +297,10 @@ const greetingWords = t.hero.greeting.split(' ');
       margin-top: 0;
     }
     .stack-row {
-      grid-template-columns: 35px 1fr;
-      gap: 10px 16px;
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
     .stack-items {
-      grid-column: 2;
       justify-self: stretch;
       max-width: none;
     }
@@ -347,9 +315,6 @@ const greetingWords = t.hero.greeting.split(' ');
     }
     .projects-grid {
       grid-template-columns: 1fr;
-    }
-    .stack-row {
-      grid-template-columns: 28px 1fr;
     }
   }
 </style>
