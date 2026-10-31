@@ -106,7 +106,7 @@ export default {
       {
         slug: 'rag-pdf',
         title: 'Asistente de estudio con RAG',
-        description: 'App móvil para subir tus PDFs y hacerles preguntas en lenguaje natural: las respuestas salen del propio documento gracias a un agente RAG.',
+        description: 'App móvil para subir tus PDFs y hacer preguntas sobre su contenido en lenguaje natural: las respuestas salen del propio documento gracias a un agente RAG.',
         context: 'Trabajo de fin del Curso de Especialización en Inteligencia Artificial y Big Data (ITIC Barcelona), desarrollado de forma individual y documentado en un paper académico. Un estudiante sube sus apuntes, libros o artículos y conversa con ellos desde el móvil: resúmenes, flashcards y explicaciones de conceptos generadas a partir de fragmentos recuperados semánticamente.',
         depthTopics: [
           'Pipeline de ingesta de PDFs: extracción de texto, chunking con solapamiento y embeddings de 512 dimensiones con nomic-embed-text en local vía Ollama',

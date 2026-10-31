@@ -106,7 +106,7 @@ export default {
       {
         slug: 'rag-pdf',
         title: 'RAG study assistant',
-        description: 'Mobile app to upload your PDFs and ask them questions in natural language: answers come from the document itself, powered by a RAG agent.',
+        description: 'Mobile app to upload your PDFs and ask questions about their content in natural language: answers come from the document itself, powered by a RAG agent.',
         context: 'Final project of the Specialization Course in Artificial Intelligence and Big Data (ITIC Barcelona), built individually and documented in an academic paper. Students upload their notes, books or articles and chat with them from their phone: summaries, flashcards and concept explanations generated from semantically retrieved passages.',
         depthTopics: [
           'PDF ingestion pipeline: text extraction, overlapping chunking and 512-dimension embeddings with nomic-embed-text running locally on Ollama',

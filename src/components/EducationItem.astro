@@ -76,11 +76,12 @@ const { institution, institutionHref, degree, dates, note, coursework, coursewor
 
   a.education-institution {
     min-height: 32px;
-    transition: color 0.2s;
+    color: var(--accent);
   }
 
   a.education-institution:hover {
-    color: var(--accent);
+    text-decoration: underline 1px;
+    text-underline-offset: 4px;
   }
 
   .education-note,

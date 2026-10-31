@@ -106,7 +106,7 @@ export default {
       {
         slug: 'rag-pdf',
         title: "Assistent d'estudi amb RAG",
-        description: 'App mòbil per pujar els teus PDFs i fer-los preguntes en llenguatge natural: les respostes surten del mateix document gràcies a un agent RAG.',
+        description: 'App mòbil per pujar els teus PDFs i fer preguntes sobre el seu contingut en llenguatge natural: les respostes surten del mateix document gràcies a un agent RAG.',
         context: "Treball de final del Curs d'Especialització en Intel·ligència Artificial i Big Data (ITIC Barcelona), desenvolupat de manera individual i documentat en un paper acadèmic. Un estudiant puja els seus apunts, llibres o articles i hi conversa des del mòbil: resums, flashcards i explicacions de conceptes generades a partir de fragments recuperats semànticament.",
         depthTopics: [
           "Pipeline d'ingesta de PDFs: extracció de text, chunking amb solapament i embeddings de 512 dimensions amb nomic-embed-text en local via Ollama",
