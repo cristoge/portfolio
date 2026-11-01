@@ -1,0 +1,114 @@
+---
+import ArrowLink from '../ui/ArrowLink.astro';
+import PillList from '../ui/PillList.astro';
+import type { Project } from '../../data/projects';
+import { getDictionary, projectDetailPath, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<article class="project-card reveal">
+  <div class="project-image" aria-hidden="true">
+    <img src={project.image} alt="" loading="lazy" />
+  </div>
+  <div class="project-body">
+    <h3 class="project-title">
+      <a href={projectDetailPath(lang, project.slug)} class="project-title-link">{project.title}</a>
+    </h3>
+    <p class="project-description">{project.description}</p>
+    <PillList items={project.stack} />
+    <div class="project-links">
+      <ArrowLink href={project.repoHref} class="project-link" external>{t.projects.links.repo}</ArrowLink>
+      {project.demoHref && (
+        <ArrowLink href={project.demoHref} class="project-link" external>{t.projects.links.demo}</ArrowLink>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  /* Celda de la rejilla: imagen arriba y el texto debajo, separados por líneas finas. */
+  .project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line-strong);
+    background: var(--page);
+    transition: background-color 0.2s;
+  }
+
+  .project-card:hover {
+    background: var(--surface);
+  }
+
+  .project-image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--field);
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.03);
+  }
+
+  .project-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .project-card:hover .project-title-link {
+    color: var(--accent);
+  }
+
+  /* El enlace del título cubre toda la tarjeta; los enlaces de abajo quedan por encima. */
+  .project-title-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .project-title-link:focus-visible {
+    outline: none;
+  }
+
+  .project-card:has(.project-title-link:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .project-description {
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--copy);
+    font-size: var(--fs-sm);
+  }
+
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    margin-top: auto;
+  }
+
+  .project-links :global(.project-link) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

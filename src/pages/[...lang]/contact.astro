@@ -1,0 +1,94 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactChannels from '../../components/contact/ContactChannels.astro';
+import ContactForm from '../../components/contact/ContactForm.astro';
+import MapEmbed from '../../components/contact/MapEmbed.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import { getDictionary, getLangStaticPaths } from '../../i18n/utils';
+
+export const getStaticPaths = getLangStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<BaseLayout lang={lang} title={`${t.contact.kicker} — ${t.meta.title}`} activePage="contact">
+  <section class="page">
+    <header class="contact-intro">
+      <p class="eyebrow">{t.contact.kicker}</p>
+      <h1>{t.contact.heading}</h1>
+      <p class="contact-body lead">{t.contact.body}</p>
+      <div class="contact-channels">
+        <ContactChannels lang={lang} />
+      </div>
+    </header>
+
+    <div class="contact-block reveal">
+      <SectionHeading heading={t.contact.map.heading} note={t.contact.map.caption} reveal={false} />
+      <div class="contact-grid">
+        <MapEmbed title={t.contact.map.heading} />
+        <ContactForm lang={lang} />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-intro {
+    padding-bottom: var(--intro-gap);
+  }
+
+  .contact-intro h1 {
+    margin-top: 24px;
+  }
+
+  .contact-body {
+    margin-top: 28px;
+    max-width: 700px;
+  }
+
+  .contact-channels {
+    margin-top: 40px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .contact-intro > * {
+      animation: fade-up 0.9s var(--ease-out) both;
+    }
+    .contact-intro h1 {
+      animation-delay: 0.15s;
+    }
+    .contact-intro > :nth-child(n + 3) {
+      animation-delay: 0.3s;
+    }
+  }
+
+  .contact-block {
+    padding: 64px 0;
+  }
+
+  .contact-block :global(.section-head) {
+    margin-bottom: 36px;
+  }
+
+  /* Mapa a la izquierda y formulario a la derecha, a la misma altura. */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 48px;
+  }
+
+  @media (max-width: 900px) {
+    .contact-block {
+      padding: 48px 0;
+    }
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

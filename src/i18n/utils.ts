@@ -1,12 +1,13 @@
 import ca from './ca';
 import es from './es';
 import en from './en';
+import type { Dictionary } from './types';
 
-export const dictionaries = { ca, es, en };
+export const languages = ['ca', 'es', 'en'] as const;
 
-export type Lang = keyof typeof dictionaries;
+export type Lang = (typeof languages)[number];
 
-export const languages: Lang[] = ['ca', 'es', 'en'];
+export const defaultLang: Lang = 'ca';
 
 export const languageLabels: Record<Lang, string> = {
   ca: 'CAT',
@@ -14,41 +15,47 @@ export const languageLabels: Record<Lang, string> = {
   en: 'EN',
 };
 
-export const defaultLang: Lang = 'ca';
+const dictionaries: Record<Lang, Dictionary> = { ca, es, en };
 
 export type Page = 'home' | 'personal' | 'contact';
 
-export function getDictionary(lang: Lang) {
+export function getDictionary(lang: Lang): Dictionary {
   return dictionaries[lang];
 }
 
-export function pageSlug(page: Page): string {
-  return page === 'home' ? '' : page;
+function isLang(value: string): value is Lang {
+  return (languages as readonly string[]).includes(value);
 }
 
-// Builds the URL for a given language + raw path slug (e.g. '', 'contact',
-// 'projects/my-project'), respecting that the default language (ca) is
-// served unprefixed at the root.
-export function localizedPath(lang: Lang, slug: string): string {
-  const clean = slug.replace(/^\/+/, '');
+// Rutas de las páginas de src/pages/[...lang]: el idioma por defecto (ca) va sin
+// prefijo, así que su parámetro es `undefined`.
+export function getLangStaticPaths() {
+  return languages.map((lang) => ({
+    params: { lang: lang === defaultLang ? undefined : lang },
+    props: { lang },
+  }));
+}
+
+// Construye la URL de una ruta ('', 'contact', 'projects/mi-proyecto') en un idioma,
+// respetando que el idioma por defecto (ca) se sirve sin prefijo en la raíz.
+export function localizedPath(lang: Lang, path: string): string {
+  const clean = path.replace(/^\/+|\/+$/g, '');
   if (lang === defaultLang) {
     return `/${clean}`;
   }
   return `/${lang}/${clean}`.replace(/\/$/, '');
 }
 
-// Convenience wrapper for the three static top-level pages.
+// Inversa de `localizedPath`: '/es/projects/x/' -> 'projects/x'.
+export function unlocalizedPath(pathname: string): string {
+  const [first = '', ...rest] = pathname.split('/').filter(Boolean);
+  return (isLang(first) ? rest : [first, ...rest]).join('/');
+}
+
 export function localePath(lang: Lang, page: Page): string {
-  return localizedPath(lang, pageSlug(page));
+  return localizedPath(lang, page === 'home' ? '' : page);
 }
 
 export function projectDetailPath(lang: Lang, slug: string): string {
   return localizedPath(lang, `projects/${slug}`);
-}
-
-export function projectLinkLabels(lang: Lang): { repoLabel: string; demoLabel: string } {
-  return {
-    repoLabel: lang === 'ca' ? 'Repositori' : lang === 'es' ? 'Repositorio' : 'Repo',
-    demoLabel: 'Demo',
-  };
 }

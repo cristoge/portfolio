@@ -1,0 +1,148 @@
+---
+import Icon from '../ui/Icon.astro';
+import { site } from '../../data/site';
+import { getDictionary, type Lang } from '../../i18n/utils';
+import { externalLink } from '../../lib/links';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+const { linkedin } = site;
+---
+
+<div class="contact-links">
+  <div class="contact-email">
+    <a href={`mailto:${site.email}`} class="contact-email-link">
+      <Icon name="email" />
+      <span>{site.email}</span>
+    </a>
+    <button
+      type="button"
+      class="copy-email"
+      data-copy-email={site.email}
+      data-done={t.contact.copyEmail.done}
+      aria-label={t.contact.copyEmail.ariaLabel}
+      title={t.contact.copyEmail.label}
+    >
+      <Icon name="copy" size={17} class="copy-icon" />
+      <Icon name="check" size={17} class="copy-done-icon" />
+      <span class="visually-hidden" data-copy-status aria-live="polite"></span>
+    </button>
+  </div>
+  <a
+    href={linkedin.href}
+    class="contact-link"
+    aria-label={`${linkedin.label}: ${linkedin.display}`}
+    title={linkedin.display}
+    {...externalLink}
+  >
+    <Icon name="linkedin" />
+    <span>{linkedin.handle}</span>
+  </a>
+</div>
+
+<script>
+  // Copia el email al portapapeles y muestra un check durante 2 s.
+  const button = document.querySelector<HTMLButtonElement>('[data-copy-email]');
+  const status = button?.querySelector('[data-copy-status]');
+  let resetTimer: number | undefined;
+
+  button?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyEmail ?? '');
+    } catch {
+      return;
+    }
+    if (status) status.textContent = button.dataset.done ?? '';
+    button.classList.add('is-done');
+    window.clearTimeout(resetTimer);
+    resetTimer = window.setTimeout(() => {
+      if (status) status.textContent = '';
+      button.classList.remove('is-done');
+    }, 2000);
+  });
+</script>
+
+<style>
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Email y LinkedIn en bloques rectos con línea fina. */
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 18px;
+    border: 1px solid var(--line-strong);
+    font-size: var(--fs-base);
+    font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Bloque del email con el botón de copiar dentro. */
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 1px 1px 1px 0;
+    border: 1px solid var(--line-strong);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .contact-email:has(.contact-email-link:hover) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .contact-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    padding-left: 18px;
+    font-size: var(--fs-base);
+    font-weight: 500;
+  }
+
+  .copy-email {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: var(--surface);
+    border: 0;
+    border-left: 1px solid var(--line-strong);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .copy-email:hover,
+  .copy-email.is-done {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .copy-email :global(.copy-done-icon),
+  .copy-email.is-done :global(.copy-icon) {
+    display: none;
+  }
+
+  .copy-email.is-done :global(.copy-done-icon) {
+    display: block;
+  }
+</style>

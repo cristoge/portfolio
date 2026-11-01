@@ -1,0 +1,17 @@
+---
+// Cabecera de sección: título y, opcionalmente, una nota debajo.
+interface Props {
+  heading: string;
+  note?: string;
+  reveal?: boolean;
+}
+
+const { heading, note, reveal = true } = Astro.props;
+---
+
+<div class:list={['section-head', { reveal }]}>
+  <div>
+    <h2>{heading}</h2>
+    {note && <p class="note">{note}</p>}
+  </div>
+</div>

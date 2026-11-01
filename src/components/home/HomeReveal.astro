@@ -1,0 +1,18 @@
+---
+// Contenido de la portada que queda oculto tras el hero hasta pulsar "Veure-ho tot".
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="home-reveal" id={id} data-home-reveal>
+  <slot />
+</div>
+
+<style>
+  .home-reveal {
+    scroll-margin-top: var(--nav-h, 60px);
+  }
+</style>

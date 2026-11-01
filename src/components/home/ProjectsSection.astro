@@ -1,0 +1,41 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { getProjects } from '../../data/projects';
+import { getDictionary, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<section class="section" id="projects">
+  <SectionHeading heading={t.projects.heading} note={t.projects.note} />
+  <div class="projects-grid">
+    {getProjects(lang).map((project) => <ProjectCard lang={lang} project={project} />)}
+  </div>
+</section>
+
+<style>
+  /* Rejilla de 3 columnas con tarjetas separadas. */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

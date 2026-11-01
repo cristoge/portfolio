@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 /* Estilo "case library": fondo blanco roto, tinta casi negra, un único acento
-   índigo, titulares en minúsculas muy compactos, etiquetas en monoespaciada
+   azul cobalto, titulares en minúsculas muy compactos, etiquetas en monoespaciada
    y rejillas de esquinas rectas con líneas finas.
    Tema claro por defecto, oscuro con [data-theme=dark]. */
 :root {
@@ -9,8 +9,8 @@
   --page: #fafaf9;
   --surface: #f1f1ef;
   --ink: #1a1a1a;
-  --accent: #3b53d8;
-  --accent-soft: rgba(59, 83, 216, 0.08);
+  --accent: #2251ff;
+  --accent-soft: rgba(34, 81, 255, 0.08);
   --on-accent: #fff;
   --line: #e3e3e0;
   --line-strong: #c9c9c5;
@@ -49,8 +49,8 @@
   --page: #111112;
   --surface: #1b1b1d;
   --ink: #ededeb;
-  --accent: #8b9cff;
-  --accent-soft: rgba(139, 156, 255, 0.12);
+  --accent: #66a3ff;
+  --accent-soft: rgba(102, 163, 255, 0.12);
   --on-accent: #111112;
   --line: #2a2a2d;
   --line-strong: #44444a;
@@ -175,10 +175,16 @@ p {
   line-height: 1.6;
 }
 
-/* Secciones separadas por una línea fina. */
+/* Cuerpo de las páginas interiores (personal, contacto, detalle de proyecto). */
+.page {
+  padding: var(--page-top) 0 clamp(70px, 8vw, 120px);
+}
+
+/* Secciones de la portada separadas por una línea fina. */
 .section {
   padding-block: clamp(72px, 8vw, 112px);
   border-top: 1px solid var(--line);
+  scroll-margin-top: var(--nav-h, 60px);
 }
 
 .section-head {
@@ -191,12 +197,6 @@ p {
 
 .section-head .note {
   margin-top: 12px;
-}
-
-/* Celda con línea fina y esquinas rectas. */
-.card {
-  border: 1px solid var(--line-strong);
-  background: var(--page);
 }
 
 /* Botones de esquinas rectas con texto en monoespaciada. */
@@ -246,7 +246,7 @@ p {
   cursor: not-allowed;
 }
 
-/* Enlace de acción en índigo, monoespaciada y mayúsculas ("Open case →"). */
+/* Enlace de acción en azul, monoespaciada y mayúsculas ("Open case →"). */
 .arrow-link {
   display: inline-flex;
   align-items: center;
@@ -299,26 +299,19 @@ a:hover .arrow-back {
   gap: 6px;
 }
 
-/* Subrayado a mano en índigo bajo una palabra del titular. */
-.squiggle {
-  position: relative;
-  display: inline-block;
-}
-
-.squiggle-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.12em;
-  width: 100%;
-  height: 0.16em;
-  overflow: visible;
-  color: var(--accent);
-}
-
 /* En modo oscuro, las imágenes claras deslumbran un poco menos. */
 :root[data-theme='dark'] img {
   filter: brightness(0.9);
+}
+
+/* Oculto a la vista pero legible por lectores de pantalla. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Enlace para saltar al contenido: oculto hasta recibir el foco con el teclado. */
@@ -339,19 +332,6 @@ a:hover .arrow-back {
 
 .skip-link:focus-visible {
   transform: none;
-}
-
-/* Titular partido en palabras que suben desde una máscara. */
-.word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  margin: -0.2em -0.08em -0.2em 0;
-  padding: 0.2em 0.08em 0.2em 0;
-}
-
-.word > span {
-  display: inline-block;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,3 +1,5 @@
+import type { Dictionary } from './types';
+
 export default {
   nav: {
     home: 'Professional',
@@ -18,11 +20,11 @@ export default {
   },
   hero: {
     kicker: 'AI Engineer',
+    status: 'Disponible',
     greeting: 'Hola, sóc',
     name: 'Cristo',
     tagline: "Disseny d'agents i de la seva infraestructura a AWS.",
     cta: 'Veure el CV',
-    ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'Veure-ho tot',
   },
   education: {
@@ -77,6 +79,10 @@ export default {
   projects: {
     heading: 'Projectes',
     note: 'Una selecció de projectes acadèmics i personals.',
+    links: {
+      repo: 'Repositori',
+      demo: 'Demo',
+    },
     detail: {
       back: 'Tornar a projectes',
       context: 'Context',
@@ -84,9 +90,8 @@ export default {
       stackLabel: 'Stack',
       outcome: 'Resultat',
     },
-    items: [
-      {
-        slug: 'safe-reply',
+    items: {
+      'safe-reply': {
         title: 'Safe_reply',
         description: "Backend que classifica els tiquets de suport d'un banc digital fictici i decideix quins pot respondre la IA sense risc i quins necessiten la trucada d'una persona.",
         context: "Projecte personal en curs. Un banc rep moltes consultes repetides que es poden respondre soles, però d'altres (frau, robatori de targeta, càrrecs no reconeguts) no admeten una resposta equivocada. El repte no és respondre, sinó saber quan no fer-ho: davant el dubte, el tiquet sempre va a una persona. La v1 funciona sense LLM, amb respostes predefinides: més privacitat (les dades bancàries no surten del servidor) i cap cost per petició.",
@@ -97,14 +102,9 @@ export default {
           'Backend asíncron amb FastAPI i PostgreSQL per capes: JWT amb refresh tokens rotats, rate limiting amb Redis, Idempotency-Key, protecció contra IDOR i logs JSON sense dades personals',
           "57 respostes predefinides amb totes les xifres extretes d'un únic document de dades del banc, comprovat per tests, i 470 tests contra una base de dades real",
         ],
-        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
         outcome: "v1 acabada. Al test de Banking77 (3.080 tiquets), cap resposta automàtica va arribar a un tiquet que havia d'atendre una persona, i la IA no va respondre cap missatge fora d'àmbit ni cap amb dos problemes alhora. Següent pas (v2): RAG amb pgvector i un LLM local, un sistema de cues i un jutge que revisa cada resposta.",
-        repoHref: 'https://github.com/cristoge/rag_revision',
-        demoHref: '',
-        image: '/docs.webp',
       },
-      {
-        slug: 'rag-pdf',
+      'rag-pdf': {
         title: "Assistent d'estudi amb RAG",
         description: 'App mòbil per pujar els teus PDFs i fer preguntes sobre el seu contingut en llenguatge natural: les respostes surten del mateix document gràcies a un agent RAG.',
         context: "Treball de final del Curs d'Especialització en Intel·ligència Artificial i Big Data (ITIC Barcelona), desenvolupat de manera individual i documentat en un paper acadèmic. Un estudiant puja els seus apunts, llibres o articles i hi conversa des del mòbil: resums, flashcards i explicacions de conceptes generades a partir de fragments recuperats semànticament.",
@@ -115,14 +115,9 @@ export default {
           "Backend asíncron amb FastAPI i streaming de la resposta token a token cap a l'app mitjançant Server-Sent Events",
           "Historial de conversa persistent a la base de dades i LLM intercanviable entre Claude Haiku (API d'Anthropic) i Gemma en local",
         ],
-        stack: ['Python', 'FastAPI', 'LangGraph', 'LangChain', 'PostgreSQL', 'pgvector', 'Supabase', 'Ollama', 'React Native'],
         outcome: "Nota final: 9/10. Treball de final d'especialització acompanyat d'un paper que documenta el disseny, l'evolució de l'agent i les seves limitacions.",
-        repoHref: 'https://github.com/cristoge/TIC_project',
-        demoHref: '',
-        image: '/rag2.webp',
       },
-      {
-        slug: 'bikeshare',
+      'bikeshare': {
         title: 'BikeShare',
         description: 'App mòbil de lloguer de bicicletes normals i elèctriques amb mapa interactiu, reserves i estadístiques de CO₂ estalviat.',
         context: "Projecte final del Cicle Formatiu de Grau Superior en Desenvolupament d'Aplicacions Multiplataforma (Prat FP), desenvolupat en un equip de quatre persones. L'app permet localitzar, reservar i desbloquejar bicicletes sense passar per un taulell, i mostra a l'usuari l'impacte ambiental positiu dels seus trajectes.",
@@ -133,13 +128,9 @@ export default {
           'Autenticació amb Supabase Auth i sessió persistent, estat global amb Zustand i validació de formularis amb Zod',
           'Historial de viatges i estadístiques per usuari, amb una estimació del CO₂ evitat segons la distància recorreguda',
         ],
-        stack: ['TypeScript', 'React Native', 'Expo', 'Supabase', 'PostgreSQL', 'Zustand', 'Zod'],
         outcome: "Nota final: 9,84/10. Projecte final del cicle, lliurat amb memòria tècnica i manual d'usuari.",
-        repoHref: 'https://github.com/cristoge/bikeshare',
-        demoHref: '',
-        image: '/bike2.webp',
       },
-    ],
+    },
   },
   stack: {
     heading: 'Tecnologies',
@@ -149,7 +140,17 @@ export default {
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Bases de dades', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
       { label: 'Cloud i infraestructura', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
-      { label: 'Eines', items: ['Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr', { label: 'Skills de Matt Pocock', href: 'https://github.com/mattpocock/skills' }] },
+      {
+        label: 'Eines',
+        items: [
+          'Claude Code',
+          { label: 'Skills de Matt Pocock', href: 'https://github.com/mattpocock/skills' },
+          'OpenCode',
+          { label: 'Pi', description: 'harness minimal per a agents' },
+          { label: 'herdr', description: "multiplexor d'agents d'IA" },
+          'Neovim',
+        ],
+      },
     ],
   },
   personal: {
@@ -224,11 +225,6 @@ export default {
       ariaLabel: 'Copiar el correu electrònic',
       done: 'Copiat!',
     },
-    links: [
-      { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },
-      { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
-    ],
     map: {
       heading: 'Ubicació',
       caption: 'Esplugues de Llobregat, prop de Barcelona.',
@@ -245,7 +241,6 @@ export default {
     },
   },
   footer: {
-    owner: 'Cristopher Gordon',
     builtWith: 'Fet amb Astro',
   },
-} as const;
+} satisfies Dictionary;

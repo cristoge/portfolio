@@ -1,0 +1,16 @@
+---
+import { externalLink } from '../../lib/links';
+
+// Enlace de acción en mono con flecha (estilos `.arrow-link` de global.css).
+interface Props {
+  href: string;
+  external?: boolean;
+  class?: string;
+}
+
+const { href, external = false, class: className } = Astro.props;
+---
+
+<a href={href} class:list={['arrow-link', className]} {...(external ? externalLink : {})}>
+  <slot /> <span class="arrow" aria-hidden="true">→</span>
+</a>

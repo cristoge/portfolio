@@ -1,0 +1,13 @@
+---
+// Fila de etiquetas `.pill`, p. ej. las tecnologías de un proyecto.
+interface Props {
+  items: readonly string[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<div class:list={['pill-row', className]}>
+  {items.map((item) => <span class="pill">{item}</span>)}
+</div>

@@ -1,0 +1,29 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PersonalEntry from '../../components/personal/PersonalEntry.astro';
+import PersonalIntro from '../../components/personal/PersonalIntro.astro';
+import { getDictionary, getLangStaticPaths } from '../../i18n/utils';
+
+export const getStaticPaths = getLangStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<BaseLayout lang={lang} title={`${t.personal.kicker} — ${t.meta.title}`} activePage="personal">
+  <section class="page">
+    <PersonalIntro lang={lang} />
+    <div class="entries">
+      {t.personal.sections.map((entry) => <PersonalEntry entry={entry} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .entries {
+    border-bottom: 1px solid var(--line-strong);
+  }
+</style>

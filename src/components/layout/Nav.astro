@@ -1,0 +1,175 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { site } from '../../data/site';
+import { getDictionary, localePath, type Lang, type Page } from '../../i18n/utils';
+import { externalLink } from '../../lib/links';
+
+interface Props {
+  lang: Lang;
+  // Ruta actual sin prefijo de idioma, para el selector de idioma.
+  path: string;
+  activePage?: Page;
+}
+
+const { lang, path, activePage } = Astro.props;
+const t = getDictionary(lang);
+
+const navItems: { page: Page; label: string }[] = [
+  { page: 'home', label: t.nav.home },
+  { page: 'personal', label: t.nav.personal },
+  { page: 'contact', label: t.nav.contact },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="container nav-inner">
+    <a href={site.cvHref} class="nav-cta" {...externalLink}>{t.hero.cta}</a>
+
+    <nav class="nav-links" aria-label={t.nav.ariaLabel}>
+      {navItems.map((item) => (
+        <a
+          href={localePath(lang, item.page)}
+          class="nav-link"
+          aria-current={item.page === activePage ? 'page' : undefined}
+        >{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="nav-actions">
+      <LanguageSwitcher lang={lang} path={path} />
+      <ThemeToggle lang={lang} />
+    </div>
+  </div>
+</header>
+
+<script>
+  // Expone la altura real de la barra (cambia al pasar a dos filas) como --nav-h.
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+
+  if (nav) {
+    const setNavHeight = () => {
+      document.documentElement.style.setProperty('--nav-h', `${nav.offsetHeight}px`);
+    };
+    // Se fija ya, antes de que otros scripts hagan scroll, y se actualiza al cambiar.
+    setNavHeight();
+    new ResizeObserver(setNavHeight).observe(nav);
+  }
+</script>
+
+<style>
+  /* Barra fina semitransparente con línea inferior. */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--page) 95%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 60px;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    background: var(--ink);
+    color: var(--page);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color 0.2s, opacity 0.4s var(--ease-out), visibility 0.4s;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  /* En la portada el CV ya está en el hero: el del header aparece al pulsar "Veure-ho tot". */
+  :global(html.js[data-hero-lock]:not(.home-revealed)) .nav-cta {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .nav-links {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    color: var(--copy);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover {
+    color: var(--accent);
+  }
+
+  .nav-link[aria-current] {
+    color: var(--ink);
+    text-decoration: underline 1px;
+    text-underline-offset: 6px;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 14px;
+    border-left: 1px solid var(--line);
+  }
+
+  /* En pantallas pequeñas los enlaces pasan a una segunda fila. */
+  @media (max-width: 900px) {
+    .nav-inner {
+      flex-wrap: wrap;
+      gap: 0 12px;
+      padding-top: 10px;
+    }
+    .nav-actions {
+      margin-left: auto;
+      padding-left: 0;
+      border-left: 0;
+    }
+    .nav-links {
+      order: 3;
+      width: calc(100% + var(--gutter) * 2);
+      margin: 10px calc(var(--gutter) * -1) 0;
+      padding: 0 calc(var(--gutter) - 14px);
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .nav-cta {
+      padding: 0 12px;
+    }
+    .nav-actions {
+      gap: 4px;
+    }
+    .nav-actions :global(.lang-option) {
+      min-width: 28px;
+      letter-spacing: 0.08em;
+    }
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import EducationItem from './EducationItem.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { getDictionary, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<section class="section" id="education">
+  <SectionHeading heading={t.education.heading} />
+  <div>
+    {t.education.items.map((entry) => (
+      <EducationItem entry={entry} courseworkLabel={t.education.courseworkLabel} />
+    ))}
+  </div>
+</section>

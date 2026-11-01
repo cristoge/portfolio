@@ -1,0 +1,55 @@
+---
+import { getDictionary, languages, languageLabels, localizedPath, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  // Ruta actual sin prefijo de idioma ('', 'contact', 'projects/x').
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<div class="lang-switcher" role="group" aria-label={t.nav.languageLabel}>
+  {languages.map((l) => (
+    <a
+      href={localizedPath(l, path)}
+      class="lang-option"
+      lang={l}
+      hreflang={l}
+      aria-current={l === lang ? 'page' : undefined}
+    >
+      {languageLabels[l]}
+    </a>
+  ))}
+</div>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    gap: 4px;
+  }
+
+  .lang-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 44px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+
+  .lang-option:hover {
+    color: var(--ink);
+    text-decoration: underline 1px;
+    text-underline-offset: 4px;
+  }
+
+  .lang-option[aria-current] {
+    color: var(--ink);
+  }
+</style>

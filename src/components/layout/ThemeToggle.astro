@@ -1,0 +1,86 @@
+---
+import { getDictionary, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  data-theme-toggle
+  aria-label={t.theme.toggle}
+  aria-pressed="false"
+  title={t.theme.dark}
+  data-label-dark={t.theme.dark}
+  data-label-light={t.theme.light}
+>
+  <span class="theme-toggle-icon" aria-hidden="true"></span>
+</button>
+
+<script>
+  import { THEME_KEY } from '../../lib/storage';
+
+  // El tema inicial lo pone el script del <head> de BaseLayout; aquí solo se cambia.
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  // El título indica el modo al que se cambiará.
+  const syncToggle = () => {
+    if (!toggle) return;
+    const isDark = root.dataset.theme === 'dark';
+    toggle.setAttribute('aria-pressed', String(isDark));
+    toggle.title = (isDark ? toggle.dataset.labelLight : toggle.dataset.labelDark) ?? '';
+  };
+
+  syncToggle();
+
+  toggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    if (next === 'dark') root.dataset.theme = 'dark';
+    else delete root.dataset.theme;
+    try {
+      localStorage.setItem(THEME_KEY, next);
+    } catch {
+      // ignore (private browsing / storage disabled)
+    }
+    syncToggle();
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .theme-toggle-icon {
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid;
+    border-radius: 50%;
+    background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+    transition: transform 0.6s var(--ease-in-out);
+  }
+
+  :global(:root[data-theme='dark']) .theme-toggle-icon {
+    transform: rotate(180deg);
+  }
+</style>

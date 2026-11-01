@@ -1,0 +1,27 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EducationSection from '../../components/home/EducationSection.astro';
+import Hero from '../../components/home/Hero.astro';
+import HomeReveal from '../../components/home/HomeReveal.astro';
+import ProjectsSection from '../../components/home/ProjectsSection.astro';
+import StackSection from '../../components/home/StackSection.astro';
+import { getDictionary, getLangStaticPaths } from '../../i18n/utils';
+
+export const getStaticPaths = getLangStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+const revealId = 'home-content';
+---
+
+<BaseLayout lang={lang} title={t.meta.title} description={t.meta.description} activePage="home" lockHero>
+  <Hero lang={lang} revealId={revealId} />
+  <HomeReveal id={revealId}>
+    <ProjectsSection lang={lang} />
+    <EducationSection lang={lang} />
+    <StackSection lang={lang} />
+  </HomeReveal>
+</BaseLayout>

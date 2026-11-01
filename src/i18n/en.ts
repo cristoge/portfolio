@@ -1,3 +1,5 @@
+import type { Dictionary } from './types';
+
 export default {
   nav: {
     home: 'Professional',
@@ -18,11 +20,11 @@ export default {
   },
   hero: {
     kicker: 'AI Engineer',
+    status: 'Open to work',
     greeting: "Hello, I'm",
     name: 'Cristo',
     tagline: 'Designing agents and their infrastructure on AWS.',
     cta: 'View CV',
-    ctaHref: '/CV_Cristopher_Gordon.pdf',
     exploreCta: 'See it all',
   },
   education: {
@@ -77,6 +79,10 @@ export default {
   projects: {
     heading: 'Projects',
     note: 'A selection of academic and personal projects.',
+    links: {
+      repo: 'Repo',
+      demo: 'Demo',
+    },
     detail: {
       back: 'Back to projects',
       context: 'Context',
@@ -84,9 +90,8 @@ export default {
       stackLabel: 'Stack',
       outcome: 'Outcome',
     },
-    items: [
-      {
-        slug: 'safe-reply',
+    items: {
+      'safe-reply': {
         title: 'Safe_reply',
         description: 'Backend that classifies the support tickets of a fictional digital bank and decides which ones AI can safely answer and which ones need a call from a person.',
         context: 'Ongoing personal project. A bank gets many repetitive questions that can be answered automatically, but others (fraud, stolen cards, unrecognised charges) leave no room for a wrong answer. The challenge is not answering, but knowing when not to: when in doubt, the ticket always goes to a person. v1 works without an LLM, using canned answers: more privacy (banking data never leaves the server) and no per-request cost.',
@@ -97,14 +102,9 @@ export default {
           'Async layered backend with FastAPI and PostgreSQL: JWT with rotating refresh tokens, Redis rate limiting, Idempotency-Key, IDOR protection and JSON logs with no personal data',
           '57 canned answers whose figures all come from a single bank facts document, checked by tests, and 470 tests against a real database',
         ],
-        stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
         outcome: 'v1 complete. On the Banking77 test set (3,080 tickets), no automatic answer reached a ticket that needed a person, and AI answered none of the out-of-scope or two-problem messages. Next step (v2): RAG with pgvector and a local LLM, a queue system and a judge that reviews every answer.',
-        repoHref: 'https://github.com/cristoge/rag_revision',
-        demoHref: '',
-        image: '/docs.webp',
       },
-      {
-        slug: 'rag-pdf',
+      'rag-pdf': {
         title: 'RAG study assistant',
         description: 'Mobile app to upload your PDFs and ask questions about their content in natural language: answers come from the document itself, powered by a RAG agent.',
         context: 'Final project of the Specialization Course in Artificial Intelligence and Big Data (ITIC Barcelona), built individually and documented in an academic paper. Students upload their notes, books or articles and chat with them from their phone: summaries, flashcards and concept explanations generated from semantically retrieved passages.',
@@ -115,14 +115,9 @@ export default {
           'Async FastAPI backend streaming the answer token by token to the app over Server-Sent Events',
           'Conversation history persisted in the database and a swappable LLM: Claude Haiku (Anthropic API) or Gemma running locally',
         ],
-        stack: ['Python', 'FastAPI', 'LangGraph', 'LangChain', 'PostgreSQL', 'pgvector', 'Supabase', 'Ollama', 'React Native'],
         outcome: 'Final grade: 9/10. Final specialization project, accompanied by a paper documenting the design, the evolution of the agent and its limitations.',
-        repoHref: 'https://github.com/cristoge/TIC_project',
-        demoHref: '',
-        image: '/rag2.webp',
       },
-      {
-        slug: 'bikeshare',
+      'bikeshare': {
         title: 'BikeShare',
         description: 'Mobile app for renting regular and electric bikes, with an interactive map, reservations and CO₂ savings stats.',
         context: 'Final project of the Higher Vocational Training in Multiplatform Application Development (Prat FP), built in a team of four. The app lets users find, reserve and unlock bikes without going to a desk, and shows them the positive environmental impact of their rides.',
@@ -133,13 +128,9 @@ export default {
           'Authentication with Supabase Auth and persistent sessions, global state with Zustand and form validation with Zod',
           'Ride history and per-user stats, including an estimate of the CO₂ avoided based on distance travelled',
         ],
-        stack: ['TypeScript', 'React Native', 'Expo', 'Supabase', 'PostgreSQL', 'Zustand', 'Zod'],
         outcome: 'Final grade: 9.84/10. Final project of the programme, delivered with a technical report and user manual.',
-        repoHref: 'https://github.com/cristoge/bikeshare',
-        demoHref: '',
-        image: '/bike2.webp',
       },
-    ],
+    },
   },
   stack: {
     heading: 'Technologies',
@@ -149,7 +140,17 @@ export default {
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
       { label: 'Cloud & infrastructure', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
-      { label: 'Tools', items: ['Neovim', 'Claude Code', 'Pi', 'OpenCode', 'herdr', { label: "Matt Pocock's skills", href: 'https://github.com/mattpocock/skills' }] },
+      {
+        label: 'Tools',
+        items: [
+          'Claude Code',
+          { label: "Matt Pocock's skills", href: 'https://github.com/mattpocock/skills' },
+          'OpenCode',
+          { label: 'Pi', description: 'minimal agent harness' },
+          { label: 'herdr', description: 'AI agent multiplexer' },
+          'Neovim',
+        ],
+      },
     ],
   },
   personal: {
@@ -224,11 +225,6 @@ export default {
       ariaLabel: 'Copy email address',
       done: 'Copied!',
     },
-    links: [
-      { label: 'Email', value: 'cristo.g@outlook.es', href: 'mailto:cristo.g@outlook.es' },
-      { label: 'LinkedIn', value: 'linkedin.com/in/cristopher-gordon', href: 'https://www.linkedin.com/in/cristopher-gordon/' },
-      { label: 'GitHub', value: 'github.com/cristoge', href: 'https://github.com/cristoge' },
-    ],
     map: {
       heading: 'Location',
       caption: 'Esplugues de Llobregat, near Barcelona.',
@@ -245,7 +241,6 @@ export default {
     },
   },
   footer: {
-    owner: 'Cristopher Gordon',
     builtWith: 'Built with Astro',
   },
-} as const;
+} satisfies Dictionary;

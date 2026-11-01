@@ -1,0 +1,184 @@
+---
+import { getDictionary, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { form } = getDictionary(lang).contact;
+---
+
+<form
+  class="contact-form"
+  data-contact-form
+  data-subject={form.subject}
+  data-sending={form.sendingLabel}
+  data-success={form.successMessage}
+  data-error={form.errorMessage}
+>
+  <label class="form-field">
+    <span>{form.nameLabel}</span>
+    <input type="text" name="name" autocomplete="name" required />
+  </label>
+  <label class="form-field">
+    <span>{form.emailLabel}</span>
+    <input type="email" name="email" autocomplete="email" required />
+  </label>
+  <label class="form-field form-field-full">
+    <span>{form.messageLabel}</span>
+    <textarea name="message" rows="4" required></textarea>
+  </label>
+  <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <div class="form-field-full">
+    <button type="submit" class="btn btn-primary">
+      <span data-submit-label>{form.submitLabel}</span> <span class="arrow" aria-hidden="true">→</span>
+    </button>
+    <p class="form-status" role="status" aria-live="polite" hidden></p>
+  </div>
+</form>
+
+<script>
+  // Envía el formulario a Web3Forms (https://web3forms.com). La clave es pública:
+  // está pensada para ir en el cliente y se define en .env (ver .env.example).
+  const ENDPOINT = 'https://api.web3forms.com/submit';
+  const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const buttonLabel = form?.querySelector<HTMLElement>('[data-submit-label]');
+  const status = form?.querySelector<HTMLElement>('.form-status');
+
+  if (form && button && buttonLabel && status) {
+    const { subject = '', sending = '', success = '', error = '' } = form.dataset;
+    const submitLabel = buttonLabel.textContent ?? '';
+
+    const showStatus = (text: string, kind: 'success' | 'error') => {
+      status.textContent = text;
+      status.dataset.kind = kind;
+      status.hidden = false;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get('name') ?? '').trim();
+
+      data.append('access_key', accessKey);
+      data.append('subject', `${subject} — ${name}`);
+      data.append('from_name', name);
+
+      button.disabled = true;
+      buttonLabel.textContent = sending;
+      status.hidden = true;
+
+      try {
+        const response = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.message);
+
+        form.reset();
+        showStatus(success, 'success');
+      } catch {
+        showStatus(error, 'error');
+      } finally {
+        button.disabled = false;
+        buttonLabel.textContent = submitLabel;
+      }
+    });
+  }
+</script>
+
+<style>
+  /* La fila del mensaje crece para que el formulario iguale la altura del mapa. */
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 18px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .form-field-full {
+    grid-column: 1 / -1;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+    background: var(--field);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: var(--fs-base);
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+
+  .form-field textarea {
+    flex: 1;
+  }
+
+  .form-field input:hover,
+  .form-field textarea:hover {
+    border-color: var(--ink);
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--accent);
+    outline: 1px solid var(--accent);
+    outline-offset: 0;
+  }
+
+  /* Botón de enviar a todo el ancho del formulario. */
+  .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .btn:disabled {
+    cursor: wait;
+  }
+
+  .form-honeypot {
+    display: none;
+  }
+
+  .form-status {
+    margin-top: 18px;
+    font-size: var(--fs-sm);
+  }
+
+  .form-status[data-kind='error'] {
+    color: var(--danger);
+  }
+
+  @media (max-width: 640px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+    }
+  }
+</style>
