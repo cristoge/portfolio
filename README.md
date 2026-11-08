@@ -1,42 +1,65 @@
 # Portfolio
 
-Portfolio personal construido con [Astro](https://astro.build), i18n nativo (ca/es/en) y desplegado en GitHub Pages.
+Personal portfolio of **Cristopher Gordon**: projects, education, tech stack and contact. A fully static site built with [Astro](https://astro.build), available in three languages (Catalan, Spanish and English).
 
-## Desarrollo
+**Live site:** <https://cristoge-portfolio.vercel.app>
+
+## Getting started
+
+Requirements: Node.js 20 or later.
 
 ```sh
 npm install
-npm run dev
+cp .env.example .env   # optional: only needed for the contact form
+npm run dev            # http://localhost:4321
 ```
 
-## Build
+| Command           | What it does                     |
+| ----------------- | -------------------------------- |
+| `npm run dev`     | Start the development server     |
+| `npm run build`   | Build for production into `dist/` |
+| `npm run preview` | Serve the production build locally |
 
-```sh
-npm run build
-npm run preview
+### Environment variables
+
+| Variable               | Purpose                                                                       |
+| ---------------------- | ----------------------------------------------------------------------------- |
+| `PUBLIC_WEB3FORMS_KEY` | [Web3Forms](https://web3forms.com) access key used to send the contact form |
+
+The site works without it; only the contact form submission fails.
+
+## Features
+
+- **Native Astro i18n**: `ca` is the default locale (no URL prefix); `es` and `en` are prefixed. A single page per route generates all three languages.
+- **Typed content**: the dictionaries in `src/i18n/` satisfy a shared `Dictionary` type, so a field missing in any language fails to compile.
+- **Light and dark themes**: follows the system preference and can be toggled from the navigation bar.
+- **No framework JavaScript**: only small per-component scripts (theme, scroll reveal, copy email, contact form).
+
+## Project structure
+
+```text
+src/
+├── pages/[...lang]/   # routes: index, personal, contact, projects/[slug]
+├── layouts/           # BaseLayout: head, nav, footer
+├── components/        # grouped by area: ui, layout, home, personal, contact
+├── i18n/              # ca/es/en dictionaries, Dictionary type and helpers
+├── data/              # language-independent data: site.ts and projects.ts
+├── lib/               # non-UI utilities
+└── styles/global.css  # design tokens
 ```
 
-## Deploy
+### Adding a project
 
-El workflow `.github/workflows/deploy.yml` construye y despliega a GitHub Pages en cada push a `main`.
-En el repositorio de GitHub: **Settings → Pages → Source → GitHub Actions**.
+1. Add an entry to `src/data/projects.ts` (`slug`, `stack`, links, image).
+2. Add its text to `projects.items` in `src/i18n/{ca,es,en}.ts` using the same `slug`.
+3. Put the image in `public/`.
 
-## Pendiente de definir / editar
+The order of the list in `projects.ts` is the order shown on the site, and each project gets its own page at `/projects/<slug>`.
 
-- [ ] `astro.config.mjs`: cambiar `TU-USUARIO` por tu usuario real de GitHub (y `base` si usas un repo de proyecto en vez de `usuario.github.io`).
-- [ ] `src/i18n/{ca,es,en}.ts` → `hero.tagline`: tagline real separada por "|".
-- [ ] `src/i18n/{ca,es,en}.ts` → `education.items`: nombre del centro (`[Centro educativo]`), años exactos (`[año]`) y especialidad del Ciclo Superior (`[especialidad]`) en las tres entradas.
-- [ ] `src/i18n/{ca,es,en}.ts` → `projects.items`: contenido real de cada proyecto académico (título, descripción, `context`, `depthTopics`, stack, `outcome`, enlaces a repo/demo). Ahora mismo son 3 proyectos de ejemplo con lorem ipsum, ya con la plantilla de página de detalle lista en `/projects/:slug`.
-- [ ] Enlaces de contacto reales (`contact.links`: email, LinkedIn, GitHub) en los tres idiomas.
-- [ ] Subir el CV a `public/cv.pdf` (el botón "Ver CV" ya apunta ahí).
-- [ ] Página **Personal**: sustituir el placeholder por fotos/contenido de hobbies cuando esté listo.
-- [ ] Imágenes reales de los proyectos (ahora hay un marcador `IMG` en la tarjeta y en la página de detalle).
-- [ ] Confirmar dominio final (¿dominio propio o `usuario.github.io`?).
+## Deployment
 
-## Estructura
+Deployed on [Vercel](https://vercel.com) from the `master` branch and served from the root (`base: '/'` in `astro.config.mjs`). If you deploy to a different domain, update `site` in that file.
 
-- `src/i18n/` — diccionarios de contenido por idioma.
-- `src/views/` — cuerpo de cada página (Home/Personal/Contact/ProjectDetail), compartido entre idiomas.
-- `src/pages/` — rutas: catalán en la raíz (idioma por defecto), `es/` y `en/` con prefijo. `projects/[slug].astro` genera una página por proyecto a partir de `projects.items` en cada idioma.
-- `src/components/` — Nav, selector de idioma, tarjetas de proyecto/educación.
-- `src/styles/global.css` — tokens de diseño (paleta "papel envejecido", tipografías).
+## Author
+
+Cristopher Gordon — [LinkedIn](https://www.linkedin.com/in/cristopher-gordon/) · [GitHub](https://github.com/cristoge)

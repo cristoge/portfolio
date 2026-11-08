@@ -2,7 +2,7 @@
 
 ## Proyecto
 
-Portfolio personal — Astro estático, sin backend, deploy en GitHub Pages.
+Portfolio personal — Astro estático, sin backend, deploy en Vercel (`site` y `base` en `astro.config.mjs`).
 
 ## Comandos
 
@@ -43,4 +43,3 @@ Portfolio personal — Astro estático, sin backend, deploy en GitHub Pages.
 - Para añadir un proyecto: entrada en `src/data/projects.ts` y su texto en `projects.items` de los 3 idiomas con el mismo `slug`.
 - Enlaces externos con `{...externalLink}` (o `external` en `ButtonLink`/`ArrowLink`), no `target`/`rel` a mano.
 - Comprobar tipos: `npx tsc --noEmit` (archivos `.ts`); para los `.astro`, `astro check` (requiere `@astrojs/check`, no instalado).
-- Los campos marcados con comentarios `// TODO` en los archivos de i18n son placeholders reales (rol, tagline, CV, contacto, educación, proyectos) pendientes de rellenar con contenido definitivo.
