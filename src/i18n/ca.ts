@@ -135,7 +135,7 @@ export default {
   stack: {
     heading: 'Tecnologies',
     groups: [
-      { label: 'IA / ML', items: ['LangChain', 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'IA / ML', items: [{ label: 'Strands Agents', href: 'https://strandsagents.com' }, 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
       { label: 'Llenguatges', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Bases de dades', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
@@ -144,7 +144,7 @@ export default {
         label: 'Eines',
         items: [
           'Claude Code',
-          { label: 'Skills de Matt Pocock', href: 'https://github.com/mattpocock/skills' },
+          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: "configurador d'agents d'IA" },
           'OpenCode',
           { label: 'Pi', description: 'harness minimal per a agents' },
           { label: 'herdr', description: "multiplexor d'agents d'IA" },
@@ -161,7 +161,7 @@ export default {
       { label: 'Rol', value: 'Backend · AI Engineer' },
       { label: 'Ara', value: 'Curs Cloud (AWS)' },
       { label: 'Estat', value: 'Buscant feina' },
-      { label: 'Fora del codi', value: 'Teclats, terminal i violí' },
+      { label: 'Fora del codi', value: 'Personalització i música' },
     ],
     intro: [
       "Em dic Cristopher i sóc desenvolupador backend. Vaig començar al cicle de DAM programant la part del servidor i aplicacions mòbils, i a poc a poc vaig anar sentint parlar cada vegada més de la intel·ligència artificial.",
@@ -169,31 +169,41 @@ export default {
     ],
     sections: [
       {
-        title: "Mecanografia i teclats",
+        title: "Com aprenc",
         body: [
-          "Quan vaig començar a programar em passava l'estona mirant el teclat per trobar cada tecla. Em vaig proposar deixar de fer-ho i vaig començar a practicar mecanografia en diferents pàgines, a poc a poc, fins que un dia em vaig adonar que ja no mirava el teclat i que, a sobre, m'ho passava bé escrivint.",
-          "D'aquí vaig saltar al món dels teclats mecànics custom. Vaig anar descobrint layouts diferents i tota mena de teclats, i sense adonar-me'n he acabat fent-ne col·lecció: cada vegada en tinc més, i sempre n'hi ha algun de rar o exclusiu que vull provar.",
+          "Amb la IA tot canvia tan de pressa que el que aprens a classe es queda antic en uns mesos, així que m'he acostumat a posar-me al dia pel meu compte, una miqueta cada dia.",
+          "Acostumo a mirar Reddit i Twitter, on la gent sempre va recomanant eines noves, que amb la IA cada dia surt algun projecte nou.",
+          "També segueixo diversos canals de YouTube, com el de Gentleman Programming, que sempre està ensenyant eines noves per millorar el workflow. D'allà en vaig treure algunes que ara faig servir cada dia, com gentle-ai, que em deixa els agents d'IA a punt per programar, o engram, que fa que recordin el que hem fet d'una sessió a l'altra.",
+          "Un altre que segueixo és typecraft. Amb els seus vídeos em vaig enganxar a personalitzar el terminal i l'editor, i d'aquí surt el setup que t'ensenyo més avall.",
+          "Sempre que alguna cosa em crida l'atenció, la instal·lo i la provo a veure què tal.",
         ],
-        image: '/keyboard.webp',
-        caption: 'Teclat split custom',
+        inlineLinks: [
+          { text: 'Gentleman Programming', href: 'https://www.youtube.com/@GentlemanProgramming' },
+          { text: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai' },
+          { text: 'engram', href: 'https://github.com/Gentleman-Programming/engram' },
+          { text: 'typecraft', href: 'https://www.youtube.com/@typecraft_dev' },
+        ],
+        image: '/engram.webp',
+        caption: 'engram · memòria per als meus agents',
       },
       {
         title: "El meu setup",
         body: [
           "Quan vaig començar a programar feia servir VS Code i em passava el dia canviant de tema sense estar mai del tot content. Després vaig descobrir que des de la mateixa terminal també es podia editar codi, i amb això tot un món de personalització i configuracions: d'aquí van sortir Neovim, Starship i unes quantes terminals diferents, fins que em vaig adonar que programant des de la terminal estava molt més còmode. Ara faig servir Ghostty, que fins i tot em deixa posar-hi shaders.",
           "Últimament hi he afegit herdr, un multiplexor de terminal pensat per a agents d'IA. Em permet tenir diversos agents treballant alhora, cadascun al seu espai, i veure d'un cop d'ull quin necessita la meva atenció, cosa que ha millorat molt el meu flux de treball amb agents.",
-          "Després de provar moltes configuracions i paletes de colors, vaig trobar la definitiva: vague. Ara la poso a tot arreu: a l'editor, a la terminal i a qualsevol eina que em deixi personalitzar els colors.",
+          "Després de provar moltes configuracions i paletes de colors, vaig trobar les definitives: Rosé Pine i vague. Ara les poso a tot arreu: a l'editor, a la terminal i a qualsevol eina que em deixi personalitzar els colors.",
         ],
         inlineLinks: [
           { text: 'Neovim', href: 'https://github.com/neovim/neovim' },
           { text: 'Starship', href: 'https://github.com/starship/starship' },
           { text: 'Ghostty', href: 'https://github.com/ghostty-org/ghostty' },
           { text: 'herdr', href: 'https://github.com/ogulcancelik/herdr' },
+          { text: 'Rosé Pine', href: 'https://github.com/rose-pine' },
           { text: 'vague', href: 'https://github.com/vague-theme' },
         ],
         link: { label: 'Veure els meus dotfiles a GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
-        caption: 'Neovim · Ghostty · tema vague',
+        caption: 'Neovim · Ghostty · tema Rosé Pine',
       },
       {
         title: "Música",
@@ -208,7 +218,7 @@ export default {
       {
         title: "Ara mateix",
         body: [
-          "Estic en una etapa en què estic buscant feina i, alhora, continuo formant-me. Vaig decidir aprofundir en cloud perquè és una de les coses que més es demana avui dia, així que estic fent el curs d'especialització i em passo el dia trastejant amb AWS.",
+          "Estic en una etapa en què estic buscant feina i, alhora, continuo formant-me. Vaig decidir aprofundir en cloud perquè és una de les coses que més es demana avui dia, així que estic fent el curs d'especialització i em passo el dia trastejant amb AWS. L'objectiu és aprendre AWS a fons i poder-hi desplegar els meus projectes d'agents d'IA.",
           "El curs em prepara per a la certificació AWS Solutions Architect – Associate, que em trauré d'aquí a uns mesos. En paral·lel, pel meu compte, continuo fent projectes amb agents d'IA i aprofundeixo en els seus conceptes més tècnics i en com dissenyar workflows amb ells.",
         ],
         image: '/now.webp',

@@ -135,7 +135,7 @@ export default {
   stack: {
     heading: 'Technologies',
     groups: [
-      { label: 'AI / ML', items: ['LangChain', 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'AI / ML', items: [{ label: 'Strands Agents', href: 'https://strandsagents.com' }, 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
       { label: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
@@ -144,7 +144,7 @@ export default {
         label: 'Tools',
         items: [
           'Claude Code',
-          { label: "Matt Pocock's skills", href: 'https://github.com/mattpocock/skills' },
+          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'AI agent configurator' },
           'OpenCode',
           { label: 'Pi', description: 'minimal agent harness' },
           { label: 'herdr', description: 'AI agent multiplexer' },
@@ -161,7 +161,7 @@ export default {
       { label: 'Role', value: 'Backend · AI Engineer' },
       { label: 'Now', value: 'Cloud course (AWS)' },
       { label: 'Status', value: 'Open to work' },
-      { label: 'Off the clock', value: 'Keyboards, terminal and violin' },
+      { label: 'Off the clock', value: 'Customization and music' },
     ],
     intro: [
       "My name is Cristopher and I'm a backend developer. I started out in a vocational degree in multiplatform app development, building server-side code and mobile apps, and little by little I kept hearing more and more about artificial intelligence.",
@@ -169,31 +169,41 @@ export default {
     ],
     sections: [
       {
-        title: "Touch typing and keyboards",
+        title: "How I learn",
         body: [
-          "When I started coding I spent most of the time looking down at the keyboard to find each key. I set out to stop doing that and began practicing touch typing on different sites, little by little, until one day I realized I wasn't looking at the keyboard anymore and, on top of that, I was actually having fun typing.",
-          "From there I fell into the world of custom mechanical keyboards. I discovered different layouts and all kinds of boards, and before I knew it I'd started collecting them: the collection keeps growing, and there's always some rare or exclusive one I want to try.",
+          "With AI everything moves so fast that what you learn in class is outdated within a few months, so I've gotten used to keeping up on my own, a little bit every day.",
+          "I usually check Reddit and Twitter, where people are always recommending new tools; with AI, there's a new project coming out every day.",
+          "I also follow several YouTube channels, like Gentleman Programming, which is always showing new tools to improve your workflow. That's where I found some I now use daily, like gentle-ai, which gets AI agents ready to code, and engram, which makes them remember what we did from one session to the next.",
+          "Another one I follow is typecraft. Those videos got me hooked on customizing my terminal and editor, and that's where the setup I show below comes from.",
+          "Whenever something catches my eye, I install it and try it out to see how it holds up.",
         ],
-        image: '/keyboard.webp',
-        caption: 'Custom split keyboard',
+        inlineLinks: [
+          { text: 'Gentleman Programming', href: 'https://www.youtube.com/@GentlemanProgramming' },
+          { text: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai' },
+          { text: 'engram', href: 'https://github.com/Gentleman-Programming/engram' },
+          { text: 'typecraft', href: 'https://www.youtube.com/@typecraft_dev' },
+        ],
+        image: '/engram.webp',
+        caption: 'engram · memory for my agents',
       },
       {
         title: "My setup",
         body: [
           "When I started programming I used VS Code and kept switching themes, never quite happy with any of them. Then I found out you could edit code right from the terminal, and with it a whole world of customisation and configs: that led me to Neovim, Starship and a handful of different terminals, until I realised I was much more comfortable programming from the terminal. These days I use Ghostty, which even lets me add shaders.",
           "Lately I've added herdr, a terminal multiplexer built for AI agents. It lets me run several agents at once, each in its own space, and see at a glance which one needs my attention, which has made my workflow with agents much better.",
-          "After trying so many configs and color palettes, I found the one: vague. Now it's on everything: my editor, my terminal and any other tool that lets me customize the colors.",
+          "After trying so many configs and color palettes, I found the ones: Rosé Pine and vague. Now they're on everything: my editor, my terminal and any other tool that lets me customize the colors.",
         ],
         inlineLinks: [
           { text: 'Neovim', href: 'https://github.com/neovim/neovim' },
           { text: 'Starship', href: 'https://github.com/starship/starship' },
           { text: 'Ghostty', href: 'https://github.com/ghostty-org/ghostty' },
           { text: 'herdr', href: 'https://github.com/ogulcancelik/herdr' },
+          { text: 'Rosé Pine', href: 'https://github.com/rose-pine' },
           { text: 'vague', href: 'https://github.com/vague-theme' },
         ],
         link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
-        caption: 'Neovim · Ghostty · vague theme',
+        caption: 'Neovim · Ghostty · Rosé Pine theme',
       },
       {
         title: "Music",
@@ -208,7 +218,7 @@ export default {
       {
         title: "Right now",
         body: [
-          "I'm at a stage where I'm looking for a job while I keep learning. I decided to go deeper into cloud because it's one of the most in-demand skills these days, so I'm doing the specialization course and spending my days tinkering with AWS.",
+          "I'm at a stage where I'm looking for a job while I keep learning. I decided to go deeper into cloud because it's one of the most in-demand skills these days, so I'm doing the specialization course and spending my days tinkering with AWS. The goal is to learn AWS in depth and be able to deploy my AI agent projects on it.",
           "The course is preparing me for the AWS Solutions Architect – Associate certification, which I'll get in a few months. In parallel, on my own, I keep building projects with AI agents and dig deeper into their more technical concepts and how to design workflows with them.",
         ],
         image: '/now.webp',

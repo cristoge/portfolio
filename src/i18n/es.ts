@@ -135,7 +135,7 @@ export default {
   stack: {
     heading: 'Tecnologías',
     groups: [
-      { label: 'IA / ML', items: ['LangChain', 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'IA / ML', items: [{ label: 'Strands Agents', href: 'https://strandsagents.com' }, 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
       { label: 'Lenguajes', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Bases de datos', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
@@ -144,7 +144,7 @@ export default {
         label: 'Herramientas',
         items: [
           'Claude Code',
-          { label: 'Skills de Matt Pocock', href: 'https://github.com/mattpocock/skills' },
+          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'configurador de agentes de IA' },
           'OpenCode',
           { label: 'Pi', description: 'harness minimalista para agentes' },
           { label: 'herdr', description: 'multiplexor de agentes de IA' },
@@ -161,7 +161,7 @@ export default {
       { label: 'Rol', value: 'Backend · AI Engineer' },
       { label: 'Ahora', value: 'Curso Cloud (AWS)' },
       { label: 'Estado', value: 'Buscando trabajo' },
-      { label: 'Fuera del código', value: 'Teclados, terminal y violín' },
+      { label: 'Fuera del código', value: 'Personalización y música' },
     ],
     intro: [
       "Me llamo Cristopher y soy desarrollador backend. Empecé en el ciclo de DAM programando la parte del servidor y aplicaciones móviles, y poco a poco fui oyendo hablar cada vez más de la inteligencia artificial.",
@@ -169,31 +169,41 @@ export default {
     ],
     sections: [
       {
-        title: "Mecanografía y teclados",
+        title: "Cómo aprendo",
         body: [
-          "Cuando empecé a programar me pasaba el rato mirando el teclado para encontrar cada tecla. Me propuse dejar de hacerlo y empecé a practicar mecanografía en distintas páginas, poco a poco, hasta que un día me di cuenta de que ya no miraba el teclado y que, encima, me lo pasaba bien escribiendo.",
-          "De ahí salté al mundo de los teclados mecánicos custom. Fui descubriendo distintos layouts y todo tipo de teclados, y sin darme cuenta he acabado coleccionándolos: cada vez tengo más, y siempre hay alguno raro o exclusivo que quiero probar.",
+          "Con la IA todo cambia tan rápido que lo que aprendes en clase se queda viejo en unos meses, así que me he acostumbrado a ponerme al día por mi cuenta, un poquito cada día.",
+          "Suelo mirar Reddit y Twitter, donde la gente siempre va recomendando herramientas nuevas, que con la IA cada día sale algún proyecto nuevo.",
+          "También sigo varios canales de YouTube, como el de Gentleman Programming, que siempre está enseñando herramientas nuevas para mejorar el workflow. De ahí saqué algunas que ahora uso a diario, como gentle-ai, que me deja los agentes de IA listos para programar, o engram, que hace que recuerden lo que hemos hecho de una sesión a otra.",
+          "Otro que sigo es typecraft. Con sus vídeos me enganché a personalizar la terminal y el editor, y de ahí sale el setup que te enseño más abajo.",
+          "Siempre que algo me llama la atención, lo instalo y lo pruebo a ver qué tal está.",
         ],
-        image: '/keyboard.webp',
-        caption: 'Teclado split custom',
+        inlineLinks: [
+          { text: 'Gentleman Programming', href: 'https://www.youtube.com/@GentlemanProgramming' },
+          { text: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai' },
+          { text: 'engram', href: 'https://github.com/Gentleman-Programming/engram' },
+          { text: 'typecraft', href: 'https://www.youtube.com/@typecraft_dev' },
+        ],
+        image: '/engram.webp',
+        caption: 'engram · memoria para mis agentes',
       },
       {
         title: "Mi setup",
         body: [
           "Cuando empecé a programar usaba VS Code y me pasaba el día cambiando de tema sin acabar de estar nunca conforme. Luego descubrí que desde la propia terminal también se podía editar código, y con ello todo un mundo de personalización y configuraciones: de ahí salieron Neovim, Starship y unas cuantas terminales distintas, hasta que me di cuenta de que programando desde la terminal estaba mucho más cómodo. Ahora uso Ghostty, que incluso me deja ponerle shaders.",
           "Últimamente le he añadido herdr, un multiplexor de terminal pensado para agentes de IA. Me permite tener varios agentes trabajando a la vez, cada uno en su espacio, y ver de un vistazo cuál necesita mi atención, lo que ha mejorado mucho mi flujo de trabajo con agentes.",
-          "Después de probar muchas configuraciones y paletas de colores, encontré la definitiva: vague. Ahora la pongo en todas partes: en el editor, en la terminal y en cualquier herramienta que me deje personalizar los colores.",
+          "Después de probar muchas configuraciones y paletas de colores, encontré las definitivas: Rosé Pine y vague. Ahora las pongo en todas partes: en el editor, en la terminal y en cualquier herramienta que me deje personalizar los colores.",
         ],
         inlineLinks: [
           { text: 'Neovim', href: 'https://github.com/neovim/neovim' },
           { text: 'Starship', href: 'https://github.com/starship/starship' },
           { text: 'Ghostty', href: 'https://github.com/ghostty-org/ghostty' },
           { text: 'herdr', href: 'https://github.com/ogulcancelik/herdr' },
+          { text: 'Rosé Pine', href: 'https://github.com/rose-pine' },
           { text: 'vague', href: 'https://github.com/vague-theme' },
         ],
         link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
-        caption: 'Neovim · Ghostty · tema vague',
+        caption: 'Neovim · Ghostty · tema Rosé Pine',
       },
       {
         title: "Música",
@@ -208,7 +218,7 @@ export default {
       {
         title: "Ahora mismo",
         body: [
-          "Estoy en una etapa en la que estoy buscando trabajo y, a la vez, sigo formándome. Decidí profundizar en cloud porque es de lo que más se pide hoy en día, así que estoy con el curso de especialización y me paso el día trasteando con AWS.",
+          "Estoy en una etapa en la que estoy buscando trabajo y, a la vez, sigo formándome. Decidí profundizar en cloud porque es de lo que más se pide hoy en día, así que estoy con el curso de especialización y me paso el día trasteando con AWS. El objetivo es aprender AWS a fondo y poder desplegar ahí mis proyectos de agentes de IA.",
           "El curso me prepara para la certificación AWS Solutions Architect – Associate, que me sacaré en unos meses. En paralelo, por mi cuenta, sigo haciendo proyectos con agentes de IA y profundizo en sus conceptos más técnicos y en cómo diseñar workflows con ellos.",
         ],
         image: '/now.webp',
