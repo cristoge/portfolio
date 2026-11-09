@@ -38,6 +38,8 @@ const t = getDictionary(lang);
   };
 
   syncToggle();
+  // El tema también puede cambiarlo la intro de la portada.
+  new MutationObserver(syncToggle).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 
   toggle?.addEventListener('click', () => {
     const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -48,7 +50,6 @@ const t = getDictionary(lang);
     } catch {
       // ignore (private browsing / storage disabled)
     }
-    syncToggle();
   });
 </script>
 

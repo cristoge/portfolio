@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/layout/Nav.astro';
 import Footer from '../components/layout/Footer.astro';
 import { getDictionary, unlocalizedPath, type Lang, type Page } from '../i18n/utils';
-import { HOME_REVEALED_CLASS, HOME_REVEALED_KEY, THEME_KEY } from '../lib/storage';
+import { INTRO_ACTIVE_CLASS, INTRO_SEEN_KEY, THEME_KEY } from '../lib/storage';
 
 interface Props {
   lang: Lang;
@@ -11,17 +11,17 @@ interface Props {
   description?: string;
   // Enlace del menú que se marca como actual.
   activePage?: Page;
-  // Portada: bloquea el scroll en el hero hasta pulsar "Veure-ho tot" (ver Hero.astro).
-  lockHero?: boolean;
+  // Portada: puede mostrar la intro en forma de terminal (ver TerminalIntro.astro).
+  intro?: boolean;
 }
 
-const { lang, title, description, activePage, lockHero = false } = Astro.props;
+const { lang, title, description, activePage, intro = false } = Astro.props;
 const t = getDictionary(lang);
 const path = unlocalizedPath(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang={lang} data-hero-lock={lockHero ? '' : undefined}>
+<html lang={lang} data-intro-page={intro ? '' : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -30,8 +30,8 @@ const path = unlocalizedPath(Astro.url.pathname);
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Se ejecuta antes de pintar para que no parpadee el tema ni el hero. -->
-    <script define:vars={{ THEME_KEY, HOME_REVEALED_KEY, HOME_REVEALED_CLASS }}>
+    <!-- Se ejecuta antes de pintar para que no parpadee el tema ni la intro. -->
+    <script define:vars={{ THEME_KEY, INTRO_SEEN_KEY, INTRO_ACTIVE_CLASS }}>
       const root = document.documentElement;
       root.classList.add('js');
       try {
@@ -41,15 +41,11 @@ const path = unlocalizedPath(Astro.url.pathname);
           root.dataset.theme = 'dark';
         }
       } catch {}
-      // Al recargar se vuelve a mostrar el hero; al navegar se recuerda si ya se desplegó.
+      // Intro en forma de terminal de la portada: la primera visita o con ?intro.
       try {
-        const [entry] = performance.getEntriesByType('navigation');
-        const isReload = entry ? entry.type === 'reload' : performance.navigation?.type === 1;
-
-        if (isReload) {
-          sessionStorage.removeItem(HOME_REVEALED_KEY);
-        } else if (sessionStorage.getItem(HOME_REVEALED_KEY) === 'true') {
-          root.classList.add(HOME_REVEALED_CLASS);
+        const forced = new URLSearchParams(location.search).has('intro');
+        if (root.hasAttribute('data-intro-page') && (forced || localStorage.getItem(INTRO_SEEN_KEY) !== 'true')) {
+          root.classList.add(INTRO_ACTIVE_CLASS);
         }
       } catch {}
     </script>

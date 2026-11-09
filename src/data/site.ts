@@ -15,4 +15,9 @@ export const site = {
   },
   mapEmbedSrc: 'https://www.google.com/maps?q=Esplugues+de+Llobregat&z=13&output=embed',
   builtWithHref: 'https://astro.build',
+  // Cabecera de la intro en forma de terminal de la portada.
+  terminal: {
+    version: 'v2026',
+    cwd: '~/cristoge',
+  },
 } as const;

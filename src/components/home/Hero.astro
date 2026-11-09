@@ -6,11 +6,9 @@ import { getDictionary, type Lang } from '../../i18n/utils';
 
 interface Props {
   lang: Lang;
-  // id del contenido que se despliega con "Veure-ho tot" (ver HomeReveal.astro).
-  revealId: string;
 }
 
-const { lang, revealId } = Astro.props;
+const { lang } = Astro.props;
 const t = getDictionary(lang);
 const greetingWords = t.hero.greeting.split(' ');
 ---
@@ -40,70 +38,17 @@ const greetingWords = t.hero.greeting.split(' ');
       </div>
     </div>
   </div>
-
-  <button type="button" class="scroll-cta" data-reveal-toggle aria-expanded="false" aria-controls={revealId}>
-    <span>{t.hero.exploreCta}</span>
-    <span class="arrow arrow-down" aria-hidden="true">↓</span>
-  </button>
 </section>
 
-<script>
-  import { HOME_REVEALED_CLASS, HOME_REVEALED_KEY } from '../../lib/storage';
-
-  // Con JS, la portada muestra solo el hero; el resto aparece al pulsar el botón
-  // (o al llegar con un #ancla que apunta dentro). Se recuerda durante la sesión.
-  const root = document.documentElement;
-  const toggle = document.querySelector<HTMLButtonElement>('[data-reveal-toggle]');
-  const content = document.getElementById(toggle?.getAttribute('aria-controls') ?? '');
-
-  const markRevealed = () => {
-    try {
-      sessionStorage.setItem(HOME_REVEALED_KEY, 'true');
-    } catch {
-      // ignore (private browsing / storage disabled)
-    }
-    root.classList.add(HOME_REVEALED_CLASS);
-    toggle?.setAttribute('aria-expanded', 'true');
-  };
-
-  if (root.classList.contains(HOME_REVEALED_CLASS)) {
-    toggle?.setAttribute('aria-expanded', 'true');
-  }
-
-  const hashTarget = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
-
-  if (content && hashTarget && content.contains(hashTarget)) {
-    markRevealed();
-    requestAnimationFrame(() => hashTarget.scrollIntoView({ block: 'start' }));
-  }
-
-  toggle?.addEventListener('click', () => {
-    markRevealed();
-    content?.scrollIntoView({ block: 'start' });
-  });
-</script>
-
 <style>
-  /* Mientras el hero está bloqueado no hay scroll y se ocultan el contenido y el footer. */
-  :global(html.js[data-hero-lock]:not(.home-revealed)),
-  :global(html.js[data-hero-lock]:not(.home-revealed) body) {
-    height: 100%;
-    overflow: hidden;
-    overscroll-behavior: none;
-  }
-
-  :global(html.js[data-hero-lock]:not(.home-revealed) [data-home-reveal]),
-  :global(html.js[data-hero-lock]:not(.home-revealed) #site-footer) {
-    display: none;
-  }
-
+  /* Ocupa toda la pantalla (menos el nav) con el texto centrado. */
   .hero-intro {
-    height: calc(100dvh - var(--nav-h, 60px));
-    max-height: calc(100dvh - var(--nav-h, 60px));
+    min-height: calc(100dvh - var(--nav-h, 60px));
     display: flex;
     flex-direction: column;
+    justify-content: center;
     position: relative;
-    padding: 24px 0 28px;
+    padding: var(--page-top) 0 clamp(72px, 8vw, 112px);
     /* Solo se recorta en vertical: en horizontal la onda del punto de estado
        sobresale del borde izquierdo. */
     overflow-x: visible;
@@ -112,8 +57,6 @@ const greetingWords = t.hero.greeting.split(' ');
 
   /* Portada alineada a la izquierda: etiqueta, titular grande, entradilla y botones. */
   .hero-intro-body {
-    margin: auto 0;
-    padding-bottom: 6vh;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -225,45 +168,6 @@ const greetingWords = t.hero.greeting.split(' ');
     .hero-side {
       animation: fade-up 0.9s var(--ease-out) 0.65s both;
     }
-    .scroll-cta {
-      animation: fade-up 0.9s var(--ease-out) 0.9s both;
-    }
   }
 
-  :global(html.home-revealed) .scroll-cta {
-    display: none;
-  }
-
-  .scroll-cta {
-    align-self: center;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    padding: 0;
-    background: none;
-    border: 0;
-    color: var(--copy);
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: var(--fs-2xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .scroll-cta:hover {
-    color: var(--accent);
-  }
-
-  .scroll-cta:hover .arrow-down {
-    transform: translateY(3px);
-  }
-
-  @media (max-width: 640px) {
-    .hero-intro {
-      padding: 20px 0;
-    }
-  }
 </style>

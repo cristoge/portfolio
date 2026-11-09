@@ -1,0 +1,559 @@
+---
+import PixelPenguin from '../ui/PixelPenguin.astro';
+import { site } from '../../data/site';
+import { getDictionary, languageNames, languages, localePath, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getDictionary(lang);
+
+// La pregunta del idioma va alternando entre los 3, empezando por el de la página.
+const languageQuestions = [lang, ...languages.filter((l) => l !== lang)].map((l) => ({
+  lang: l,
+  text: getDictionary(l).intro.languageQuestion,
+}));
+// Los textos del pie cambian de idioma a la vez que la pregunta.
+const footerText = (key: 'hint' | 'skip') =>
+  JSON.stringify(Object.fromEntries(languages.map((l) => [l, getDictionary(l).intro[key]])));
+
+const themes = [
+  { value: 'light', label: `☀ ${t.theme.light}` },
+  { value: 'dark', label: `☾ ${t.theme.dark}` },
+];
+---
+
+<!-- Intro en forma de terminal de la portada: idioma, tema y entrada al portfolio.
+     Solo se ve con JS y la primera vez (ver el script del <head> de BaseLayout). -->
+<div class="intro" data-intro data-lang={lang} role="dialog" aria-modal="true" aria-label={t.intro.ariaLabel}>
+  <div class="intro-frame">
+    <div class="intro-log" aria-live="polite">
+      <header class="intro-header">
+        <PixelPenguin size={50} />
+        <div>
+          <p><strong>{t.hero.name.toLowerCase()}</strong> {t.intro.title} <span class="intro-muted">{site.terminal.version}</span></p>
+          <p class="intro-muted">{t.hero.kicker}</p>
+          <p class="intro-muted">{site.terminal.cwd}</p>
+        </div>
+      </header>
+
+      <div class="intro-step" data-intro-step="language" hidden>
+        <p><span class="intro-prompt">❯</span> <span data-intro-type data-intro-cycle={JSON.stringify(languageQuestions)} lang={lang} aria-hidden="true">{t.intro.languageQuestion}</span><span class="visually-hidden">{t.intro.languageQuestion}</span></p>
+        <div class="intro-options" role="radiogroup" aria-label={t.intro.languageQuestion}>
+          {languages.map((l, i) => (
+            <button type="button" role="radio" aria-checked="false" class="intro-option" data-intro-option={l} data-href={localePath(l, 'home')} lang={l}>
+              <span class="intro-pointer" aria-hidden="true">❯</span> {i + 1}. {languageNames[l]}
+            </button>
+          ))}
+        </div>
+        <p class="intro-answer" data-intro-answer hidden></p>
+      </div>
+
+      <div class="intro-step" data-intro-step="theme" hidden>
+        <p><span class="intro-prompt">❯</span> <span data-intro-type>{t.intro.themeQuestion}</span></p>
+        <div class="intro-options" role="radiogroup" aria-label={t.intro.themeQuestion}>
+          {themes.map(({ value, label }, i) => (
+            <button type="button" role="radio" aria-checked="false" class="intro-option" data-intro-option={value}>
+              <span class="intro-pointer" aria-hidden="true">❯</span> {i + 1}. {label}
+            </button>
+          ))}
+        </div>
+        <p class="intro-answer" data-intro-answer hidden></p>
+      </div>
+
+      <p class="intro-step intro-loading" data-intro-step="loading" hidden>
+        <span class="intro-spinner" data-intro-spinner aria-hidden="true">✻</span> {t.intro.loading}
+      </p>
+    </div>
+
+    <div class="intro-input" aria-hidden="true">
+      <span class="intro-prompt">❯</span>
+      <span class="intro-caret"></span>
+    </div>
+    <div class="intro-footer">
+      <span class="intro-hint"><span class="intro-accent">▸▸</span> <span data-intro-sync={footerText('hint')} lang={lang}>{t.intro.hint}</span></span>
+      <button type="button" class="intro-skip" data-intro-skip>esc · <span data-intro-sync={footerText('skip')} lang={lang}>{t.intro.skip}</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { INTRO_ACTIVE_CLASS, INTRO_SEEN_KEY, INTRO_STEP_KEY, THEME_KEY } from '../../lib/storage';
+
+  const root = document.documentElement;
+  const intro = document.querySelector<HTMLElement>('[data-intro]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LEAVE_MS = 900;
+
+  let skipped = false;
+  let themeConfirmed = false;
+  const initialTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
+
+  const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, reducedMotion ? 0 : ms));
+
+  const applyTheme = (theme: string) => {
+    if (theme === 'dark') root.dataset.theme = 'dark';
+    else delete root.dataset.theme;
+  };
+
+  const session = {
+    get: () => {
+      try {
+        return sessionStorage.getItem(INTRO_STEP_KEY);
+      } catch {
+        return null;
+      }
+    },
+    set: (step: string | null) => {
+      try {
+        if (step) sessionStorage.setItem(INTRO_STEP_KEY, step);
+        else sessionStorage.removeItem(INTRO_STEP_KEY);
+      } catch {
+        // ignore (private browsing / storage disabled)
+      }
+    },
+  };
+
+  // Escribe el texto de la pregunta letra a letra.
+  async function type(el: HTMLElement, instant: boolean) {
+    const text = el.textContent ?? '';
+    if (instant || reducedMotion) return;
+    el.textContent = '';
+    for (const char of text) {
+      if (skipped) return;
+      el.textContent += char;
+      await wait(26);
+    }
+  }
+
+  // Va borrando y reescribiendo la pregunta y el pie en cada idioma hasta que se elige uno.
+  // Todos los textos se borran y se escriben a la vez y acaban juntos.
+  // Devuelve la función que lo para y deja los textos en el idioma elegido.
+  function cycleQuestion(el: HTMLElement | null) {
+    if (!el) return () => {};
+    const questions: { lang: string; text: string }[] = JSON.parse(el.dataset.introCycle ?? '[]');
+    const order = questions.map((entry) => entry.lang);
+    const nodes = [el, ...document.querySelectorAll<HTMLElement>('[data-intro-sync]')];
+    const textsOf = new Map<HTMLElement, Record<string, string>>(
+      nodes.map((node) => [
+        node,
+        node === el
+          ? Object.fromEntries(questions.map((entry) => [entry.lang, entry.text]))
+          : JSON.parse(node.dataset.introSync ?? '{}'),
+      ]),
+    );
+    const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    let stopped = false;
+    const done = () => stopped || skipped;
+
+    const show = (lang: string) => {
+      for (const node of nodes) {
+        node.lang = lang;
+        node.textContent = textsOf.get(node)?.[lang] ?? '';
+      }
+    };
+
+    // Muestra en cada texto la parte proporcional al paso `k` de `steps`.
+    const frame = (texts: string[], k: number, steps: number) => {
+      nodes.forEach((node, i) => {
+        node.textContent = texts[i].slice(0, Math.ceil((texts[i].length * k) / steps));
+      });
+    };
+
+    const morph = async (lang: string) => {
+      if (reducedMotion) return show(lang);
+      const from = nodes.map((node) => node.textContent ?? '');
+      const to = nodes.map((node) => textsOf.get(node)?.[lang] ?? '');
+      const eraseSteps = Math.max(...from.map((text) => text.length));
+      for (let k = eraseSteps - 1; k >= 0 && !done(); k--) {
+        frame(from, k, eraseSteps);
+        await pause(14);
+      }
+      if (done()) return;
+      nodes.forEach((node) => (node.lang = lang));
+      const typeSteps = Math.max(...to.map((text) => text.length));
+      for (let k = 1; k <= typeSteps && !done(); k++) {
+        frame(to, k, typeSteps);
+        await pause(26);
+      }
+    };
+
+    (async () => {
+      for (let i = 1; order.length > 1; i++) {
+        await pause(1400);
+        if (done()) return;
+        await morph(order[i % order.length]);
+      }
+    })();
+
+    return (chosenLang: string) => {
+      stopped = true;
+      show(chosenLang);
+    };
+  }
+
+  async function showStep(step: HTMLElement, instant = false) {
+    const question = step.querySelector<HTMLElement>('[data-intro-type]');
+    const options = step.querySelector<HTMLElement>('.intro-options');
+    if (options) options.hidden = true;
+    step.hidden = false;
+    if (question) await type(question, instant);
+    if (!instant) await wait(200);
+    if (options) options.hidden = false;
+  }
+
+  // Sustituye las opciones por la respuesta elegida, como un historial.
+  function answer(step: HTMLElement, value: string) {
+    const option = step.querySelector<HTMLElement>(`[data-intro-option="${value}"]`);
+    const answerEl = step.querySelector<HTMLElement>('[data-intro-answer]');
+    const options = step.querySelector<HTMLElement>('.intro-options');
+    if (options) options.hidden = true;
+    if (answerEl && option) {
+      answerEl.textContent = `⎿ ${(option.textContent ?? '').replace('❯', '').replace(/^\s*\d+\.\s*/, '')}`;
+      answerEl.hidden = false;
+    }
+  }
+
+  // Selector con ↑↓ o j/k, números, clic o Enter. `onSelect` se llama al cambiar la opción marcada.
+  function choose(step: HTMLElement, initial: string, onSelect?: (value: string) => void): Promise<string> {
+    const options = [...step.querySelectorAll<HTMLButtonElement>('[data-intro-option]')];
+    const controller = new AbortController();
+    const { signal } = controller;
+    let index = Math.max(0, options.findIndex((o) => o.dataset.introOption === initial));
+
+    const select = (i: number) => {
+      index = (i + options.length) % options.length;
+      options.forEach((o, j) => o.setAttribute('aria-checked', String(j === index)));
+      options[index].focus({ preventScroll: true });
+      onSelect?.(options[index].dataset.introOption ?? '');
+    };
+
+    select(index);
+
+    return new Promise((resolve) => {
+      const confirm = () => {
+        controller.abort();
+        resolve(options[index].dataset.introOption ?? '');
+      };
+
+      options.forEach((option, j) => {
+        option.addEventListener('pointerenter', () => select(j), { signal });
+        option.addEventListener('click', () => {
+          select(j);
+          confirm();
+        }, { signal });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        // Si se ha saltado la intro, las flechas vuelven a hacer scroll.
+        if (skipped) return controller.abort();
+        // Flechas o j/k como en vim.
+        const steps: Record<string, number> = { ArrowDown: 1, j: 1, ArrowUp: -1, k: -1 };
+        const step = steps[event.key];
+        if (step && !event.ctrlKey && !event.metaKey && !event.altKey) {
+          event.preventDefault();
+          select(index + step);
+        } else if (/^[1-9]$/.test(event.key) && Number(event.key) <= options.length) {
+          select(Number(event.key) - 1);
+          confirm();
+        }
+      }, { signal });
+    });
+  }
+
+  async function spin(el: HTMLElement | null, ms: number) {
+    const frames = ['·', '✢', '✳', '✶', '✻', '✽'];
+    const steps = reducedMotion ? 0 : Math.round(ms / 110);
+    for (let i = 0; i < steps && !skipped; i++) {
+      if (el) el.textContent = frames[i % frames.length];
+      await wait(110);
+    }
+  }
+
+  async function finish() {
+    if (!intro || intro.classList.contains('is-leaving')) return;
+    if (!themeConfirmed) applyTheme(initialTheme);
+    try {
+      localStorage.setItem(INTRO_SEEN_KEY, 'true');
+    } catch {
+      // ignore (private browsing / storage disabled)
+    }
+    session.set(null);
+    intro.classList.add('is-leaving');
+    await wait(LEAVE_MS);
+    root.classList.remove(INTRO_ACTIVE_CLASS);
+    intro.remove();
+  }
+
+  async function run(intro: HTMLElement) {
+    const languageStep = intro.querySelector<HTMLElement>('[data-intro-step="language"]')!;
+    const themeStep = intro.querySelector<HTMLElement>('[data-intro-step="theme"]')!;
+    const loadingStep = intro.querySelector<HTMLElement>('[data-intro-step="loading"]')!;
+    const lang = intro.dataset.lang ?? '';
+    // Al elegir otro idioma se recarga la página en ese idioma y se sigue por el tema.
+    const resuming = session.get() === 'theme';
+    session.set(null);
+
+    if (resuming) {
+      await showStep(languageStep, true);
+      answer(languageStep, lang);
+    } else {
+      await wait(400);
+      await showStep(languageStep);
+      if (skipped) return;
+      const stopCycle = cycleQuestion(languageStep.querySelector('[data-intro-cycle]'));
+      const chosen = await choose(languageStep, lang);
+      stopCycle(chosen);
+      if (skipped) return;
+      if (chosen !== lang) {
+        const href = languageStep.querySelector<HTMLElement>(`[data-intro-option="${chosen}"]`)?.dataset.href;
+        if (href) {
+          session.set('theme');
+          window.location.href = href;
+          return;
+        }
+      }
+      answer(languageStep, chosen);
+    }
+
+    await showStep(themeStep);
+    if (skipped) return;
+    // El tema se previsualiza en directo al moverse por las opciones.
+    const theme = await choose(themeStep, initialTheme, applyTheme);
+    if (skipped) return;
+    themeConfirmed = true;
+    applyTheme(theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // ignore (private browsing / storage disabled)
+    }
+    answer(themeStep, theme);
+
+    loadingStep.hidden = false;
+    await spin(loadingStep.querySelector('[data-intro-spinner]'), 1400);
+    if (skipped) return;
+    finish();
+  }
+
+  if (intro && root.classList.contains(INTRO_ACTIVE_CLASS)) {
+    const skip = () => {
+      skipped = true;
+      finish();
+    };
+    intro.querySelector('[data-intro-skip]')?.addEventListener('click', skip);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') skip();
+    });
+    run(intro);
+  } else {
+    intro?.remove();
+  }
+</script>
+
+<style>
+  /* Mientras se ve la intro no hay scroll y las animaciones del hero esperan para arrancar al salir. */
+  :global(html.intro-active),
+  :global(html.intro-active body) {
+    overflow: hidden;
+  }
+
+  :global(html.intro-active .hero-intro *),
+  :global(html.intro-active .hero-intro *::after) {
+    animation-play-state: paused !important;
+  }
+
+  .intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    overflow-y: auto;
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+    transition:
+      background-color 0.4s,
+      color 0.4s,
+      transform 0.9s var(--ease-in-out);
+  }
+
+  :global(html.intro-active) .intro {
+    display: flex;
+  }
+
+  .intro.is-leaving {
+    transform: translateY(-100%);
+  }
+
+  .intro p {
+    margin: 0;
+  }
+
+  .intro-frame {
+    width: min(100% - 32px, 880px);
+    min-height: 100%;
+    margin-inline: auto;
+    padding: clamp(24px, 8vh, 72px) 0 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro-log {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-bottom: 32px;
+  }
+
+  .intro-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .intro-header strong {
+    font-weight: 500;
+  }
+
+  .intro-muted,
+  .intro-prompt,
+  .intro-answer {
+    color: var(--muted);
+  }
+
+  .intro-accent {
+    color: var(--accent);
+  }
+
+  .intro-options {
+    display: flex;
+    flex-direction: column;
+    margin-top: 6px;
+  }
+
+  .intro-options[hidden],
+  .intro-step[hidden],
+  .intro-answer[hidden] {
+    display: none;
+  }
+
+  .intro-option {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+    min-height: 40px;
+    padding: 0 0 0 1ch;
+    background: none;
+    border: 0;
+    color: var(--copy);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+  }
+
+  .intro-option:focus-visible {
+    outline: none;
+  }
+
+  .intro-option[aria-checked='true'] {
+    color: var(--accent);
+  }
+
+  .intro-pointer {
+    visibility: hidden;
+  }
+
+  .intro-option[aria-checked='true'] .intro-pointer {
+    visibility: visible;
+  }
+
+  .intro-answer {
+    padding-left: 2ch;
+  }
+
+  .intro-loading {
+    color: var(--accent);
+  }
+
+  .intro-spinner {
+    display: inline-block;
+    width: 1ch;
+  }
+
+  .intro-input {
+    display: flex;
+    align-items: center;
+    gap: 1ch;
+    padding: 10px 0;
+    border-block: 1px solid var(--line-strong);
+  }
+
+  .intro-caret {
+    width: 0.6em;
+    height: 1.2em;
+    background: var(--ink);
+  }
+
+  .intro-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-top: 6px;
+    color: var(--muted);
+    /* Entre --fs-2xs y --fs-sm: a 12px la pista se leía demasiado pequeña. */
+    font-size: 13px;
+  }
+
+  .intro-skip {
+    min-height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    cursor: pointer;
+    font: inherit;
+    transition: color 0.2s;
+  }
+
+  .intro-skip:hover {
+    color: var(--accent);
+  }
+
+  @media (hover: none) {
+    .intro-hint {
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .intro-caret {
+      animation: intro-blink 1.1s steps(1) infinite;
+    }
+    .intro-step:not([hidden]),
+    .intro-options:not([hidden]) {
+      animation: fade-up 0.4s var(--ease-out) both;
+    }
+    @keyframes intro-blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro {
+      transition: opacity 0.3s;
+    }
+    .intro.is-leaving {
+      transform: none;
+      opacity: 0;
+    }
+  }
+</style>

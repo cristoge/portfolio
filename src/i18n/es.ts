@@ -18,6 +18,15 @@ export default {
     title: 'Cristo — Portfolio',
     description: 'Portfolio personal de Cristo.',
   },
+  intro: {
+    ariaLabel: 'Introducción',
+    title: 'portfolio',
+    languageQuestion: '¡Hola! ¿En qué idioma hablamos?',
+    themeQuestion: '¿Claro u oscuro?',
+    loading: 'Cargando el portfolio…',
+    hint: '↑↓ o j/k para elegir · enter para confirmar',
+    skip: 'Saltar',
+  },
   hero: {
     kicker: 'AI Engineer',
     status: 'Disponible',
@@ -25,7 +34,6 @@ export default {
     name: 'Cristo',
     tagline: 'Diseño de agentes y de su infraestructura en AWS.',
     cta: 'Ver el CV',
-    exploreCta: 'Ver todo',
   },
   education: {
     heading: 'Educación',

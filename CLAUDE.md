@@ -25,11 +25,11 @@ Portfolio personal — Astro estático, sin backend, deploy en Vercel (`site` y 
 ## Estructura
 
 - `src/pages/[...lang]/` — una sola página por ruta para los 3 idiomas (`index`, `personal`, `contact`, `projects/[slug]`); `getLangStaticPaths` genera `ca` sin prefijo y `es`/`en` con prefijo. Las páginas solo componen secciones.
-- `src/layouts/BaseLayout.astro` — head (script de tema y del hero antes de pintar), Nav, Footer y el observer de `.reveal`. Props: `lang`, `title`, `description?`, `activePage?` (resalta el menú), `lockHero?` (portada). La ruta para el selector de idioma se deduce de la URL.
+- `src/layouts/BaseLayout.astro` — head (script de tema y de la intro antes de pintar), Nav, Footer y el observer de `.reveal`. Props: `lang`, `title`, `description?`, `activePage?` (resalta el menú), `intro?` (portada: activa la intro de terminal). La ruta para el selector de idioma se deduce de la URL.
 - `src/components/` por zonas:
-  - `ui/` — piezas genéricas: `ButtonLink` (`.btn` como enlace), `ArrowLink` (`.arrow-link`), `PillList`, `SectionHeading`, `Icon`.
+  - `ui/` — piezas genéricas: `ButtonLink` (`.btn` como enlace), `ArrowLink` (`.arrow-link`), `PillList`, `SectionHeading`, `Icon`, `PixelPenguin` (avatar pixel de la intro y del nav).
   - `layout/` — `Nav`, `LanguageSwitcher`, `ThemeToggle`, `Footer`.
-  - `home/` — `Hero` (incluye el bloqueo del hero y el botón "Veure-ho tot"), `HomeReveal`, `ProjectsSection`, `ProjectCard`, `EducationSection`, `EducationItem`, `StackSection`.
+  - `home/` — `TerminalIntro` (intro en forma de terminal: idioma y tema, solo la primera visita o con `?intro`), `Hero`, `ProjectsSection`, `ProjectCard`, `EducationSection`, `EducationItem`, `StackSection`.
   - `personal/` — `PersonalIntro`, `PersonalEntry`.
   - `contact/` — `ContactChannels` (email con botón de copiar y LinkedIn), `ContactForm` (envío a Web3Forms con `PUBLIC_WEB3FORMS_KEY` de `.env`), `MapEmbed`.
 - `src/lib/` — utilidades sin UI: `links` (`externalLink`: atributos para abrir en pestaña nueva), `linkify`, `format`, `storage` (claves de localStorage/sessionStorage).

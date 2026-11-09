@@ -15,6 +15,13 @@ export const languageLabels: Record<Lang, string> = {
   en: 'EN',
 };
 
+// Nombre de cada idioma en su propia lengua (selector de la intro).
+export const languageNames: Record<Lang, string> = {
+  ca: 'català',
+  es: 'español',
+  en: 'english',
+};
+
 const dictionaries: Record<Lang, Dictionary> = { ca, es, en };
 
 export type Page = 'home' | 'personal' | 'contact';

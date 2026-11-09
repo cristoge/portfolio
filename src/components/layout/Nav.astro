@@ -1,9 +1,8 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle.astro';
-import { site } from '../../data/site';
+import PixelPenguin from '../ui/PixelPenguin.astro';
 import { getDictionary, localePath, type Lang, type Page } from '../../i18n/utils';
-import { externalLink } from '../../lib/links';
 
 interface Props {
   lang: Lang;
@@ -24,7 +23,9 @@ const navItems: { page: Page; label: string }[] = [
 
 <header class="nav" data-nav>
   <div class="container nav-inner">
-    <a href={site.cvHref} class="nav-cta" {...externalLink}>{t.hero.cta}</a>
+    <a href={localePath(lang, 'home')} class="nav-logo" aria-label={t.nav.home}>
+      <PixelPenguin size={30} bounce="hover" />
+    </a>
 
     <nav class="nav-links" aria-label={t.nav.ariaLabel}>
       {navItems.map((item) => (
@@ -76,31 +77,10 @@ const navItems: { page: Page; label: string }[] = [
     min-height: 60px;
   }
 
-  .nav-cta {
+  .nav-logo {
     display: inline-flex;
     align-items: center;
-    min-height: 40px;
-    padding: 0 16px;
-    background: var(--ink);
-    color: var(--page);
-    font-family: var(--font-mono);
-    font-size: var(--fs-2xs);
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transition: background-color 0.2s, opacity 0.4s var(--ease-out), visibility 0.4s;
-  }
-
-  .nav-cta:hover {
-    background: var(--accent);
-    color: var(--on-accent);
-  }
-
-  /* En la portada el CV ya está en el hero: el del header aparece al pulsar "Veure-ho tot". */
-  :global(html.js[data-hero-lock]:not(.home-revealed)) .nav-cta {
-    opacity: 0;
-    visibility: hidden;
+    min-height: 44px;
   }
 
   .nav-links {
@@ -161,9 +141,6 @@ const navItems: { page: Page; label: string }[] = [
   }
 
   @media (max-width: 400px) {
-    .nav-cta {
-      padding: 0 12px;
-    }
     .nav-actions {
       gap: 4px;
     }

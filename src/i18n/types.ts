@@ -79,6 +79,15 @@ export interface Dictionary {
     title: string;
     description: string;
   };
+  intro: {
+    ariaLabel: string;
+    title: string;
+    languageQuestion: string;
+    themeQuestion: string;
+    loading: string;
+    hint: string;
+    skip: string;
+  };
   hero: {
     kicker: string;
     status: string;
@@ -86,7 +95,6 @@ export interface Dictionary {
     name: string;
     tagline: string;
     cta: string;
-    exploreCta: string;
   };
   education: {
     heading: string;

@@ -1,0 +1,142 @@
+---
+// Pingüino pixel en el color de acento: parpadea y rebota (siempre o al pasar por encima del enlace que lo contiene).
+interface Props {
+  // Ancho en px (mejor múltiplo de 10, las columnas de la rejilla); la altura sale de la rejilla.
+  size: number;
+  bounce?: 'always' | 'hover';
+}
+
+const { size, bounce = 'always' } = Astro.props;
+
+// Cada letra es un píxel: X cuerpo, W barriga, E ojos y pico, F patas, B mofletes.
+const avatar = [
+  '..XXXXXX..',
+  '.XXXXXXXX.',
+  'XXBWBBWBXX',
+  'XBWEWWEWBX',
+  'XBWWEEWWBX',
+  'XBWWWWWWBX',
+  '.XBWWWWBX.',
+  '..F....F..',
+];
+// Al parpadear, los ojos desaparecen un instante.
+const blink = avatar.map((row, y) => (y === 3 ? 'XBWWWWWWBX' : row));
+const pixelClass: Record<string, string> = { X: 'px-body', W: 'px-belly', E: 'px-eye', F: 'px-feet', B: 'px-blush' };
+const toPixels = (rows: string[]) =>
+  rows.flatMap((row, y) => [...row].flatMap((cell, x) => (pixelClass[cell] ? [{ x, y, cls: pixelClass[cell] }] : [])));
+---
+
+<svg
+  class="penguin"
+  data-bounce={bounce}
+  viewBox={`0 0 ${avatar[0].length} ${avatar.length}`}
+  style={`width:${size}px`}
+  aria-hidden="true"
+>
+  <g class="penguin-body">
+    <g class="penguin-open">{toPixels(avatar).map(({ x, y, cls }) => <rect x={x} y={y} width="1" height="1" class={cls} />)}</g>
+    <g class="penguin-blink">{toPixels(blink).map(({ x, y, cls }) => <rect x={x} y={y} width="1" height="1" class={cls} />)}</g>
+  </g>
+</svg>
+
+<style>
+  .penguin {
+    flex-shrink: 0;
+    height: auto;
+    overflow: visible;
+    shape-rendering: crispEdges;
+  }
+
+  .penguin-blink {
+    opacity: 0;
+  }
+
+  .penguin-body {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+  }
+
+  .px-body {
+    fill: var(--accent);
+  }
+
+  .px-eye {
+    fill: var(--ink);
+  }
+
+  .px-belly {
+    fill: var(--page);
+  }
+
+  .px-feet {
+    fill: var(--ink);
+  }
+
+  /* En oscuro se invierten para que siga con barriga clara y ojos oscuros;
+     las patas pasan a azul porque en negro no se verían sobre el fondo. */
+  :global(:root[data-theme='dark']) .px-belly {
+    fill: var(--ink);
+  }
+
+  :global(:root[data-theme='dark']) .px-eye {
+    fill: var(--page);
+  }
+
+  :global(:root[data-theme='dark']) .px-feet {
+    fill: var(--accent);
+  }
+
+  .px-blush {
+    fill: color-mix(in srgb, var(--accent) 45%, white);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .penguin-open {
+      animation: penguin-open 3.6s steps(1, end) infinite;
+    }
+    .penguin-blink {
+      animation: penguin-blink 3.6s steps(1, end) infinite;
+    }
+    /* Se aplasta y rebota un poco. */
+    .penguin[data-bounce='always'] .penguin-body {
+      animation: penguin-squish 2.4s var(--ease-in-out) infinite;
+    }
+    /* Al pasar por encima empieza ya por el rebote. */
+    :global(a:hover) > .penguin[data-bounce='hover'] .penguin-body {
+      animation: penguin-squish 2.4s var(--ease-in-out) -1.4s infinite;
+    }
+    @keyframes penguin-squish {
+      0%,
+      60%,
+      100% {
+        transform: scale(1, 1);
+      }
+      75% {
+        transform: scale(1.08, 0.9);
+      }
+      88% {
+        transform: scale(0.96, 1.05);
+      }
+    }
+    @keyframes penguin-open {
+      0%,
+      93% {
+        opacity: 1;
+      }
+      94%,
+      100% {
+        opacity: 0;
+      }
+    }
+    @keyframes penguin-blink {
+      0%,
+      93% {
+        opacity: 0;
+      }
+      94%,
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+</style>

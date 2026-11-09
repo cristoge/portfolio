@@ -18,6 +18,15 @@ export default {
     title: 'Cristo — Portfolio',
     description: "Cristo's personal portfolio.",
   },
+  intro: {
+    ariaLabel: 'Introduction',
+    title: 'portfolio',
+    languageQuestion: 'Hi! Which language should we speak?',
+    themeQuestion: 'Light or dark?',
+    loading: 'Loading the portfolio…',
+    hint: '↑↓ or j/k to choose · enter to confirm',
+    skip: 'Skip',
+  },
   hero: {
     kicker: 'AI Engineer',
     status: 'Open to work',
@@ -25,7 +34,6 @@ export default {
     name: 'Cristo',
     tagline: 'Designing agents and their infrastructure on AWS.',
     cta: 'View CV',
-    exploreCta: 'See it all',
   },
   education: {
     heading: 'Education',
