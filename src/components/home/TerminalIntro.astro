@@ -1,5 +1,5 @@
 ---
-import PixelPenguin from '../ui/PixelPenguin.astro';
+import PixelGuineaPig from '../ui/pixel/PixelGuineaPig.astro';
 import { site } from '../../data/site';
 import { getDictionary, languageNames, languages, localePath, type Lang } from '../../i18n/utils';
 
@@ -31,7 +31,7 @@ const themes = [
   <div class="intro-frame">
     <div class="intro-log" aria-live="polite">
       <header class="intro-header">
-        <PixelPenguin size={50} />
+        <PixelGuineaPig size={72} />
         <div>
           <p><strong>{t.hero.name.toLowerCase()}</strong> {t.intro.title} <span class="intro-muted">{site.terminal.version}</span></p>
           <p class="intro-muted">{t.hero.kicker}</p>

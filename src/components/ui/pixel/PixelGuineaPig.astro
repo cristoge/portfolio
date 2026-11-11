@@ -1,0 +1,143 @@
+---
+// Cobaya pixel blanca y negra: parpadea y rebota (siempre o al pasar por encima del enlace que la contiene).
+interface Props {
+  // Ancho en px (mejor múltiplo de 18, las columnas de la rejilla con el contorno); la altura sale de la rejilla.
+  size: number;
+  bounce?: 'always' | 'hover';
+}
+
+const { size, bounce = 'always' } = Astro.props;
+
+// Cada letra es un píxel: K pelo negro, W pelo blanco, E ojo, P nariz y patas.
+const avatar = [
+  '.....KK.........',
+  '...KKKKKWWWWKK..',
+  '..KKKKKKWWWWKKK.',
+  '.WEWKKKKWWWWKKKK',
+  'WWWWKKKKWWWWKKKK',
+  'PWWWKKKKWWWWKKKK',
+  'WWWKKKKKWWWWKKKK',
+  '.WWWWWWWWWWWKKK.',
+  '..PP......PP....',
+];
+// Al parpadear, el ojo desaparece un instante.
+const blink = avatar.map((row, y) => (y === 3 ? '.WWWKKKKWWWWKKKK' : row));
+
+// Contorno de 1 píxel alrededor de la silueta (O), para que se vea sobre fondo claro y oscuro.
+const withOutline = (rows: string[]) => {
+  const width = rows[0].length + 2;
+  const grid = ['.'.repeat(width), ...rows.map((row) => `.${row}.`), '.'.repeat(width)];
+  const filled = (x: number, y: number) => grid[y]?.[x] !== undefined && grid[y][x] !== '.';
+  return grid.map((row, y) =>
+    [...row]
+      .map((cell, x) => (cell === '.' && [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => filled(x + dx, y + dy)) ? 'O' : cell))
+      .join(''),
+  );
+};
+
+const pixelClass: Record<string, string> = { K: 'px-black', W: 'px-white', E: 'px-black', P: 'px-pink', O: 'px-outline' };
+const toPixels = (rows: string[]) =>
+  withOutline(rows).flatMap((row, y) => [...row].flatMap((cell, x) => (pixelClass[cell] ? [{ x, y, cls: pixelClass[cell] }] : [])));
+
+const open = toPixels(avatar);
+const closed = toPixels(blink);
+---
+
+<svg
+  class="pet"
+  data-bounce={bounce}
+  viewBox={`0 0 ${avatar[0].length + 2} ${avatar.length + 2}`}
+  style={`width:${size}px`}
+  aria-hidden="true"
+>
+  <g class="pet-body">
+    <g class="pet-open">{open.map(({ x, y, cls }) => <rect x={x} y={y} width="1" height="1" class={cls} />)}</g>
+    <g class="pet-blink">{closed.map(({ x, y, cls }) => <rect x={x} y={y} width="1" height="1" class={cls} />)}</g>
+  </g>
+</svg>
+
+<style>
+  .pet {
+    flex-shrink: 0;
+    height: auto;
+    overflow: visible;
+    shape-rendering: crispEdges;
+  }
+
+  .pet-blink {
+    opacity: 0;
+  }
+
+  .pet-body {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+  }
+
+  /* Colores propios del animal (blanco y negro con la nariz rosa), iguales en los dos temas;
+     solo el contorno sigue al tema. */
+  .px-black {
+    fill: #1f1f22;
+  }
+
+  .px-white {
+    fill: #fff;
+  }
+
+  .px-pink {
+    fill: #f2a5b8;
+  }
+
+  .px-outline {
+    fill: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pet-open {
+      animation: pet-open 3.6s steps(1, end) infinite;
+    }
+    .pet-blink {
+      animation: pet-blink 3.6s steps(1, end) infinite;
+    }
+    /* Se aplasta y rebota un poco. */
+    .pet[data-bounce='always'] .pet-body {
+      animation: pet-squish 2.4s var(--ease-in-out) infinite;
+    }
+    /* Al pasar por encima empieza ya por el rebote. */
+    :global(a:hover) > .pet[data-bounce='hover'] .pet-body {
+      animation: pet-squish 2.4s var(--ease-in-out) -1.4s infinite;
+    }
+    @keyframes pet-squish {
+      0%,
+      60%,
+      100% {
+        transform: scale(1, 1);
+      }
+      75% {
+        transform: scale(1.08, 0.9);
+      }
+      88% {
+        transform: scale(0.96, 1.05);
+      }
+    }
+    @keyframes pet-open {
+      0%,
+      93% {
+        opacity: 1;
+      }
+      94%,
+      100% {
+        opacity: 0;
+      }
+    }
+    @keyframes pet-blink {
+      0%,
+      93% {
+        opacity: 0;
+      }
+      94%,
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+</style>

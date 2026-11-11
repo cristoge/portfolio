@@ -1,7 +1,7 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle.astro';
-import PixelPenguin from '../ui/PixelPenguin.astro';
+import PixelGuineaPig from '../ui/pixel/PixelGuineaPig.astro';
 import { getDictionary, localePath, type Lang, type Page } from '../../i18n/utils';
 
 interface Props {
@@ -24,7 +24,7 @@ const navItems: { page: Page; label: string }[] = [
 <header class="nav" data-nav>
   <div class="container nav-inner">
     <a href={localePath(lang, 'home')} class="nav-logo" aria-label={t.nav.home}>
-      <PixelPenguin size={30} bounce="hover" />
+      <PixelGuineaPig size={36} bounce="hover" />
     </a>
 
     <nav class="nav-links" aria-label={t.nav.ariaLabel}>

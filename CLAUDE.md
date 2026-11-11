@@ -27,7 +27,8 @@ Portfolio personal — Astro estático, sin backend, deploy en Vercel (`site` y 
 - `src/pages/[...lang]/` — una sola página por ruta para los 3 idiomas (`index`, `personal`, `contact`, `projects/[slug]`); `getLangStaticPaths` genera `ca` sin prefijo y `es`/`en` con prefijo. Las páginas solo componen secciones.
 - `src/layouts/BaseLayout.astro` — head (script de tema y de la intro antes de pintar), Nav, Footer y el observer de `.reveal`. Props: `lang`, `title`, `description?`, `activePage?` (resalta el menú), `intro?` (portada: activa la intro de terminal). La ruta para el selector de idioma se deduce de la URL.
 - `src/components/` por zonas:
-  - `ui/` — piezas genéricas: `ButtonLink` (`.btn` como enlace), `ArrowLink` (`.arrow-link`), `PillList`, `SectionHeading`, `Icon`, `PixelPenguin` (avatar pixel de la intro y del nav).
+  - `ui/` — piezas genéricas: `ButtonLink` (`.btn` como enlace), `ArrowLink` (`.arrow-link`), `PillList`, `SectionHeading`, `Icon`.
+    - `ui/pixel/` — avatares pixel: `PixelGuineaPig` (el que usan la intro y el nav) y `PixelPenguin` (guardado, sin usar).
   - `layout/` — `Nav`, `LanguageSwitcher`, `ThemeToggle`, `Footer`.
   - `home/` — `TerminalIntro` (intro en forma de terminal: idioma y tema, solo la primera visita o con `?intro`), `Hero`, `ProjectsSection`, `ProjectCard`, `EducationSection`, `EducationItem`, `StackSection`.
   - `personal/` — `PersonalIntro`, `PersonalEntry`.
