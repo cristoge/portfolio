@@ -1,5 +1,6 @@
 ---
-// Cobaya pixel blanca y negra: parpadea y rebota (siempre o al pasar por encima del enlace que la contiene).
+// Cobaya pixel blanca y negra: parpadea y da saltitos de alegría ("popcorning"),
+// siempre o al pasar por encima del enlace que la contiene.
 interface Props {
   // Ancho en px (mejor múltiplo de 18, las columnas de la rejilla con el contorno); la altura sale de la rejilla.
   size: number;
@@ -98,25 +99,34 @@ const closed = toPixels(blink);
     .pet-blink {
       animation: pet-blink 3.6s steps(1, end) infinite;
     }
-    /* Se aplasta y rebota un poco. */
+    /* Popcorning: se agacha, salta girando un poco en el aire y se aplasta al caer. */
     .pet[data-bounce='always'] .pet-body {
-      animation: pet-squish 2.4s var(--ease-in-out) infinite;
+      animation: pet-popcorn 3.2s var(--ease-out) infinite;
     }
-    /* Al pasar por encima empieza ya por el rebote. */
+    /* Al pasar por encima empieza ya por el salto. */
     :global(a:hover) > .pet[data-bounce='hover'] .pet-body {
-      animation: pet-squish 2.4s var(--ease-in-out) -1.4s infinite;
+      animation: pet-popcorn 3.2s var(--ease-out) -1.7s infinite;
     }
-    @keyframes pet-squish {
+    @keyframes pet-popcorn {
       0%,
-      60%,
+      55%,
       100% {
-        transform: scale(1, 1);
+        transform: translateY(0) rotate(0) scale(1, 1);
       }
-      75% {
-        transform: scale(1.08, 0.9);
+      60% {
+        transform: translateY(0) rotate(0) scale(1.08, 0.88);
       }
-      88% {
-        transform: scale(0.96, 1.05);
+      68% {
+        transform: translateY(-25%) rotate(-8deg) scale(0.96, 1.06);
+      }
+      76% {
+        transform: translateY(-6%) rotate(5deg) scale(1, 1);
+      }
+      82% {
+        transform: translateY(0) rotate(0) scale(1.1, 0.86);
+      }
+      90% {
+        transform: translateY(0) rotate(0) scale(0.97, 1.03);
       }
     }
     @keyframes pet-open {
