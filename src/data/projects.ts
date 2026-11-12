@@ -14,16 +14,17 @@ interface ProjectMeta {
 // indexado por `slug`.
 export const projectMeta = [
   {
+    slug: 'rag-pdf',
+    stack: ['Python', 'FastAPI', 'Strands Agents', 'PostgreSQL', 'pgvector', 'Ollama', 'Amazon Cognito', 'Terraform', 'TypeScript', 'React Native', 'Expo'],
+    repoHref: 'https://github.com/cristoge/TIC_project',
+    demoHref: 'https://youtu.be/20UHkDUTeqA',
+    image: '/rag2.webp',
+  },
+  {
     slug: 'safe-reply',
     stack: ['Python', 'FastAPI', 'scikit-learn', 'PostgreSQL', 'pgvector', 'SQLAlchemy', 'Alembic', 'Redis', 'Pydantic', 'pytest', 'Docker'],
     repoHref: 'https://github.com/cristoge/rag_revision',
     image: '/docs.webp',
-  },
-  {
-    slug: 'rag-pdf',
-    stack: ['Python', 'FastAPI', 'LangGraph', 'LangChain', 'PostgreSQL', 'pgvector', 'Supabase', 'Ollama', 'React Native'],
-    repoHref: 'https://github.com/cristoge/TIC_project',
-    image: '/rag2.webp',
   },
   {
     slug: 'bikeshare',

@@ -114,16 +114,17 @@ export default {
       },
       'rag-pdf': {
         title: "Assistent d'estudi amb RAG",
-        description: 'App mòbil per pujar els teus PDFs i fer preguntes sobre el seu contingut en llenguatge natural: les respostes surten del mateix document gràcies a un agent RAG.',
-        context: "Treball de final del Curs d'Especialització en Intel·ligència Artificial i Big Data (ITIC Barcelona), desenvolupat de manera individual i documentat en un paper acadèmic. Un estudiant puja els seus apunts, llibres o articles i hi conversa des del mòbil: resums, flashcards i explicacions de conceptes generades a partir de fragments recuperats semànticament.",
+        description: 'App mòbil per estudiar amb els teus PDFs: puges apunts, llibres o articles a un projecte i un agent respon citant el document i la pàgina, i en genera resums, flashcards i tests.',
+        context: "Treball de final del Curs d'Especialització en Intel·ligència Artificial i Big Data (ITIC Barcelona), desenvolupat de manera individual i documentat en un paper acadèmic. Després del lliurament el vaig refer com una mena de mini NotebookLM: cada projecte agrupa diversos documents, el xat treballa sobre tots ells i les respostes surten dels fragments recuperats, no del coneixement general del model.",
         depthTopics: [
-          "Pipeline d'ingesta de PDFs: extracció de text, chunking amb solapament i embeddings de 512 dimensions amb nomic-embed-text en local via Ollama",
-          'Cerca semàntica a PostgreSQL amb pgvector: funció SQL amb similitud cosinus, llindar mínim i top-k configurables',
-          "Agent amb LangGraph i patró ReAct (tool calling) amb eines de recuperació, resum, flashcards i explicació, evolucionat a partir d'un primer graf amb router explícit",
-          "Backend asíncron amb FastAPI i streaming de la resposta token a token cap a l'app mitjançant Server-Sent Events",
-          "Historial de conversa persistent a la base de dades i LLM intercanviable entre Claude Haiku (API d'Anthropic) i Gemma en local",
+          'Backend amb FastAPI i arquitectura hexagonal: el domini i els serveis no depenen de cap proveïdor, i cada servei extern (LLM, embeddings, fitxers, usuaris) hi entra per un adaptador',
+          'Ingesta de PDFs amb PyMuPDF: extracció de text per pàgina, chunking amb solapament i embeddings de 512 dimensions amb EmbeddingGemma (embeddinggemma-2:270m) en local amb Ollama',
+          'Cerca híbrida a PostgreSQL: cerca de text complet i semàntica amb pgvector, combinades amb Reciprocal Rank Fusion (RRF) en una funció SQL',
+          "Agent amb Strands Agents que decideix quan cercar, cita cada resposta amb [n] i crea resums, flashcards i tests com a eines; la resposta arriba a l'app en streaming mitjançant Server-Sent Events",
+          "LLM intercanviable amb una sola variable entre Ollama en local, Claude, OpenAI o qualsevol API compatible i DeepSeek; l'he fet servir amb Gemma 4 (gemma4:26b) en local via Ollama i amb DeepSeek Flash",
+          "App amb Expo i React Native (TypeScript, TanStack Query, Zustand) i inici de sessió amb Amazon Cognito desplegat amb Terraform: l'app inicia sessió contra Cognito i el backend només valida el token",
         ],
-        outcome: "Nota final: 9/10. Treball de final d'especialització acompanyat d'un paper que documenta el disseny, l'evolució de l'agent i les seves limitacions.",
+        outcome: "Nota final: 9/10, amb un paper que documenta el disseny, l'evolució de l'agent i les seves limitacions. La versió actual funciona de cap a cap en local; el següent pas és desplegar-la a AWS.",
       },
       'bikeshare': {
         title: 'BikeShare',
@@ -147,7 +148,7 @@ export default {
       { label: 'Llenguatges', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Bases de dades', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
-      { label: 'Cloud i infraestructura', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
+      { label: 'Cloud i infraestructura', items: ['Docker', 'Terraform', 'AWS (IAM, Lambda, S3, RDS, DynamoDB, Cognito, Bedrock)'] },
       {
         label: 'Eines',
         items: [

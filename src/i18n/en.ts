@@ -114,16 +114,17 @@ export default {
       },
       'rag-pdf': {
         title: 'RAG study assistant',
-        description: 'Mobile app to upload your PDFs and ask questions about their content in natural language: answers come from the document itself, powered by a RAG agent.',
-        context: 'Final project of the Specialization Course in Artificial Intelligence and Big Data (ITIC Barcelona), built individually and documented in an academic paper. Students upload their notes, books or articles and chat with them from their phone: summaries, flashcards and concept explanations generated from semantically retrieved passages.',
+        description: 'Mobile app to study with your PDFs: upload notes, books or articles to a project and an agent answers citing the document and page, and generates summaries, flashcards and quizzes from them.',
+        context: "Final project of the Specialization Course in Artificial Intelligence and Big Data (ITIC Barcelona), built individually and documented in an academic paper. After submitting it I rebuilt it as a kind of mini NotebookLM: each project groups several documents, the chat works across all of them and answers come from the retrieved passages, not from the model's general knowledge.",
         depthTopics: [
-          'PDF ingestion pipeline: text extraction, overlapping chunking and 512-dimension embeddings with nomic-embed-text running locally on Ollama',
-          'Semantic search in PostgreSQL with pgvector: a SQL function using cosine similarity with configurable threshold and top-k',
-          'LangGraph agent using the ReAct pattern (tool calling) with retrieval, summary, flashcard and explanation tools, evolved from an initial graph with an explicit router',
-          'Async FastAPI backend streaming the answer token by token to the app over Server-Sent Events',
-          'Conversation history persisted in the database and a swappable LLM: Claude Haiku (Anthropic API) or Gemma running locally',
+          'FastAPI backend with hexagonal architecture: the domain and services depend on no provider, and every external service (LLM, embeddings, files, users) plugs in through an adapter',
+          'PDF ingestion with PyMuPDF: per-page text extraction, overlapping chunking and 512-dimension embeddings with EmbeddingGemma (embeddinggemma-2:270m) running locally on Ollama',
+          'Hybrid search in PostgreSQL: full-text and semantic search with pgvector, fused with Reciprocal Rank Fusion (RRF) in a SQL function',
+          'Strands Agents agent that decides when to search, cites every answer with [n] and creates summaries, flashcards and quizzes as tools; the answer streams to the app over Server-Sent Events',
+          'LLM swappable with a single variable between Ollama running locally, Claude, OpenAI or any compatible API, and DeepSeek; I have used it with Gemma 4 (gemma4:26b) locally on Ollama and with DeepSeek Flash',
+          'Expo and React Native app (TypeScript, TanStack Query, Zustand) with sign-in through Amazon Cognito deployed with Terraform: the app signs in against Cognito and the backend only validates the token',
         ],
-        outcome: 'Final grade: 9/10. Final specialization project, accompanied by a paper documenting the design, the evolution of the agent and its limitations.',
+        outcome: 'Final grade: 9/10, with a paper documenting the design, the evolution of the agent and its limitations. The current version works end to end locally; the next step is deploying it to AWS.',
       },
       'bikeshare': {
         title: 'BikeShare',
@@ -147,7 +148,7 @@ export default {
       { label: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
       { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
       { label: 'Databases', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
-      { label: 'Cloud & infrastructure', items: ['Docker', 'GitHub Actions', 'AWS (VPC, IAM, EC2, S3)'] },
+      { label: 'Cloud & infrastructure', items: ['Docker', 'Terraform', 'AWS (IAM, Lambda, S3, RDS, DynamoDB, Cognito, Bedrock)'] },
       {
         label: 'Tools',
         items: [
