@@ -16,7 +16,7 @@ const id = `project-${project.slug}`;
 ---
 
 <article class="project-case" id={id} aria-labelledby={`${id}-title`} tabindex="-1">
-  <div class="case-grid" data-project-entry>
+  <div class="case-grid">
     <div>
       <p class="mono case-category"><span>{number}</span> / {info.category}</p>
       <h3 id={`${id}-title`}>
@@ -30,16 +30,19 @@ const id = `project-${project.slug}`;
       </div>
     </div>
     <figure class="case-shot">
-      <div class="case-image"><img src={project.image} alt="" loading="lazy" /></div>
+      <div class="case-image" data-project-shot>
+        <img src={project.image} alt="" loading="lazy" />
+        <span class="case-sweep" data-project-sweep aria-hidden="true"></span>
+      </div>
       <figcaption class="mono"><span>{archive.figure} {number}</span>{info.caption}</figcaption>
     </figure>
   </div>
-  <ol class="case-flow" role="list" aria-label={archive.flow} data-draw-svg>
+  <ol class="case-flow" role="list" aria-label={archive.flow} data-project-flow>
     {info.flow.map((step, index) => (
-      <li>
+      <li data-project-node>
         {index > 0 && (
           <svg class="case-trace" viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M0 7H94m-7-5 7 5-7 5" vector-effect="non-scaling-stroke" />
+            <path d="M0 7H94m-7-5 7 5-7 5" vector-effect="non-scaling-stroke" data-project-connector />
           </svg>
         )}
         {step}
@@ -112,6 +115,8 @@ const id = `project-${project.slug}`;
   }
 
   .case-image {
+    position: relative;
+    overflow: hidden;
     height: clamp(138px, 15vw, 191px);
     border: 1px solid var(--line-strong);
     background: var(--field);
@@ -121,6 +126,16 @@ const id = `project-${project.slug}`;
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+
+  .case-sweep {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .case-shot figcaption {

@@ -44,37 +44,12 @@ const projects = getProjects(lang);
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
   import { INTRO_ACTIVE_CLASS } from '../../lib/storage';
+  import { attachProjectMotion } from '../../lib/project-motion.mjs';
 
-  gsap.registerPlugin(ScrollTrigger);
-  let motion: ReturnType<typeof gsap.matchMedia> | undefined;
-
-  function startMotion() {
-    if (motion) return;
-    motion = gsap.matchMedia();
-    motion.add('(prefers-reduced-motion: no-preference)', () => {
-      for (const entry of document.querySelectorAll('[data-project-entry]')) {
-        const entrance = gsap.from(entry, { y: 10, duration: 0.49, ease: 'power2.out', paused: true, immediateRender: false });
-        ScrollTrigger.create({
-          trigger: entry,
-          start: 'top 92%',
-          once: true,
-          onEnter: () => {
-            if (!document.documentElement.classList.contains(INTRO_ACTIVE_CLASS)) entrance.play();
-          },
-        });
-      }
-    });
-  }
-
-  startMotion();
-  window.addEventListener('pagehide', () => {
-    motion?.revert();
-    motion = undefined;
-  });
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted) startMotion();
-  });
+  gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+  attachProjectMotion({ gsap, ScrollTrigger, introClass: INTRO_ACTIVE_CLASS });
 </script>
 
 <style>
