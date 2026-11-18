@@ -4,9 +4,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactChannels from '../../components/contact/ContactChannels.astro';
 import ContactForm from '../../components/contact/ContactForm.astro';
 import MapEmbed from '../../components/contact/MapEmbed.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import DrawRule from '../../components/ui/DrawRule.astro';
 import EmbeddingText from '../../components/ui/EmbeddingText.astro';
+import { site } from '../../data/site';
 import { getDictionary, getLangStaticPaths } from '../../i18n/utils';
 
 export const getStaticPaths = getLangStaticPaths;
@@ -15,82 +15,149 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { lang } = Astro.props;
 const t = getDictionary(lang);
+const { contact } = t;
 ---
 
-<BaseLayout lang={lang} title={`${t.contact.kicker} — ${t.meta.title}`} activePage="contact">
-  <section class="page">
+<BaseLayout lang={lang} title={`${contact.kicker} — ${t.meta.title}`} activePage="contact">
+  <section class="page" aria-labelledby="contact-heading" data-contact-page>
     <header class="contact-intro">
-      <p class="eyebrow">{t.contact.kicker}</p>
-      <h1><EmbeddingText text={t.contact.heading} /><DrawRule /></h1>
-      <p class="contact-body lead">{t.contact.body}</p>
-      <div class="contact-channels">
-        <ContactChannels lang={lang} />
-      </div>
+      <p class="eyebrow contact-kicker">{contact.kicker} <span aria-hidden="true">/</span> {site.owner}</p>
+      <h1 id="contact-heading"><EmbeddingText text={contact.heading} /><DrawRule /></h1>
+      <p class="lead">{contact.body}</p>
     </header>
 
-    <div class="contact-block reveal">
-      <SectionHeading heading={t.contact.map.heading} note={t.contact.map.caption} reveal={false} />
-      <div class="contact-grid">
-        <MapEmbed title={t.contact.map.heading} />
+    <section class="contact-panel contact-panel--direct" aria-labelledby="contact-channels-heading">
+      <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
+      <p class="eyebrow">{contact.channels.kicker}</p>
+      <h2 id="contact-channels-heading">{contact.channels.heading}</h2>
+      <ContactChannels lang={lang} />
+    </section>
+
+    <div class="contact-grid">
+      <section class="contact-panel" aria-labelledby="contact-form-heading">
+        <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
+        <p class="eyebrow">{contact.form.kicker}</p>
+        <h2 id="contact-form-heading">{contact.form.heading}</h2>
         <ContactForm lang={lang} />
-      </div>
+      </section>
+      <section class="contact-panel contact-location" aria-labelledby="contact-map-heading">
+        <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
+        <h2 id="contact-map-heading">{contact.map.heading}</h2>
+        <p>{contact.map.caption}</p>
+        <MapEmbed title={contact.map.heading} />
+      </section>
     </div>
   </section>
 </BaseLayout>
 
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+  const played = new WeakSet<Element>();
+  let media: ReturnType<typeof gsap.matchMedia> | undefined;
+
+  function mount() {
+    if (media) return;
+    media = gsap.matchMedia();
+    media.add('(prefers-reduced-motion: no-preference)', () => {
+      for (const trace of document.querySelectorAll('[data-contact-page] [data-contact-trace]')) {
+        if (played.has(trace) || !trace.parentElement) continue;
+        gsap.fromTo(trace, { scaleX: 0 }, {
+          scaleX: 1,
+          duration: 0.65,
+          ease: 'power2.out',
+          clearProps: 'transform',
+          scrollTrigger: {
+            trigger: trace.parentElement,
+            start: 'top 89%',
+            once: true,
+            onEnter: () => { played.add(trace); },
+          },
+        });
+      }
+    });
+  }
+
+  mount();
+  window.addEventListener('pagehide', () => {
+    media?.revert();
+    media = undefined;
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) mount();
+  });
+</script>
+
 <style>
   .contact-intro {
-    padding-bottom: var(--intro-gap);
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 10px var(--gutter);
+    margin-bottom: clamp(var(--gutter), 4vw, 48px);
   }
 
-  .contact-intro h1 {
-    margin-top: 24px;
+  .contact-kicker { grid-column: 1 / -1; color: var(--accent); }
+
+  .contact-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-inline-end: 10px;
+    background: var(--accent);
   }
 
-  .contact-body {
-    margin-top: 28px;
-    max-width: 700px;
+  h1 { font-size: var(--fs-display); line-height: 1.05; overflow-wrap: anywhere; }
+  .contact-intro .lead { max-width: 44ch; }
+
+  .contact-panel {
+    --panel-mark: var(--accent);
+    position: relative;
+    min-width: 0;
+    padding: clamp(16px, 3vw, 32px);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--field);
   }
 
-  .contact-channels {
-    margin-top: 40px;
+  .contact-panel--direct {
+    --panel-mark: var(--on-accent);
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .contact-intro > * {
-      animation: fade-up 0.9s var(--ease-out) both;
-    }
-    .contact-intro h1 {
-      animation-delay: 0.15s;
-    }
-    .contact-intro > :nth-child(n + 3) {
-      animation-delay: 0.3s;
-    }
+  .contact-panel > .eyebrow { margin-bottom: 8px; color: var(--panel-mark); }
+  .contact-panel h2 { overflow-wrap: anywhere; }
+
+  .contact-trace {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: var(--panel-mark);
+    transform-origin: left;
+    pointer-events: none;
   }
 
-  .contact-block {
-    padding: 64px 0;
-  }
-
-  .contact-block :global(.section-head) {
-    margin-bottom: 36px;
-  }
-
-  /* Mapa a la izquierda y formulario a la derecha, a la misma altura. */
   .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-    gap: 48px;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--gutter);
+    margin-top: var(--gutter);
   }
 
-  @media (max-width: 900px) {
-    .contact-block {
-      padding: 48px 0;
-    }
-    .contact-grid {
-      grid-template-columns: 1fr;
-      gap: 36px;
-    }
+  .contact-grid :global(.contact-form) { margin-top: calc(var(--gutter) * 0.75); }
+  .contact-location p { margin: 8px 0 14px; color: var(--copy); }
+
+  @media (max-width: 790px) {
+    .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .contact-intro { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

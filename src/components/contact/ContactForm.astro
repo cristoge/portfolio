@@ -94,11 +94,9 @@ const { form } = getDictionary(lang).contact;
 </script>
 
 <style>
-  /* La fila del mensaje crece para que el formulario iguale la altura del mapa. */
   .contact-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
   }
 
@@ -123,7 +121,7 @@ const { form } = getDictionary(lang).contact;
     width: 100%;
     min-height: 52px;
     padding: 14px 16px;
-    background: var(--field);
+    background: var(--page);
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
     color: var(--ink);
@@ -152,9 +150,7 @@ const { form } = getDictionary(lang).contact;
     outline-offset: 0;
   }
 
-  /* Botón de enviar a todo el ancho del formulario. */
   .btn {
-    width: 100%;
     min-height: 48px;
   }
 
@@ -177,8 +173,7 @@ const { form } = getDictionary(lang).contact;
 
   @media (max-width: 640px) {
     .contact-form {
-      grid-template-columns: 1fr;
-      grid-template-rows: none;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

@@ -284,6 +284,10 @@ export default {
     kicker: 'Contacto',
     heading: 'Hablemos',
     body: 'Si quieres hablar de un proyecto, tienes alguna duda o simplemente quieres saludar, aquí me encuentras.',
+    channels: {
+      kicker: 'Canales directos',
+      heading: 'Correo y redes',
+    },
     copyEmail: {
       label: 'Copiar',
       ariaLabel: 'Copiar el correo electrónico',
@@ -294,6 +298,8 @@ export default {
       caption: 'Esplugues de Llobregat, cerca de Barcelona.',
     },
     form: {
+      kicker: 'Formulario',
+      heading: 'Envíame un mensaje',
       nameLabel: 'Nombre completo',
       emailLabel: 'Correo electrónico',
       messageLabel: 'Tu mensaje',

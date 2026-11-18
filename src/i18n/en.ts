@@ -284,6 +284,10 @@ export default {
     kicker: 'Contact',
     heading: "Let's talk",
     body: 'If you want to talk about a project, have a question, or just want to say hi, you can find me here.',
+    channels: {
+      kicker: 'Direct channels',
+      heading: 'Email and social links',
+    },
     copyEmail: {
       label: 'Copy',
       ariaLabel: 'Copy email address',
@@ -294,6 +298,8 @@ export default {
       caption: 'Esplugues de Llobregat, near Barcelona.',
     },
     form: {
+      kicker: 'Contact form',
+      heading: 'Send me a message',
       nameLabel: 'Full name',
       emailLabel: 'Email address',
       messageLabel: 'Your message',

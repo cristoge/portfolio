@@ -157,6 +157,10 @@ export interface Dictionary {
     kicker: string;
     heading: string;
     body: string;
+    channels: {
+      kicker: string;
+      heading: string;
+    };
     copyEmail: {
       label: string;
       ariaLabel: string;
@@ -167,6 +171,8 @@ export interface Dictionary {
       caption: string;
     };
     form: {
+      kicker: string;
+      heading: string;
       nameLabel: string;
       emailLabel: string;
       messageLabel: string;
