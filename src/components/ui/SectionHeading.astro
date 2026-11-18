@@ -1,4 +1,6 @@
 ---
+import DrawRule from './DrawRule.astro';
+import EmbeddingText from './EmbeddingText.astro';
 // Cabecera de sección: título y, opcionalmente, una nota debajo.
 interface Props {
   heading: string;
@@ -11,7 +13,8 @@ const { heading, note, reveal = true } = Astro.props;
 
 <div class:list={['section-head', { reveal }]}>
   <div>
-    <h2>{heading}</h2>
+    <h2><EmbeddingText text={heading} /></h2>
+    <DrawRule />
     {note && <p class="note">{note}</p>}
   </div>
 </div>

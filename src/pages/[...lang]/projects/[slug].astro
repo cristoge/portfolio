@@ -3,6 +3,8 @@ import type { InferGetStaticPropsType } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ButtonLink from '../../../components/ui/ButtonLink.astro';
 import PillList from '../../../components/ui/PillList.astro';
+import DrawRule from '../../../components/ui/DrawRule.astro';
+import EmbeddingText from '../../../components/ui/EmbeddingText.astro';
 import { getProjects } from '../../../data/projects';
 import { getDictionary, getLangStaticPaths, localePath } from '../../../i18n/utils';
 import { formatIndex } from '../../../lib/format';
@@ -29,7 +31,7 @@ const d = t.projects.detail;
 
     <header class="project-header">
       <p class="eyebrow">{d.context}</p>
-      <h1>{project.title}</h1>
+      <h1><EmbeddingText text={project.title} /><DrawRule /></h1>
       <p class="project-summary lead">{project.description}</p>
     </header>
 

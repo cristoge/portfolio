@@ -58,6 +58,15 @@ const path = unlocalizedPath(Astro.url.pathname);
     </main>
     <Footer lang={lang} />
     <script>
+      import { gsap } from 'gsap';
+      import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+      import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+      import { attachDrawMotion } from '../lib/draw-motion.mjs';
+      import { INTRO_ACTIVE_CLASS } from '../lib/storage';
+
+      gsap.registerPlugin(DrawSVGPlugin, ScrambleTextPlugin);
+      attachDrawMotion({ gsap, introClass: INTRO_ACTIVE_CLASS });
+
       // Hace aparecer los elementos `.reveal` al entrar en pantalla.
       const observer = new IntersectionObserver(
         (entries) => {

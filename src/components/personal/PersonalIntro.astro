@@ -1,4 +1,6 @@
 ---
+import DrawRule from '../ui/DrawRule.astro';
+import EmbeddingText from '../ui/EmbeddingText.astro';
 import { getDictionary, type Lang } from '../../i18n/utils';
 
 interface Props {
@@ -11,7 +13,7 @@ const t = getDictionary(lang);
 
 <header class="personal-intro">
   <p class="eyebrow">{t.personal.kicker}</p>
-  <h1>{t.personal.heading}</h1>
+  <h1><EmbeddingText text={t.personal.heading} /><DrawRule /></h1>
   <div class="personal-body">
     {t.personal.intro.map((paragraph) => <p>{paragraph}</p>)}
   </div>
