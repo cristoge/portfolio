@@ -178,16 +178,18 @@ export default {
   },
   stack: {
     heading: 'Tecnologías',
+    kicker: 'Stack técnico',
+    lead: 'Herramientas por especialidad, con IA y cloud en primer plano.',
     groups: [
-      { label: 'IA / ML', items: [{ label: 'Strands Agents', href: 'https://strandsagents.com' }, 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
-      { label: 'Lenguajes', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
-      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
-      { label: 'Bases de datos', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
-      { label: 'Cloud e infraestructura', items: ['Docker', 'Terraform', 'AWS (IAM, Lambda, S3, RDS, DynamoDB, Cognito, Bedrock)'] },
+      { label: 'Agentes e IA', highlight: 'focus', lead: { label: 'Strands Agents', href: 'https://strandsagents.com' }, items: ['LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'Cloud e infraestructura', highlight: 'accent', lead: 'AWS', items: ['Docker', 'Terraform', 'IAM', 'Lambda', 'S3', 'RDS', 'DynamoDB', 'Cognito', 'Bedrock'] },
+      { label: 'Backend', lead: 'FastAPI', items: ['Pydantic', 'Redis', 'pytest', 'uv'] },
+      { label: 'Bases de datos', lead: 'PostgreSQL', items: ['pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
+      { label: 'Lenguajes', lead: 'Python', items: ['TypeScript', 'JavaScript', 'SQL'] },
       {
         label: 'Herramientas',
+        lead: 'Claude Code',
         items: [
-          'Claude Code',
           { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'configurador de agentes de IA' },
           'OpenCode',
           { label: 'Pi', description: 'harness minimalista para agentes' },

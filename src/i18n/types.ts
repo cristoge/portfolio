@@ -53,6 +53,8 @@ export type StackItem = string | StackEntry;
 
 export interface StackGroup {
   label: string;
+  lead: StackItem;
+  highlight?: 'focus' | 'accent';
   items: readonly StackItem[];
 }
 
@@ -138,6 +140,8 @@ export interface Dictionary {
   };
   stack: {
     heading: string;
+    kicker: string;
+    lead: string;
     groups: readonly StackGroup[];
   };
   personal: {

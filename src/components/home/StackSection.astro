@@ -1,7 +1,6 @@
 ---
-import SectionHeading from '../ui/SectionHeading.astro';
+import type { StackEntry } from '../../i18n/types';
 import { getDictionary, type Lang } from '../../i18n/utils';
-import { formatIndex } from '../../lib/format';
 import { externalLink } from '../../lib/links';
 
 interface Props {
@@ -9,110 +8,247 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const t = getDictionary(lang);
+const { heading, kicker, lead, groups } = getDictionary(lang).stack;
 ---
 
-<section class="section" id="stack">
-  <SectionHeading heading={t.stack.heading} />
-  <div class="stack-list">
-    {t.stack.groups.map((group, i) => (
-      <div class="stack-cell reveal">
-        <span class="mono stack-num">{formatIndex(i)}</span>
-        <h3>{group.label}</h3>
-        <ul class="stack-items">
-          {group.items.map((item) => (
-            <li>
-              {typeof item === 'string' ? item : (
-                <>
-                  {item.href ? <a class="stack-link" href={item.href} {...externalLink}>{item.label}</a> : item.label}
-                  {item.description && <span class="stack-description">{item.description}</span>}
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
+<section class="section" id="stack" aria-labelledby="stack-heading" data-stack>
+  <header class="stack-header">
+    <p class="eyebrow stack-kicker">{kicker}</p>
+    <h2 id="stack-heading">{heading}</h2>
+    <p class="lead">{lead}</p>
+  </header>
+  <div class="stack-mosaic">
+    {groups.map(({ label, lead: entry, highlight, items }) => {
+      const primary: StackEntry = typeof entry === 'string' ? { label: entry } : entry;
+      return (
+        <article class:list={['stack-tile', highlight && `stack-tile--${highlight}`]} data-stack-tile>
+          <span class="stack-rule" aria-hidden="true" data-stack-rule></span>
+          {highlight && <span class="stack-texture" aria-hidden="true" data-stack-texture></span>}
+          <h3 class="mono stack-label">{label}</h3>
+          <p class="stack-primary">
+            {primary.href ? <a class="stack-link" href={primary.href} {...externalLink}>{primary.label}</a> : primary.label}
+          </p>
+          {primary.description && <p class="stack-description">{primary.description}</p>}
+          <ul class="stack-names" role="list">
+            {items.map((item) => (
+              <li>
+                {typeof item === 'string' ? item : (
+                  <>
+                    {item.href ? <a class="stack-link" href={item.href} {...externalLink}>{item.label}</a> : item.label}
+                    {item.description && <span class="stack-description">{item.description}</span>}
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </article>
+      );
+    })}
   </div>
 </section>
 
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { INTRO_ACTIVE_CLASS } from '../../lib/storage';
+
+  gsap.registerPlugin(ScrollTrigger);
+  const stack = document.querySelector('[data-stack]');
+  const played = new WeakSet<Element>();
+  let motion: ReturnType<typeof gsap.matchMedia> | undefined;
+
+  function mount() {
+    if (!stack || motion) return;
+    const section = stack;
+    motion = gsap.matchMedia(section);
+    motion.add('(prefers-reduced-motion: no-preference)', (context) => {
+      let intro: MutationObserver | undefined;
+      function start() {
+        if (document.documentElement.classList.contains(INTRO_ACTIVE_CLASS)) return;
+        intro?.disconnect();
+        context.add(() => {
+          for (const tile of section.querySelectorAll('[data-stack-tile]')) {
+            const rule = tile.querySelector('[data-stack-rule]');
+            if (!rule || played.has(tile)) continue;
+            const texture = tile.querySelector('[data-stack-texture]');
+            const timeline = gsap.timeline({ scrollTrigger: {
+              trigger: tile,
+              start: 'top 88%',
+              once: true,
+              onEnter: () => { played.add(tile); },
+            } });
+            timeline.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out', clearProps: 'transform' });
+            if (texture) timeline.from(texture, {
+              x: 16, opacity: 0.08, duration: 0.6, ease: 'power2.out', clearProps: 'opacity,transform',
+            }, 0.08);
+          }
+        });
+      }
+      if (document.documentElement.classList.contains(INTRO_ACTIVE_CLASS)) {
+        intro = new MutationObserver(start);
+        intro.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+      } else start();
+      return () => intro?.disconnect();
+    });
+  }
+
+  mount();
+  window.addEventListener('pagehide', () => {
+    motion?.revert();
+    motion = undefined;
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) mount();
+  });
+</script>
+
 <style>
-  /* Rejilla de 3 columnas con bordes compartidos. */
-  .stack-list {
+  .stack-header {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid var(--line-strong);
-    border-left: 1px solid var(--line-strong);
+    grid-template-columns: 1.2fr 1fr;
+    align-items: end;
+    gap: 12px var(--gutter);
+    margin-bottom: clamp(var(--gutter), 4vw, 48px);
   }
 
-  .stack-cell {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 28px 24px;
-    border-right: 1px solid var(--line-strong);
-    border-bottom: 1px solid var(--line-strong);
-  }
-
-  .stack-num {
+  .stack-kicker {
+    grid-column: 1 / -1;
     color: var(--accent);
   }
 
-  .stack-items {
-    margin: 4px 0 0;
-    padding: 12px 0 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    border-top: 1px solid var(--line);
-    color: var(--copy);
-    font-size: var(--fs-sm);
-  }
-
-  .stack-items li {
-    position: relative;
-    padding-left: 18px;
-  }
-
-  /* Rombo pequeño como viñeta. */
-  .stack-items li::before {
+  .stack-kicker::before {
     content: '';
-    position: absolute;
-    left: 2px;
-    top: 0.55em;
-    width: 6px;
-    height: 6px;
-    border: 1px solid var(--muted);
-    transform: rotate(45deg);
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-inline-end: 10px;
+    background: var(--accent);
   }
+
+  .stack-header h2 { font-size: var(--fs-display); line-height: 1; }
+  .stack-header .lead { max-width: 34ch; }
+
+  .stack-mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: calc(var(--gutter) / 2);
+  }
+
+  .stack-tile {
+    --tile-mark: var(--accent);
+    --tile-copy: var(--copy);
+    --tile-muted: var(--muted);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-width: 0;
+    min-height: 148px;
+    padding: var(--gutter);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--field);
+  }
+
+  .stack-tile--focus,
+  .stack-tile--accent {
+    grid-column: span 2;
+    min-height: 218px;
+    background: var(--surface);
+  }
+
+  .stack-tile--accent {
+    --tile-mark: var(--on-accent);
+    --tile-copy: var(--on-accent);
+    --tile-muted: var(--on-accent);
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .stack-rule {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 44px;
+    height: 2px;
+    background: var(--tile-mark);
+    transform-origin: left;
+    pointer-events: none;
+  }
+
+  .stack-tile--focus .stack-rule,
+  .stack-tile--accent .stack-rule { width: 100%; height: 3px; }
+
+  .stack-texture {
+    position: absolute;
+    z-index: -1;
+    inset: var(--gutter) 0 0 64%;
+    background-image: radial-gradient(var(--tile-mark) 1px, transparent 1px);
+    background-size: 13px 13px;
+    mask-image: linear-gradient(to right, transparent, var(--ink));
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  .stack-label { color: var(--tile-mark); }
+
+  .stack-primary {
+    margin-top: 12px;
+    font-size: var(--fs-h2);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1.04;
+    overflow-wrap: anywhere;
+  }
+
+  .stack-tile--focus .stack-primary,
+  .stack-tile--accent .stack-primary { margin-top: 16px; font-size: var(--fs-h1); }
+
+  .stack-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--tile-copy);
+    font-size: var(--fs-sm);
+    overflow-wrap: anywhere;
+  }
+
+  .stack-tile--focus .stack-names,
+  .stack-tile--accent .stack-names { max-width: 40ch; }
 
   .stack-link {
-    color: var(--accent);
+    color: var(--tile-mark);
     text-decoration: underline 1px;
-    text-underline-offset: 4px;
+    text-underline-offset: 0.16em;
   }
 
-  .stack-link:hover {
-    text-decoration-thickness: 2px;
-  }
+  .stack-link:hover { text-decoration-thickness: 2px; }
+  .stack-link:focus-visible { outline-color: var(--tile-mark); }
+  .stack-primary .stack-link { color: inherit; }
 
-  /* Qué es una herramienta poco conocida, en gris a la derecha de su nombre. */
   .stack-description {
-    margin-left: 8px;
-    color: var(--muted);
+    margin-inline-start: 5px;
+    color: var(--tile-muted);
     font-size: var(--fs-2xs);
   }
 
-  @media (max-width: 900px) {
-    .stack-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  @media (max-width: 840px) {
+    .stack-mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stack-tile { padding: 16px; }
+    .stack-tile--focus, .stack-tile--accent { grid-column: auto; }
   }
 
-  @media (max-width: 640px) {
-    .stack-list {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 600px) {
+    .stack-header { grid-template-columns: 1fr; }
+    .stack-tile { min-height: 0; }
+    .stack-tile--focus, .stack-tile--accent { grid-column: span 2; }
+    .stack-tile:not(.stack-tile--focus, .stack-tile--accent) .stack-primary { font-size: var(--fs-md); }
+  }
+
+  @media (max-width: 330px) {
+    .stack-mosaic { grid-template-columns: minmax(0, 1fr); }
+    .stack-tile--focus, .stack-tile--accent { grid-column: auto; }
   }
 </style>

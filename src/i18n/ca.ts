@@ -178,16 +178,18 @@ export default {
   },
   stack: {
     heading: 'Tecnologies',
+    kicker: 'Stack tècnic',
+    lead: 'Eines per especialitat, amb IA i cloud en primer pla.',
     groups: [
-      { label: 'IA / ML', items: [{ label: 'Strands Agents', href: 'https://strandsagents.com' }, 'LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
-      { label: 'Llenguatges', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
-      { label: 'Backend', items: ['FastAPI', 'Pydantic', 'Redis', 'pytest', 'uv'] },
-      { label: 'Bases de dades', items: ['PostgreSQL', 'pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
-      { label: 'Cloud i infraestructura', items: ['Docker', 'Terraform', 'AWS (IAM, Lambda, S3, RDS, DynamoDB, Cognito, Bedrock)'] },
+      { label: 'Agents i IA', highlight: 'focus', lead: { label: 'Strands Agents', href: 'https://strandsagents.com' }, items: ['LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
+      { label: 'Cloud i infraestructura', highlight: 'accent', lead: 'AWS', items: ['Docker', 'Terraform', 'IAM', 'Lambda', 'S3', 'RDS', 'DynamoDB', 'Cognito', 'Bedrock'] },
+      { label: 'Backend', lead: 'FastAPI', items: ['Pydantic', 'Redis', 'pytest', 'uv'] },
+      { label: 'Bases de dades', lead: 'PostgreSQL', items: ['pgvector', 'Supabase', 'SQLAlchemy', 'Alembic'] },
+      { label: 'Llenguatges', lead: 'Python', items: ['TypeScript', 'JavaScript', 'SQL'] },
       {
         label: 'Eines',
+        lead: 'Claude Code',
         items: [
-          'Claude Code',
           { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: "configurador d'agents d'IA" },
           'OpenCode',
           { label: 'Pi', description: 'harness minimal per a agents' },
