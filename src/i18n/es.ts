@@ -216,6 +216,7 @@ export default {
     sections: [
       {
         title: "Cómo aprendo",
+        kicker: 'Curiosidad',
         body: [
           "Con la IA todo cambia tan rápido que lo que aprendes en clase se queda viejo en unos meses, así que me he acostumbrado a ponerme al día por mi cuenta, un poquito cada día.",
           "Suelo mirar Reddit y Twitter, donde la gente siempre va recomendando herramientas nuevas, que con la IA cada día sale algún proyecto nuevo.",
@@ -230,10 +231,12 @@ export default {
           { text: 'typecraft', href: 'https://www.youtube.com/@typecraft_dev' },
         ],
         image: '/engram.webp',
+        imageAlt: 'Captura de la interfaz de engram',
         caption: 'engram · memoria para mis agentes',
       },
       {
         title: "Mi setup",
+        kicker: 'En la terminal',
         body: [
           "Cuando empecé a programar usaba VS Code y me pasaba el día cambiando de tema sin acabar de estar nunca conforme. Luego descubrí que desde la propia terminal también se podía editar código, y con ello todo un mundo de personalización y configuraciones: de ahí salieron Neovim, Starship y unas cuantas terminales distintas, hasta que me di cuenta de que programando desde la terminal estaba mucho más cómodo. Ahora uso Ghostty, que incluso me deja ponerle shaders.",
           "Últimamente le he añadido herdr, un multiplexor de terminal pensado para agentes de IA. Me permite tener varios agentes trabajando a la vez, cada uno en su espacio, y ver de un vistazo cuál necesita mi atención, lo que ha mejorado mucho mi flujo de trabajo con agentes.",
@@ -249,25 +252,30 @@ export default {
         ],
         link: { label: 'Ver mis dotfiles en GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
+        imageAlt: 'Captura de Neovim y Ghostty con el tema Rosé Pine',
         caption: 'Neovim · Ghostty · tema Rosé Pine',
       },
       {
         title: "Música",
+        kicker: 'Fuera de la pantalla',
         body: [
           "Si casi todas mis aficiones acaban pasando por la programación, la música es mi forma de evadirme un poco de la tecnología. Empecé a tocar el violín a los 12 años, en el colegio, gracias a un programa del ayuntamiento que acercaba la música y la cultura a los alumnos.",
           "Con los años lo fui dejando, pero ahora lo estoy retomando y aprendiendo sin prisa. Un rato con el violín, sin pantallas ni notificaciones, es lo que me hace desconectar de verdad.",
           "Y gracias al violín también se despertó mi curiosidad por aprender más sobre música: descubrir géneros distintos, cómo está construida una canción y todo lo que hay detrás.",
         ],
         image: '/music.webp',
+        imageAlt: 'Imagen de la escuela municipal de música',
         caption: 'Escuela municipal de música',
       },
       {
         title: "Ahora mismo",
+        kicker: 'Lo que estoy aprendiendo',
         body: [
           "Estoy en una etapa en la que estoy buscando trabajo y, a la vez, sigo formándome. Decidí profundizar en cloud porque es de lo que más se pide hoy en día, así que estoy con el curso de especialización y me paso el día trasteando con AWS. El objetivo es aprender AWS a fondo y poder desplegar ahí mis proyectos de agentes de IA.",
           "El curso me prepara para la certificación AWS Solutions Architect – Associate, que me sacaré en unos meses. En paralelo, por mi cuenta, sigo haciendo proyectos con agentes de IA y profundizo en sus conceptos más técnicos y en cómo diseñar workflows con ellos.",
         ],
         image: '/now.webp',
+        imageAlt: 'Captura de la formación AWS Cloud Quest',
         caption: 'AWS Cloud Quest: Cloud Practitioner',
       },
     ],

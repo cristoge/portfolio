@@ -14,16 +14,8 @@ const t = getDictionary(lang);
 ---
 
 <BaseLayout lang={lang} title={`${t.personal.kicker} — ${t.meta.title}`} activePage="personal">
-  <section class="page">
+  <section class="page" aria-labelledby="personal-heading">
     <PersonalIntro lang={lang} />
-    <div class="entries">
-      {t.personal.sections.map((entry) => <PersonalEntry entry={entry} />)}
-    </div>
+    {t.personal.sections.map((entry, index) => <PersonalEntry entry={entry} reverse={index % 2 === 1} />)}
   </section>
 </BaseLayout>
-
-<style>
-  .entries {
-    border-bottom: 1px solid var(--line-strong);
-  }
-</style>

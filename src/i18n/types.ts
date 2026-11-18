@@ -65,11 +65,13 @@ export interface Fact {
 
 export interface PersonalSection {
   title: string;
+  kicker: string;
   body: readonly string[];
   inlineLinks?: readonly InlineLink[];
   note?: string;
   link?: Link;
   image: string;
+  imageAlt: string;
   caption?: string;
 }
 

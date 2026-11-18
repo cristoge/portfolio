@@ -6,14 +6,16 @@ import { linkify } from '../../lib/linkify';
 
 interface Props {
   entry: PersonalSection;
+  reverse: boolean;
 }
 
-const { entry } = Astro.props;
+const { entry, reverse } = Astro.props;
 ---
 
-<article class="entry reveal">
-  <h2 class="entry-title">{entry.title}</h2>
+<article class:list={['entry', { 'entry--reverse': reverse }]}>
   <div class="entry-content">
+    <p class="eyebrow entry-kicker">{entry.kicker}</p>
+    <h2>{entry.title}</h2>
     {entry.body.map((paragraph) => (
       <p>
         {linkify(paragraph, entry.inlineLinks).map((part) =>
@@ -27,48 +29,90 @@ const { entry } = Astro.props;
     {entry.link && <ArrowLink href={entry.link.href} class="entry-link" external>{entry.link.label}</ArrowLink>}
   </div>
   <figure class="entry-media">
-    <div class="photo-frame">
-      <img src={entry.image} alt={entry.title} loading="lazy" />
+    <div class="photo-frame" data-personal-photo>
+      <img src={entry.image} alt={entry.imageAlt} loading="lazy" />
+      <span class="photo-trace" data-personal-trace aria-hidden="true"></span>
     </div>
     {entry.caption && <figcaption class="mono entry-caption">{entry.caption}</figcaption>}
   </figure>
 </article>
 
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+  const played = new WeakSet<Element>();
+  let media: ReturnType<typeof gsap.matchMedia> | undefined;
+
+  function mount() {
+    if (media) return;
+    media = gsap.matchMedia();
+    media.add('(prefers-reduced-motion: no-preference)', () => {
+      for (const photo of document.querySelectorAll('[data-personal-photo]')) {
+        if (played.has(photo)) continue;
+        const trace = photo.querySelector('[data-personal-trace]');
+        const image = photo.querySelector('img');
+        if (!trace || !image) continue;
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: photo,
+            start: 'top 91%',
+            once: true,
+            onEnter: () => { played.add(photo); },
+          },
+        });
+        timeline.fromTo(trace, { scaleX: 0 }, {
+          scaleX: 1, duration: 0.56, ease: 'power2.out', clearProps: 'transform',
+        });
+        timeline.fromTo(image, { clipPath: 'inset(0 12% 0 0)' }, {
+          clipPath: 'inset(0 0% 0 0)', duration: 0.52, ease: 'power2.out',
+          immediateRender: false, clearProps: 'clipPath',
+        }, 0);
+      }
+    });
+  }
+
+  mount();
+  window.addEventListener('pagehide', () => {
+    media?.revert();
+    media = undefined;
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) mount();
+  });
+</script>
+
 <style>
-  /* Fila: texto alineado con la introducción y foto pequeña a la derecha,
-     alineada con el primer párrafo y no con el título. */
   .entry {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
-    grid-template-areas:
-      'title .'
-      'content photo';
-    align-items: start;
-    gap: 20px 32px;
-    padding: 40px 0;
-    border-top: 1px solid var(--line-strong);
+    grid-template: 'copy media' / minmax(0, 1fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(18px, 4vw, 52px);
+    padding-block: clamp(26px, 5vw, 54px);
+    border-bottom: 1px solid var(--line);
   }
 
-  .entry-content {
-    grid-area: content;
-    max-width: 680px;
+  .entry--reverse {
+    grid-template: 'media copy' / minmax(0, 1.15fr) minmax(0, 1fr);
   }
 
-  .entry-title {
-    grid-area: title;
-    margin: 0;
+  .entry-content { grid-area: copy; min-width: 0; }
+
+  .entry-content h2 {
+    margin: 7px 0 12px;
     font-size: var(--fs-h2);
+    overflow-wrap: anywhere;
   }
 
-  .entry-content p {
+  .entry-kicker { color: var(--accent); }
+
+  .entry-content h2 ~ p {
+    max-width: 54ch;
     color: var(--copy);
-    font-size: var(--fs-base);
-    line-height: 1.65;
   }
 
-  .entry-content p + p {
-    margin-top: 14px;
-  }
+  .entry-content p + p { margin-top: 12px; }
 
   .inline-link {
     color: var(--accent);
@@ -76,64 +120,53 @@ const { entry } = Astro.props;
     text-underline-offset: 4px;
   }
 
-  .inline-link:hover {
-    text-decoration-thickness: 2px;
-  }
+  .inline-link:hover { text-decoration-thickness: 2px; }
 
   .entry-content .entry-note {
-    margin-top: 24px;
-    padding: 14px 18px;
-    border-left: 2px solid var(--accent);
-    color: var(--ink);
-    font-size: var(--fs-base);
+    padding-inline-start: 14px;
+    border-inline-start: 2px solid var(--accent);
   }
 
-  .entry-content :global(.entry-link) {
-    margin-top: 20px;
-  }
+  .entry-content :global(.entry-link) { margin-top: 16px; }
 
   .entry-media {
-    grid-area: photo;
+    grid-area: media;
     margin: 0;
+    min-width: 0;
   }
 
   .photo-frame {
-    aspect-ratio: 4 / 3;
+    position: relative;
+    height: clamp(176px, 27vw, 330px);
     overflow: hidden;
-    border: 1px solid var(--ink);
-    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    background: var(--field);
   }
 
   .photo-frame img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s var(--ease-out);
+    object-fit: contain;
   }
 
-  .entry:hover .photo-frame img {
-    transform: scale(1.03);
+  .photo-trace {
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: left;
+    pointer-events: none;
   }
 
-  /* Pie de foto en mono, como la documentación de un caso. */
   .entry-caption {
-    margin-top: 10px;
+    margin-top: 8px;
     color: var(--muted);
+    letter-spacing: 0.055em;
   }
 
-  /* Misma columna derecha que la ficha de PersonalIntro. */
-  @media (max-width: 1000px) {
-    .entry {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 280px);
-    }
-  }
-
-  @media (max-width: 760px) {
-    .entry {
-      grid-template-columns: 1fr;
-      grid-template-areas: 'title' 'content' 'photo';
-      gap: 20px;
-      padding: 32px 0;
-    }
+  @media (max-width: 620px) {
+    .entry, .entry--reverse { grid-template: 'copy' 'media' / minmax(0, 1fr); }
+    .photo-frame { height: clamp(152px, 55vw, 284px); }
   }
 </style>

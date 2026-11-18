@@ -216,6 +216,7 @@ export default {
     sections: [
       {
         title: "Com aprenc",
+        kicker: 'Curiositat',
         body: [
           "Amb la IA tot canvia tan de pressa que el que aprens a classe es queda antic en uns mesos, així que m'he acostumat a posar-me al dia pel meu compte, una miqueta cada dia.",
           "Acostumo a mirar Reddit i Twitter, on la gent sempre va recomanant eines noves, que amb la IA cada dia surt algun projecte nou.",
@@ -230,10 +231,12 @@ export default {
           { text: 'typecraft', href: 'https://www.youtube.com/@typecraft_dev' },
         ],
         image: '/engram.webp',
+        imageAlt: 'Captura de la interfície d’engram',
         caption: 'engram · memòria per als meus agents',
       },
       {
         title: "El meu setup",
+        kicker: 'A la terminal',
         body: [
           "Quan vaig començar a programar feia servir VS Code i em passava el dia canviant de tema sense estar mai del tot content. Després vaig descobrir que des de la mateixa terminal també es podia editar codi, i amb això tot un món de personalització i configuracions: d'aquí van sortir Neovim, Starship i unes quantes terminals diferents, fins que em vaig adonar que programant des de la terminal estava molt més còmode. Ara faig servir Ghostty, que fins i tot em deixa posar-hi shaders.",
           "Últimament hi he afegit herdr, un multiplexor de terminal pensat per a agents d'IA. Em permet tenir diversos agents treballant alhora, cadascun al seu espai, i veure d'un cop d'ull quin necessita la meva atenció, cosa que ha millorat molt el meu flux de treball amb agents.",
@@ -249,25 +252,30 @@ export default {
         ],
         link: { label: 'Veure els meus dotfiles a GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
+        imageAlt: 'Captura de Neovim i Ghostty amb el tema Rosé Pine',
         caption: 'Neovim · Ghostty · tema Rosé Pine',
       },
       {
         title: "Música",
+        kicker: 'Fora de la pantalla',
         body: [
           "Si gairebé totes les meves aficions acaben passant per la programació, la música és la meva manera d'evadir-me una mica de la tecnologia. Vaig començar a tocar el violí als 12 anys, a l'escola, gràcies a un programa de l'ajuntament que apropava la música i la cultura als alumnes.",
           "Amb els anys el vaig anar deixant, però ara l'estic reprenent i aprenent sense pressa. Una estona amb el violí, sense pantalles ni notificacions, és el que em fa desconnectar de debò.",
           "I gràcies al violí també se'm va despertar la curiositat per aprendre més sobre música: descobrir gèneres diferents, com està construïda una cançó i tot el que hi ha al darrere.",
         ],
         image: '/music.webp',
+        imageAlt: 'Imatge de l’escola municipal de música',
         caption: 'Escola municipal de música',
       },
       {
         title: "Ara mateix",
+        kicker: 'El que estic aprenent',
         body: [
           "Estic en una etapa en què estic buscant feina i, alhora, continuo formant-me. Vaig decidir aprofundir en cloud perquè és una de les coses que més es demana avui dia, així que estic fent el curs d'especialització i em passo el dia trastejant amb AWS. L'objectiu és aprendre AWS a fons i poder-hi desplegar els meus projectes d'agents d'IA.",
           "El curs em prepara per a la certificació AWS Solutions Architect – Associate, que em trauré d'aquí a uns mesos. En paral·lel, pel meu compte, continuo fent projectes amb agents d'IA i aprofundeixo en els seus conceptes més tècnics i en com dissenyar workflows amb ells.",
         ],
         image: '/now.webp',
+        imageAlt: 'Captura de la formació AWS Cloud Quest',
         caption: 'AWS Cloud Quest: Cloud Practitioner',
       },
     ],

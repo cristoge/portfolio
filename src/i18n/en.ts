@@ -216,6 +216,7 @@ export default {
     sections: [
       {
         title: "How I learn",
+        kicker: 'Curiosity',
         body: [
           "With AI everything moves so fast that what you learn in class is outdated within a few months, so I've gotten used to keeping up on my own, a little bit every day.",
           "I usually check Reddit and Twitter, where people are always recommending new tools; with AI, there's a new project coming out every day.",
@@ -230,10 +231,12 @@ export default {
           { text: 'typecraft', href: 'https://www.youtube.com/@typecraft_dev' },
         ],
         image: '/engram.webp',
+        imageAlt: 'Screenshot of the engram interface',
         caption: 'engram · memory for my agents',
       },
       {
         title: "My setup",
+        kicker: 'In the terminal',
         body: [
           "When I started programming I used VS Code and kept switching themes, never quite happy with any of them. Then I found out you could edit code right from the terminal, and with it a whole world of customisation and configs: that led me to Neovim, Starship and a handful of different terminals, until I realised I was much more comfortable programming from the terminal. These days I use Ghostty, which even lets me add shaders.",
           "Lately I've added herdr, a terminal multiplexer built for AI agents. It lets me run several agents at once, each in its own space, and see at a glance which one needs my attention, which has made my workflow with agents much better.",
@@ -249,25 +252,30 @@ export default {
         ],
         link: { label: 'See my dotfiles on GitHub', href: 'https://github.com/cristoge/dotfiles' },
         image: '/setup.webp',
+        imageAlt: 'Screenshot of Neovim and Ghostty with the Rosé Pine theme',
         caption: 'Neovim · Ghostty · Rosé Pine theme',
       },
       {
         title: "Music",
+        kicker: 'Away from the screen',
         body: [
           "If almost all my hobbies end up going through programming, music is my way to get away from technology for a while. I started playing the violin at 12, at school, thanks to a city council programme that brought music and culture closer to students.",
           "Over the years I gradually drifted away from it, but I'm picking it back up now and learning at my own pace. Some time with the violin, with no screens or notifications, is what really helps me switch off.",
           "And thanks to the violin, I also grew curious to learn more about music: discovering different genres, how a song is put together and everything behind it.",
         ],
         image: '/music.webp',
+        imageAlt: 'Image of the municipal music school',
         caption: 'Municipal music school',
       },
       {
         title: "Right now",
+        kicker: 'What I’m learning',
         body: [
           "I'm at a stage where I'm looking for a job while I keep learning. I decided to go deeper into cloud because it's one of the most in-demand skills these days, so I'm doing the specialization course and spending my days tinkering with AWS. The goal is to learn AWS in depth and be able to deploy my AI agent projects on it.",
           "The course is preparing me for the AWS Solutions Architect – Associate certification, which I'll get in a few months. In parallel, on my own, I keep building projects with AI agents and dig deeper into their more technical concepts and how to design workflows with them.",
         ],
         image: '/now.webp',
+        imageAlt: 'Screenshot of the AWS Cloud Quest training',
         caption: 'AWS Cloud Quest: Cloud Practitioner',
       },
     ],
