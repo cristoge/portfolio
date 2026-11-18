@@ -34,7 +34,10 @@ for (const [prefix, lang] of locales) {
     const html = await htmlAt(prefix);
     assert.match(html, new RegExp(`<html\\b[^>]*lang="${lang}"`));
     const hero = html.match(/<section\b[^>]*class="hero-intro"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-    assert.ok(plainText(hero).includes('Cristo'));
+    const heading = hero.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1];
+    assert.ok(heading);
+    assert.match(plainText(heading), /\bCristopher\b/);
+    assert.doesNotMatch(plainText(heading), /\bCristo\b/);
     assert.ok(plainText(hero).includes('AWS'));
     assert.match(hero, /href="\/CV_Cristopher_Gordon.pdf"/);
     assert.match(hero, /href="https:\/\/github.com\/cristoge"/);

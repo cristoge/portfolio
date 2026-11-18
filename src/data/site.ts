@@ -1,6 +1,7 @@
 // Datos del sitio que no dependen del idioma. El texto traducible vive en src/i18n.
 export const site = {
   owner: 'Cristopher Gordon',
+  givenName: 'Cristopher',
   cvHref: '/CV_Cristopher_Gordon.pdf',
   email: 'cristo.g@outlook.es',
   linkedin: {

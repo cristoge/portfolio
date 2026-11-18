@@ -25,7 +25,7 @@ const greetingWords = t.hero.greeting.split(' ');
       <h1>
         {greetingWords.map((word, i) => <><span class="word"><span style={`--i:${i}`}><EmbeddingText text={word} /></span></span>{' '}</>)}
         <span class="squiggle">
-          <span class="word"><span style={`--i:${greetingWords.length}`}><EmbeddingText text={t.hero.name} /></span></span>
+          <span class="word"><span style={`--i:${greetingWords.length}`}><EmbeddingText text={site.givenName} /></span></span>
           <svg data-draw-svg class="squiggle-line" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
             <path d="M2 6H198" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
