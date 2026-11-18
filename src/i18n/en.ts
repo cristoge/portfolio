@@ -87,6 +87,13 @@ export default {
   projects: {
     heading: 'Projects',
     note: 'A selection of academic and personal projects.',
+    archive: {
+      label: 'Case archive',
+      index: 'Project index',
+      count: 'cases',
+      figure: 'Fig.',
+      flow: 'Project flow',
+    },
     links: {
       repo: 'Repo',
       demo: 'Demo',
@@ -102,6 +109,13 @@ export default {
       'safe-reply': {
         title: 'Safe_reply',
         description: 'Backend that classifies the support tickets of a fictional digital bank and decides which ones AI can safely answer and which ones need a call from a person.',
+        archive: {
+          category: 'Classification · Backend',
+          summary: 'Classifies support tickets for a fictional bank and routes those that need human attention to a person.',
+          detail: 'The first version uses intent classification, routing rules and predefined replies.',
+          caption: 'API documentation',
+          flow: ['Ticket', 'Classification', 'Reply or handoff'],
+        },
         context: 'Ongoing personal project. A bank gets many repetitive questions that can be answered automatically, but others (fraud, stolen cards, unrecognised charges) leave no room for a wrong answer. The challenge is not answering, but knowing when not to: when in doubt, the ticket always goes to a person. v1 works without an LLM, using canned answers: more privacy (banking data never leaves the server) and no per-request cost.',
         depthTopics: [
           'Intent classifier with scikit-learn (TF-IDF and logistic regression) trained on Banking77: 77 intents and 90% accuracy, in milliseconds and with no per-request cost',
@@ -115,6 +129,14 @@ export default {
       'rag-pdf': {
         title: 'RAG study assistant',
         description: 'Mobile app to study with your PDFs: upload notes, books or articles to a project and an agent answers citing the document and page, and generates summaries, flashcards and quizzes from them.',
+        archive: {
+          indexTitle: 'RAG assistant',
+          category: 'Applied AI · Mobile app',
+          summary: 'Study with your PDFs: the assistant answers from your notes and cites the document and page.',
+          detail: 'Hybrid search in PostgreSQL combines text matches and semantic similarity with pgvector.',
+          caption: 'Study assistant app',
+          flow: ['PDF', 'Retrieval', 'Cited answer'],
+        },
         context: "Final project of the Specialization Course in Artificial Intelligence and Big Data (ITIC Barcelona), built individually and documented in an academic paper. After submitting it I rebuilt it as a kind of mini NotebookLM: each project groups several documents, the chat works across all of them and answers come from the retrieved passages, not from the model's general knowledge.",
         depthTopics: [
           'FastAPI backend with hexagonal architecture: the domain and services depend on no provider, and every external service (LLM, embeddings, files, users) plugs in through an adapter',
@@ -129,6 +151,13 @@ export default {
       'bikeshare': {
         title: 'BikeShare',
         description: 'Mobile app for renting regular and electric bikes, with an interactive map, reservations and CO₂ savings stats.',
+        archive: {
+          category: 'Maps · Mobile app',
+          summary: 'Find, reserve and unlock bikes from your phone.',
+          detail: 'Each rental stage syncs the bike’s status and location in Supabase.',
+          caption: 'Bike rental app',
+          flow: ['Find', 'Reserve', 'Unlock'],
+        },
         context: 'Final project of the Higher Vocational Training in Multiplatform Application Development (Prat FP), built in a team of four. The app lets users find, reserve and unlock bikes without going to a desk, and shows them the positive environmental impact of their rides.',
         depthTopics: [
           'Database modelling in PostgreSQL (Supabase): users, bikes, locations, rentals and routes, and how they relate',

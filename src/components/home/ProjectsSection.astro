@@ -1,41 +1,166 @@
 ---
 import ProjectCard from './ProjectCard.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
+import EmbeddingText from '../ui/EmbeddingText.astro';
 import { getProjects } from '../../data/projects';
 import { getDictionary, type Lang } from '../../i18n/utils';
+import { formatIndex } from '../../lib/format';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
-const t = getDictionary(lang);
+const { heading, note, archive } = getDictionary(lang).projects;
+const projects = getProjects(lang);
 ---
 
-<section class="section" id="projects">
-  <SectionHeading heading={t.projects.heading} note={t.projects.note} />
-  <div class="projects-grid">
-    {getProjects(lang).map((project) => <ProjectCard lang={lang} project={project} />)}
+<section class="section" id="projects" aria-labelledby="projects-heading">
+  <header class="archive-header">
+    <p class="eyebrow archive-label"><EmbeddingText text={archive.label} /></p>
+    <h2 id="projects-heading">{heading}</h2>
+    <p class="lead">{note}</p>
+  </header>
+  <div class="archive-layout">
+    <nav class="project-index" aria-label={archive.index}>
+      <p class="mono">{archive.index} / {String(projects.length).padStart(2, '0')} {archive.count}</p>
+      <ol role="list">
+        {projects.map((project, index) => (
+          <li>
+            <a href={`#project-${project.slug}`}>
+              <span class="mono" aria-hidden="true">{formatIndex(index)}</span>
+              <span>{project.archive.indexTitle ?? project.title}</span>
+              <span class="index-arrow" aria-hidden="true">↓</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <div>
+      {projects.map((project, index) => <ProjectCard lang={lang} project={project} number={formatIndex(index)} />)}
+    </div>
   </div>
 </section>
 
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { INTRO_ACTIVE_CLASS } from '../../lib/storage';
+
+  gsap.registerPlugin(ScrollTrigger);
+  let motion: ReturnType<typeof gsap.matchMedia> | undefined;
+
+  function startMotion() {
+    if (motion) return;
+    motion = gsap.matchMedia();
+    motion.add('(prefers-reduced-motion: no-preference)', () => {
+      for (const entry of document.querySelectorAll('[data-project-entry]')) {
+        const entrance = gsap.from(entry, { y: 10, duration: 0.49, ease: 'power2.out', paused: true, immediateRender: false });
+        ScrollTrigger.create({
+          trigger: entry,
+          start: 'top 92%',
+          once: true,
+          onEnter: () => {
+            if (!document.documentElement.classList.contains(INTRO_ACTIVE_CLASS)) entrance.play();
+          },
+        });
+      }
+    });
+  }
+
+  startMotion();
+  window.addEventListener('pagehide', () => {
+    motion?.revert();
+    motion = undefined;
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) startMotion();
+  });
+</script>
+
 <style>
-  /* Rejilla de 3 columnas con tarjetas separadas. */
-  .projects-grid {
+  .archive-header {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: end;
+    gap: 16px var(--gutter);
+    margin-bottom: clamp(26px, 4vw, 48px);
   }
 
-  @media (max-width: 900px) {
-    .projects-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .archive-label {
+    grid-column: 1 / -1;
+    color: var(--accent);
   }
 
-  @media (max-width: 640px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
-    }
+  .archive-label::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-inline-end: 12px;
+    background: var(--accent);
+  }
+
+  .archive-header h2 {
+    font-size: var(--fs-display);
+    line-height: 1;
+  }
+
+  .archive-header .lead {
+    max-width: 33ch;
+  }
+
+  .archive-layout {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.3fr) minmax(0, 1fr);
+    gap: clamp(var(--gutter), 4vw, 56px);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .project-index {
+    position: sticky;
+    top: calc(var(--nav-h, 60px) + 8px);
+    align-self: start;
+    padding-top: 20px;
+    background: var(--page);
+  }
+
+  .project-index ol {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0 0;
+  }
+
+  .project-index a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    border-bottom: 1px solid var(--line);
+    color: var(--accent);
+    font-size: var(--fs-sm);
+  }
+
+  .project-index a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .project-index .mono {
+    color: var(--muted);
+  }
+
+  .project-index .index-arrow {
+    margin-inline-start: auto;
+  }
+
+  @media (max-width: 800px) {
+    .archive-layout { grid-template-columns: 1fr; gap: 12px; }
+    .project-index { position: static; }
+    .project-index ol { display: flex; flex-wrap: wrap; column-gap: 16px; }
+    .project-index a { padding-inline: 4px; }
+  }
+
+  @media (max-width: 600px) {
+    .archive-header { grid-template-columns: 1fr; gap: 10px; }
   }
 </style>

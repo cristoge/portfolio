@@ -87,6 +87,13 @@ export default {
   projects: {
     heading: 'Projectes',
     note: 'Una selecció de projectes acadèmics i personals.',
+    archive: {
+      label: 'Arxiu de casos',
+      index: 'Índex de projectes',
+      count: 'casos',
+      figure: 'Fig.',
+      flow: 'Flux del projecte',
+    },
     links: {
       repo: 'Repositori',
       demo: 'Demo',
@@ -102,6 +109,13 @@ export default {
       'safe-reply': {
         title: 'Safe_reply',
         description: "Backend que classifica els tiquets de suport d'un banc digital fictici i decideix quins pot respondre la IA sense risc i quins necessiten la trucada d'una persona.",
+        archive: {
+          category: 'Classificació · Backend',
+          summary: 'Classifica consultes de suport d’un banc fictici i deriva a una persona les que no ha de respondre automàticament.',
+          detail: 'La primera versió utilitza un classificador d’intencions, regles de derivació i respostes predefinides.',
+          caption: 'Documentació de l’API',
+          flow: ['Tiquet', 'Classificació', 'Resposta o derivació'],
+        },
         context: "Projecte personal en curs. Un banc rep moltes consultes repetides que es poden respondre soles, però d'altres (frau, robatori de targeta, càrrecs no reconeguts) no admeten una resposta equivocada. El repte no és respondre, sinó saber quan no fer-ho: davant el dubte, el tiquet sempre va a una persona. La v1 funciona sense LLM, amb respostes predefinides: més privacitat (les dades bancàries no surten del servidor) i cap cost per petició.",
         depthTopics: [
           "Classificador d'intencions amb scikit-learn (TF-IDF i regressió logística) entrenat amb Banking77: 77 intencions i un 90 % d'encert, en mil·lisegons i sense cost per petició",
@@ -115,6 +129,14 @@ export default {
       'rag-pdf': {
         title: "Assistent d'estudi amb RAG",
         description: 'App mòbil per estudiar amb els teus PDFs: puges apunts, llibres o articles a un projecte i un agent respon citant el document i la pàgina, i en genera resums, flashcards i tests.',
+        archive: {
+          indexTitle: 'Assistent RAG',
+          category: 'IA aplicada · App mòbil',
+          summary: 'Estudia amb els teus PDF: l’assistent respon a partir dels apunts i cita el document i la pàgina.',
+          detail: 'Cerca híbrida a PostgreSQL: combina coincidències de text i similitud semàntica amb pgvector.',
+          caption: 'App de l’assistent d’estudi',
+          flow: ['PDF', 'Recuperació', 'Resposta citada'],
+        },
         context: "Treball de final del Curs d'Especialització en Intel·ligència Artificial i Big Data (ITIC Barcelona), desenvolupat de manera individual i documentat en un paper acadèmic. Després del lliurament el vaig refer com una mena de mini NotebookLM: cada projecte agrupa diversos documents, el xat treballa sobre tots ells i les respostes surten dels fragments recuperats, no del coneixement general del model.",
         depthTopics: [
           'Backend amb FastAPI i arquitectura hexagonal: el domini i els serveis no depenen de cap proveïdor, i cada servei extern (LLM, embeddings, fitxers, usuaris) hi entra per un adaptador',
@@ -129,6 +151,13 @@ export default {
       'bikeshare': {
         title: 'BikeShare',
         description: 'App mòbil de lloguer de bicicletes normals i elèctriques amb mapa interactiu, reserves i estadístiques de CO₂ estalviat.',
+        archive: {
+          category: 'Mapes · App mòbil',
+          summary: 'Permet localitzar, reservar i desbloquejar bicicletes des del mòbil.',
+          detail: 'Cada fase del lloguer sincronitza l’estat i la ubicació de la bicicleta a Supabase.',
+          caption: 'App de lloguer de bicicletes',
+          flow: ['Localitzar', 'Reservar', 'Desbloquejar'],
+        },
         context: "Projecte final del Cicle Formatiu de Grau Superior en Desenvolupament d'Aplicacions Multiplataforma (Prat FP), desenvolupat en un equip de quatre persones. L'app permet localitzar, reservar i desbloquejar bicicletes sense passar per un taulell, i mostra a l'usuari l'impacte ambiental positiu dels seus trajectes.",
         depthTopics: [
           'Modelatge de la base de dades a PostgreSQL (Supabase): usuaris, bicicletes, ubicacions, lloguers i rutes, amb les seves relacions',

@@ -27,6 +27,14 @@ export interface EducationEntry {
 export interface ProjectText {
   title: string;
   description: string;
+  archive: {
+    indexTitle?: string;
+    category: string;
+    summary: string;
+    detail: string;
+    caption: string;
+    flow: readonly [string, string, string];
+  };
   context: string;
   depthTopics: readonly string[];
   outcome?: string;
@@ -104,6 +112,13 @@ export interface Dictionary {
   projects: {
     heading: string;
     note: string;
+    archive: {
+      label: string;
+      index: string;
+      count: string;
+      figure: string;
+      flow: string;
+    };
     links: {
       repo: string;
       demo: string;
