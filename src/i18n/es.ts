@@ -37,6 +37,8 @@ export default {
   },
   education: {
     heading: 'Educación',
+    kicker: 'Formación / Cronología',
+    lead: 'Tres etapas de formación, de la más reciente a la primera.',
     courseworkLabel: 'Asignaturas relevantes',
     items: [
       {
@@ -44,6 +46,8 @@ export default {
         institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Curso de Especialización en Recursos y Entornos Cloud',
         dates: '2026 — actualidad',
+        subject: 'Cloud',
+        status: 'En curso',
         note: "Actualmente en curso y centrado en AWS, con el objetivo de sacar las certificaciones Cloud Practitioner y Solutions Architect – Associate.",
         coursework: [
           "Fundamentos de servicios cloud",
@@ -58,6 +62,7 @@ export default {
         institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Curso de Especialización en Inteligencia Artificial y Big Data',
         dates: '2025 — 2026',
+        subject: 'IA y Big Data',
         note: "Centrado en la inteligencia artificial: desde algoritmos clásicos y machine learning con scikit-learn hasta redes neuronales con PyTorch, visión por computador con YOLO, procesamiento del lenguaje con Transformers (BERT) y LSTM y sistemas RAG con LangChain y Ollama.",
         link: { label: "Ver las prácticas en GitHub", href: 'https://github.com/cristoge/ai_projects' },
         coursework: [
@@ -73,6 +78,7 @@ export default {
         institutionHref: 'https://pratfp.com/es/inicio/',
         degree: 'Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)',
         dates: '2023 — 2025',
+        subject: 'Desarrollo',
         note: "Centrado en los fundamentos y las buenas prácticas de programación, las bases de datos, la programación del lado del servidor y las aplicaciones móviles con React Native.",
         coursework: [
           'Programación',

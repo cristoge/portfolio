@@ -1,6 +1,5 @@
 ---
 import EducationItem from './EducationItem.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
 import { getDictionary, type Lang } from '../../i18n/utils';
 
 interface Props {
@@ -8,14 +7,126 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const t = getDictionary(lang);
+const { heading, kicker, lead, items, courseworkLabel } = getDictionary(lang).education;
 ---
 
-<section class="section" id="education">
-  <SectionHeading heading={t.education.heading} />
-  <div>
-    {t.education.items.map((entry) => (
-      <EducationItem entry={entry} courseworkLabel={t.education.courseworkLabel} />
+<section class="section" id="education" aria-labelledby="education-heading" data-education-timeline>
+  <header class="education-header">
+    <p class="eyebrow education-kicker">{kicker}</p>
+    <h2 id="education-heading">{heading}</h2>
+    <p class="lead">{lead}</p>
+  </header>
+  <ol class="education-timeline" role="list">
+    {items.map((entry, index) => (
+      <EducationItem entry={entry} courseworkLabel={courseworkLabel} connect={index < items.length - 1} />
     ))}
-  </div>
+  </ol>
 </section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { INTRO_ACTIVE_CLASS } from '../../lib/storage';
+
+  gsap.registerPlugin(ScrollTrigger);
+  let motion: ReturnType<typeof gsap.matchMedia> | undefined;
+  const played = new WeakSet<Element>();
+
+  function mount() {
+    const section = document.querySelector('[data-education-timeline]');
+    if (!section || motion) return;
+    motion = gsap.matchMedia(section);
+    motion.add('(prefers-reduced-motion: no-preference)', (context) => {
+      let intro: MutationObserver | undefined;
+
+      function start() {
+        if (document.documentElement.classList.contains(INTRO_ACTIVE_CLASS)) return;
+        intro?.disconnect();
+        context.add(() => {
+          for (const stage of section.querySelectorAll('[data-education-stage]')) {
+            if (played.has(stage)) continue;
+            const node = stage.querySelector('[data-education-node]');
+            if (!node) continue;
+            const trace = stage.querySelector('[data-education-trace]');
+            const sequence = gsap.timeline({
+              scrollTrigger: {
+                trigger: stage,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => { played.add(stage); },
+              },
+            });
+            sequence.fromTo(node, { scale: 1.65 }, {
+              scale: 1, duration: 0.32, ease: 'power2.out', immediateRender: false,
+            });
+            if (trace) {
+              sequence.fromTo(trace, { scaleY: 0 }, {
+                scaleY: 1, duration: 0.55, ease: 'power2.inOut',
+              }, 0.12);
+            }
+          }
+        });
+      }
+
+      if (document.documentElement.classList.contains(INTRO_ACTIVE_CLASS)) {
+        intro = new MutationObserver(start);
+        intro.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+      } else start();
+
+      return () => intro?.disconnect();
+    });
+  }
+
+  mount();
+  window.addEventListener('pagehide', () => {
+    motion?.revert();
+    motion = undefined;
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) mount();
+  });
+</script>
+
+<style>
+  .education-header {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: end;
+    gap: 12px var(--gutter);
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+
+  .education-kicker {
+    grid-column: 1 / -1;
+    color: var(--accent);
+  }
+
+  .education-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-inline-end: 10px;
+    background: var(--accent);
+  }
+
+  .education-header h2 {
+    font-size: var(--fs-display);
+    line-height: 1;
+  }
+
+  .education-header .lead {
+    max-width: 36ch;
+  }
+
+  .education-timeline {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  @media (max-width: 650px) {
+    .education-header { grid-template-columns: 1fr; }
+  }
+</style>

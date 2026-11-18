@@ -37,6 +37,8 @@ export default {
   },
   education: {
     heading: 'Education',
+    kicker: 'Education / Timeline',
+    lead: 'Three stages of education, from the most recent to the first.',
     courseworkLabel: 'Relevant coursework',
     items: [
       {
@@ -44,6 +46,8 @@ export default {
         institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Specialization Course in Cloud Resources and Environments',
         dates: '2026 — present',
+        subject: 'Cloud',
+        status: 'In progress',
         note: "Currently in progress and focused on AWS, working towards the Cloud Practitioner and Solutions Architect – Associate certifications.",
         coursework: [
           "Cloud services fundamentals",
@@ -58,6 +62,7 @@ export default {
         institutionHref: 'https://agora.xtec.cat/iticbcn/',
         degree: 'Specialization Course in Artificial Intelligence and Big Data',
         dates: '2025 — 2026',
+        subject: 'AI and Big Data',
         note: "Focused on artificial intelligence: from classical algorithms and machine learning with scikit-learn to neural networks with PyTorch, computer vision with YOLO, natural language processing with Transformers (BERT) and LSTMs, and RAG systems with LangChain and Ollama.",
         link: { label: "See the coursework on GitHub", href: 'https://github.com/cristoge/ai_projects' },
         coursework: [
@@ -73,6 +78,7 @@ export default {
         institutionHref: 'https://pratfp.com/es/inicio/',
         degree: 'Higher Vocational Training in Multiplatform Application Development (DAM)',
         dates: '2023 — 2025',
+        subject: 'Development',
         note: "Focused on programming fundamentals and best practices, databases, server-side programming and mobile apps with React Native.",
         coursework: [
           'Programming',

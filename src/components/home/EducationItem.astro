@@ -6,84 +6,136 @@ import { externalLink } from '../../lib/links';
 interface Props {
   entry: EducationEntry;
   courseworkLabel: string;
+  connect: boolean;
 }
 
-const { entry, courseworkLabel } = Astro.props;
-const { institution, institutionHref, degree, dates, note, coursework, link } = entry;
+const { entry, courseworkLabel, connect } = Astro.props;
+const { institution, institutionHref, degree, dates, subject, status, note, coursework, link } = entry;
 ---
 
-<div class="education-item reveal">
-  <span class="mono education-dates">{dates}</span>
+<li class="education-item" data-education-stage>
+  <div class="education-stamp">
+    <span class="mono education-dates">{dates}</span>
+    {status && <span class="mono education-status">{status}</span>}
+  </div>
+  <div class="education-track" aria-hidden="true">
+    <span class="education-node" data-education-node></span>
+    {connect && <span class="education-rail"><span class="education-trace" data-education-trace></span></span>}
+  </div>
   <div class="education-main">
+    <p class="mono education-meta">
+      {subject} <span class="education-separator" aria-hidden="true">/</span>
+      {institutionHref ? (
+        <a class="education-institution" href={institutionHref} {...externalLink}>
+          {institution} <span aria-hidden="true">↗</span>
+        </a>
+      ) : institution}
+    </p>
     <h3>{degree}</h3>
-    {institutionHref ? (
-      <a class="mono education-institution" href={institutionHref} {...externalLink}>
-        {institution} <span class="arrow" aria-hidden="true">→</span>
-      </a>
-    ) : (
-      <span class="mono education-institution">{institution}</span>
-    )}
     {note && <p class="education-note">{note}</p>}
     {coursework && coursework.length > 0 && (
       <p class="education-coursework">
         <span class="mono education-label">{courseworkLabel}</span>
-        {coursework.join(', ')}
+        {coursework.join(' · ')}
       </p>
     )}
     {link && <ArrowLink href={link.href} class="education-link" external>{link.label}</ArrowLink>}
   </div>
-</div>
+</li>
 
 <style>
-  /* Fila de currículum: fecha en monoespaciada a la izquierda, contenido a la derecha. */
   .education-item {
+    --node-size: 9px;
+    --track-size: 2px;
+    --track-offset: 5px;
     display: grid;
-    grid-template-columns: 180px minmax(0, 1fr);
-    align-items: start;
-    gap: 32px;
-    padding: 28px 0;
-    border-top: 1px solid var(--line-strong);
+    grid-template-columns: minmax(140px, 0.27fr) var(--node-size) minmax(0, 1fr);
+    gap: 0 var(--gutter);
+    padding-block: var(--gutter);
+    border-bottom: 1px solid var(--line);
   }
 
-  .education-item:last-child {
-    border-bottom: 1px solid var(--line-strong);
-  }
-
-  .education-dates {
-    padding-top: 4px;
+  .education-stamp {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: var(--track-offset);
     color: var(--accent);
   }
 
-  /* El bloque conserva su ancho de lectura pero se pega al borde derecho. */
-  .education-main {
-    justify-self: end;
-    width: 100%;
-    max-width: 68ch;
+  .education-status {
+    padding: 2px 6px;
+    border: 1px solid var(--line-strong);
+    background: var(--accent-soft);
+    letter-spacing: 0.05em;
   }
 
-  .education-institution {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 6px;
+  .education-track {
+    position: relative;
+    margin-top: var(--track-offset);
+    pointer-events: none;
+    isolation: isolate;
+  }
+
+  .education-node {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: var(--node-size);
+    height: var(--node-size);
+    background: var(--accent);
+  }
+
+  .education-rail {
+    position: absolute;
+    inset-block: calc(var(--node-size) / 2) calc(-2 * var(--gutter) - var(--track-offset) - var(--node-size) / 2 - 1px);
+    inset-inline-start: calc((var(--node-size) - var(--track-size)) / 2);
+    width: var(--track-size);
+    background: var(--line-strong);
+  }
+
+  .education-trace {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    transform-origin: top;
+  }
+
+  .education-meta {
+    margin-bottom: 8px;
     color: var(--muted);
   }
 
-  a.education-institution {
-    min-height: 32px;
+  .education-separator {
+    margin-inline: 3px;
     color: var(--accent);
   }
 
-  a.education-institution:hover {
-    text-decoration: underline 1px;
+  .education-institution {
+    display: inline-block;
+    padding-block: 3px;
+    color: var(--accent);
+  }
+
+  .education-institution:hover {
+    text-decoration: underline;
     text-underline-offset: 4px;
+  }
+
+  .education-main h3 {
+    font-size: var(--fs-h2);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
   }
 
   .education-note,
   .education-coursework {
-    margin-top: 10px;
+    max-width: 68ch;
     color: var(--copy);
   }
+
+  .education-note { margin-top: 12px; }
 
   .education-coursework {
     margin-top: 16px;
@@ -92,22 +144,28 @@ const { institution, institutionHref, degree, dates, note, coursework, link } = 
 
   .education-label {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     color: var(--muted);
   }
 
-  .education-main :global(.education-link) {
-    margin-top: 8px;
-  }
+  .education-main :global(.education-link) { margin-top: 8px; }
 
-  @media (max-width: 760px) {
+  @media (max-width: 650px) {
     .education-item {
-      grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 24px 0;
+      grid-template: 'track stamp' auto 'track content' 1fr / var(--node-size) minmax(0, 1fr);
+      gap: 8px 16px;
     }
-    .education-dates {
-      padding-top: 0;
+
+    .education-stamp {
+      grid-area: stamp;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      margin-top: 0;
     }
+
+    .education-track { grid-area: track; }
+    .education-main { grid-area: content; }
   }
 </style>

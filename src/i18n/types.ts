@@ -19,6 +19,8 @@ export interface EducationEntry {
   institutionHref?: string;
   degree: string;
   dates: string;
+  subject: string;
+  status?: string;
   note: string;
   coursework?: readonly string[];
   link?: Link;
@@ -106,6 +108,8 @@ export interface Dictionary {
   };
   education: {
     heading: string;
+    kicker: string;
+    lead: string;
     courseworkLabel: string;
     items: readonly EducationEntry[];
   };
