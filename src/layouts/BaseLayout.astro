@@ -61,25 +61,15 @@ const path = unlocalizedPath(Astro.url.pathname);
       import { gsap } from 'gsap';
       import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
       import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+      import { SplitText } from 'gsap/SplitText';
       import { attachDrawMotion } from '../lib/draw-motion.mjs';
+      import { attachSiteMotion } from '../lib/site-motion.mjs';
       import { INTRO_ACTIVE_CLASS } from '../lib/storage';
 
-      gsap.registerPlugin(DrawSVGPlugin, ScrambleTextPlugin);
+      gsap.registerPlugin(DrawSVGPlugin, ScrambleTextPlugin, SplitText);
       attachDrawMotion({ gsap, introClass: INTRO_ACTIVE_CLASS });
 
-      // Hace aparecer los elementos `.reveal` al entrar en pantalla.
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        },
-        { rootMargin: '0px 0px -8% 0px' },
-      );
-
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      attachSiteMotion({ gsap, SplitText, introClass: INTRO_ACTIVE_CLASS });
     </script>
   </body>
 </html>

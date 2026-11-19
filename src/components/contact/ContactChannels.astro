@@ -16,7 +16,7 @@ const { email, linkedin, github } = site;
 <div class="contact-links">
   <p class="contact-address"><a href={`mailto:${email}`}>{email}</a></p>
   <div class="copy-action">
-    <button type="button" class="btn copy-email" data-copy-email={email} data-done={copyEmail.done} aria-label={copyEmail.ariaLabel} hidden>
+    <button type="button" class="btn copy-email" data-motion-interactive data-copy-email={email} data-done={copyEmail.done} aria-label={copyEmail.ariaLabel} hidden>
       <Icon name="copy" size={17} />
       <span>{copyEmail.ariaLabel}</span>
     </button>

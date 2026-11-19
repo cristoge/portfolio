@@ -11,6 +11,7 @@ const { form } = getDictionary(lang).contact;
 
 <form
   class="contact-form"
+  data-motion
   data-contact-form
   data-subject={form.subject}
   data-sending={form.sendingLabel}
@@ -31,7 +32,7 @@ const { form } = getDictionary(lang).contact;
   </label>
   <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <div class="form-field-full">
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary" data-motion-interactive>
       <span data-submit-label>{form.submitLabel}</span> <span class="arrow" aria-hidden="true">→</span>
     </button>
     <p class="form-status" role="status" aria-live="polite" hidden></p>

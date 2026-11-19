@@ -21,29 +21,29 @@ const { contact } = t;
 <BaseLayout lang={lang} title={`${contact.kicker} — ${t.meta.title}`} activePage="contact">
   <section class="page" aria-labelledby="contact-heading" data-contact-page>
     <header class="contact-intro">
-      <p class="eyebrow contact-kicker">{contact.kicker} <span aria-hidden="true">/</span> {site.owner}</p>
-      <h1 id="contact-heading"><EmbeddingText text={contact.heading} /><DrawRule /></h1>
-      <p class="lead">{contact.body}</p>
+      <p class="eyebrow contact-kicker" data-text-reveal>{contact.kicker} <span aria-hidden="true">/</span> {site.owner}</p>
+      <h1 id="contact-heading" data-text-reveal><EmbeddingText text={contact.heading} /><DrawRule /></h1>
+      <p class="lead" data-text-reveal>{contact.body}</p>
     </header>
 
     <section class="contact-panel contact-panel--direct" aria-labelledby="contact-channels-heading">
       <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
-      <p class="eyebrow">{contact.channels.kicker}</p>
-      <h2 id="contact-channels-heading">{contact.channels.heading}</h2>
-      <ContactChannels lang={lang} />
+      <p class="eyebrow" data-text-reveal>{contact.channels.kicker}</p>
+      <h2 id="contact-channels-heading" data-text-reveal>{contact.channels.heading}</h2>
+      <div data-motion><ContactChannels lang={lang} /></div>
     </section>
 
     <div class="contact-grid">
       <section class="contact-panel" aria-labelledby="contact-form-heading">
         <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
-        <p class="eyebrow">{contact.form.kicker}</p>
-        <h2 id="contact-form-heading">{contact.form.heading}</h2>
+        <p class="eyebrow" data-text-reveal>{contact.form.kicker}</p>
+        <h2 id="contact-form-heading" data-text-reveal>{contact.form.heading}</h2>
         <ContactForm lang={lang} />
       </section>
       <section class="contact-panel contact-location" aria-labelledby="contact-map-heading">
         <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
-        <h2 id="contact-map-heading">{contact.map.heading}</h2>
-        <p>{contact.map.caption}</p>
+        <h2 id="contact-map-heading" data-text-reveal>{contact.map.heading}</h2>
+        <p data-text-reveal>{contact.map.caption}</p>
         <MapEmbed title={contact.map.heading} />
       </section>
     </div>

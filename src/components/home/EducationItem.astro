@@ -23,7 +23,7 @@ const { institution, institutionHref, degree, dates, subject, status, note, cour
     {connect && <span class="education-rail"><span class="education-trace" data-education-trace></span></span>}
   </div>
   <div class="education-main">
-    <p class="mono education-meta">
+    <p class="mono education-meta" data-text-reveal>
       {subject} <span class="education-separator" aria-hidden="true">/</span>
       {institutionHref ? (
         <a class="education-institution" href={institutionHref} {...externalLink}>
@@ -31,10 +31,10 @@ const { institution, institutionHref, degree, dates, subject, status, note, cour
         </a>
       ) : institution}
     </p>
-    <h3>{degree}</h3>
-    {note && <p class="education-note">{note}</p>}
+    <h3 data-text-reveal>{degree}</h3>
+    {note && <p class="education-note" data-text-reveal>{note}</p>}
     {coursework && coursework.length > 0 && (
-      <p class="education-coursework">
+      <p class="education-coursework" data-text-reveal>
         <span class="mono education-label">{courseworkLabel}</span>
         {coursework.join(' · ')}
       </p>

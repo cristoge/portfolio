@@ -347,13 +347,7 @@ a:hover .arrow-back {
     from { stroke-dashoffset: 1; }
   }
 
-  .js .reveal:not(.is-visible) {
-    opacity: 0;
-  }
-
-  .js .reveal.is-visible {
-    animation: fade-up 0.8s var(--reveal-delay, 0s) var(--ease-out) backwards;
-  }
+  /* Viewport entrances are GSAP-owned; static content stays visible on failure. */
 }
 
 @media (max-width: 640px) {

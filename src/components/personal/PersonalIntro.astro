@@ -13,16 +13,16 @@ const { kicker, heading, intro, facts } = getDictionary(lang).personal;
 ---
 
 <header class="personal-intro">
-  <p class="eyebrow">{kicker} <span aria-hidden="true">/</span> {site.owner}</p>
-  <h1 id="personal-heading"><EmbeddingText text={heading} /><DrawRule /></h1>
+  <p class="eyebrow" data-text-reveal>{kicker} <span aria-hidden="true">/</span> {site.owner}</p>
+  <h1 id="personal-heading" data-text-reveal><EmbeddingText text={heading} /><DrawRule /></h1>
   <div class="personal-body">
-    {intro.map((paragraph) => <p>{paragraph}</p>)}
+    {intro.map((paragraph) => <p data-text-reveal>{paragraph}</p>)}
   </div>
   <dl class="facts">
     {facts.map((fact) => (
       <div class="fact">
-        <dt class="mono">{fact.label}</dt>
-        <dd>{fact.value}</dd>
+        <dt class="mono" data-text-reveal>{fact.label}</dt>
+        <dd data-text-reveal>{fact.value}</dd>
       </div>
     ))}
   </dl>

@@ -18,31 +18,33 @@ const id = `project-${project.slug}`;
 <article class="project-case" id={id} aria-labelledby={`${id}-title`} tabindex="-1">
   <div class="case-grid">
     <div>
-      <p class="mono case-category"><span>{number}</span> / {info.category}</p>
-      <h3 id={`${id}-title`}>
+      <p class="mono case-category" data-text-reveal><span>{number}</span> / {info.category}</p>
+      <h3 id={`${id}-title`} data-text-reveal>
         <a class="case-title-link" href={projectDetailPath(lang, project.slug)}>{project.title}</a>
       </h3>
-      <p class="case-summary">{info.summary}</p>
-      <p class="case-detail">{info.detail}</p>
+      <p class="case-summary" data-text-reveal>{info.summary}</p>
+      <p class="case-detail" data-text-reveal>{info.detail}</p>
       <div class="case-links">
         <ArrowLink href={project.repoHref} external>{links.repo}</ArrowLink>
         {project.demoHref && <ArrowLink href={project.demoHref} external>{links.demo}</ArrowLink>}
       </div>
     </div>
     <figure class="case-shot">
-      <div class="case-image" data-project-shot>
+      <div class="case-image">
         <img src={project.image} alt="" loading="lazy" />
-        <span class="case-sweep" data-project-sweep aria-hidden="true"></span>
       </div>
       <figcaption class="mono"><span>{archive.figure} {number}</span>{info.caption}</figcaption>
     </figure>
   </div>
   <ol class="case-flow" role="list" aria-label={archive.flow} data-project-flow>
     {info.flow.map((step, index) => (
-      <li data-project-node>
+      <li>
         {index > 0 && (
-          <svg class="case-trace" viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M0 7H94m-7-5 7 5-7 5" vector-effect="non-scaling-stroke" data-project-connector />
+          <svg class="case-trace" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path class="case-trace-base" d="M0 12H100" />
+            <path class="case-dash case-dash-base" d="M0 12H100" data-project-connector />
+            <path class="case-dash case-dash-middle" d="M0 12H100" data-project-connector />
+            <path class="case-dash case-dash-upper" d="M0 12H100" data-project-connector />
           </svg>
         )}
         {step}
@@ -128,16 +130,6 @@ const id = `project-${project.slug}`;
     object-fit: contain;
   }
 
-  .case-sweep {
-    position: absolute;
-    inset-block: 0;
-    left: 0;
-    width: 2px;
-    background: var(--accent);
-    opacity: 0;
-    pointer-events: none;
-  }
-
   .case-shot figcaption {
     display: flex;
     align-items: baseline;
@@ -165,7 +157,11 @@ const id = `project-${project.slug}`;
     min-height: 46px;
     padding: 7px 5px;
     border: 1px solid var(--line-strong);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--line-strong));
     background: var(--field);
+    box-shadow:
+      0 0 16px color-mix(in srgb, var(--accent) 16%, transparent),
+      inset 0 0 12px color-mix(in srgb, var(--accent) 6%, transparent);
     text-align: center;
     overflow-wrap: anywhere;
   }
@@ -175,12 +171,31 @@ const id = `project-${project.slug}`;
     inset-inline-end: 100%;
     top: 50%;
     width: var(--trace-width);
-    height: 14px;
+    height: 24px;
     transform: translateY(-50%);
-    overflow: visible;
+    overflow: hidden;
     fill: none;
     stroke: var(--accent);
-    stroke-width: 1.4;
+    stroke-linecap: round;
+    pointer-events: none;
+  }
+
+  .case-trace-base {
+    stroke-width: 1;
+    opacity: 0.2;
+  }
+
+  .case-dash {
+    stroke-dasharray: 30 100;
+  }
+
+  .case-dash-base { stroke-width: 8; opacity: 0.15; }
+  .case-dash-middle { stroke-width: 4; opacity: 0.5; }
+  .case-dash-upper { stroke-width: 1.4; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-dash { display: none; }
+    .case-trace-base { opacity: 0.6; }
   }
 
   @media (max-width: 600px) {

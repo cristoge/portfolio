@@ -28,6 +28,6 @@ for (const { path, lang, current, status, subjects } of locales) {
     assert.ok(stages[0].includes(status));
     assert.ok(stages[1].includes('https://github.com/cristoge/ai_projects'));
     assert.match(stages[2], /class="education-coursework"/);
-    assert.doesNotMatch(section, /\breveal\b/);
+    assert.doesNotMatch(section, /\bclass="(?:[^"]*\s)?reveal(?:\s[^"]*)?"/);
   });
 }

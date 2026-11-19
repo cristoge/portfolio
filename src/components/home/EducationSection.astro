@@ -12,9 +12,9 @@ const { heading, kicker, lead, items, courseworkLabel } = getDictionary(lang).ed
 
 <section class="section" id="education" aria-labelledby="education-heading" data-education-timeline>
   <header class="education-header">
-    <p class="eyebrow education-kicker">{kicker}</p>
-    <h2 id="education-heading">{heading}</h2>
-    <p class="lead">{lead}</p>
+    <p class="eyebrow education-kicker" data-text-reveal>{kicker}</p>
+    <h2 id="education-heading" data-text-reveal>{heading}</h2>
+    <p class="lead" data-text-reveal>{lead}</p>
   </header>
   <ol class="education-timeline" role="list">
     {items.map((entry, index) => (

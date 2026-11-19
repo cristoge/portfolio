@@ -16,9 +16,9 @@ const projects = getProjects(lang);
 
 <section class="section" id="projects" aria-labelledby="projects-heading">
   <header class="archive-header">
-    <p class="eyebrow archive-label"><EmbeddingText text={archive.label} /></p>
-    <h2 id="projects-heading">{heading}</h2>
-    <p class="lead">{note}</p>
+    <p class="eyebrow archive-label" data-text-reveal><EmbeddingText text={archive.label} /></p>
+    <h2 id="projects-heading" data-text-reveal>{heading}</h2>
+    <p class="lead" data-text-reveal>{note}</p>
   </header>
   <div class="archive-layout">
     <nav class="project-index" aria-label={archive.index}>
@@ -44,11 +44,10 @@ const projects = getProjects(lang);
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
   import { INTRO_ACTIVE_CLASS } from '../../lib/storage';
   import { attachProjectMotion } from '../../lib/project-motion.mjs';
 
-  gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+  gsap.registerPlugin(ScrollTrigger);
   attachProjectMotion({ gsap, ScrollTrigger, introClass: INTRO_ACTIVE_CLASS });
 </script>
 

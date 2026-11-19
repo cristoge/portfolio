@@ -13,9 +13,9 @@ const { heading, kicker, lead, groups } = getDictionary(lang).stack;
 
 <section class="section" id="stack" aria-labelledby="stack-heading" data-stack>
   <header class="stack-header">
-    <p class="eyebrow stack-kicker">{kicker}</p>
-    <h2 id="stack-heading">{heading}</h2>
-    <p class="lead">{lead}</p>
+    <p class="eyebrow stack-kicker" data-text-reveal>{kicker}</p>
+    <h2 id="stack-heading" data-text-reveal>{heading}</h2>
+    <p class="lead" data-text-reveal>{lead}</p>
   </header>
   <div class="stack-mosaic">
     {groups.map(({ label, lead: entry, highlight, items }) => {
@@ -24,18 +24,18 @@ const { heading, kicker, lead, groups } = getDictionary(lang).stack;
         <article class:list={['stack-tile', highlight && `stack-tile--${highlight}`]} data-stack-tile>
           <span class="stack-rule" aria-hidden="true" data-stack-rule></span>
           {highlight && <span class="stack-texture" aria-hidden="true" data-stack-texture></span>}
-          <h3 class="mono stack-label">{label}</h3>
-          <p class="stack-primary">
+          <h3 class="mono stack-label" data-text-reveal>{label}</h3>
+          <p class="stack-primary" data-text-reveal>
             {primary.href ? <a class="stack-link" href={primary.href} {...externalLink}>{primary.label}</a> : primary.label}
           </p>
-          {primary.description && <p class="stack-description">{primary.description}</p>}
+          {primary.description && <p class="stack-description" data-text-reveal>{primary.description}</p>}
           <ul class="stack-names" role="list">
             {items.map((item) => (
               <li>
                 {typeof item === 'string' ? item : (
                   <>
                     {item.href ? <a class="stack-link" href={item.href} {...externalLink}>{item.label}</a> : item.label}
-                    {item.description && <span class="stack-description">{item.description}</span>}
+                    {item.description && <span class="stack-description" data-text-reveal>{item.description}</span>}
                   </>
                 )}
               </li>

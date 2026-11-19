@@ -14,10 +14,10 @@ const { entry, reverse } = Astro.props;
 
 <article class:list={['entry', { 'entry--reverse': reverse }]}>
   <div class="entry-content">
-    <p class="eyebrow entry-kicker">{entry.kicker}</p>
-    <h2>{entry.title}</h2>
+    <p class="eyebrow entry-kicker" data-text-reveal>{entry.kicker}</p>
+    <h2 data-text-reveal>{entry.title}</h2>
     {entry.body.map((paragraph) => (
-      <p>
+      <p data-text-reveal>
         {linkify(paragraph, entry.inlineLinks).map((part) =>
           typeof part === 'string' ? part : (
             <a class="inline-link" href={part.href} {...externalLink}>{part.text}</a>
@@ -25,7 +25,7 @@ const { entry, reverse } = Astro.props;
         )}
       </p>
     ))}
-    {entry.note && <p class="entry-note">{entry.note}</p>}
+    {entry.note && <p class="entry-note" data-text-reveal>{entry.note}</p>}
     {entry.link && <ArrowLink href={entry.link.href} class="entry-link" external>{entry.link.label}</ArrowLink>}
   </div>
   <figure class="entry-media">

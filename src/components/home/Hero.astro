@@ -20,9 +20,9 @@ const greetingWords = t.hero.greeting.split(' ');
     <div class="hero-main">
       <p class="eyebrow hero-kicker">
         <span class="status-dot" aria-hidden="true"></span>
-        {t.hero.kicker} <span aria-hidden="true">·</span> {t.hero.status}
+        <span data-text-reveal>{t.hero.kicker} <span aria-hidden="true">·</span> {t.hero.status}</span>
       </p>
-      <h1>
+      <h1 data-text-reveal>
         {greetingWords.map((word, i) => <><span class="word"><span style={`--i:${i}`}><EmbeddingText text={word} /></span></span>{' '}</>)}
         <span class="squiggle">
           <span class="word"><span style={`--i:${greetingWords.length}`}><EmbeddingText text={site.givenName} /></span></span>
@@ -33,7 +33,7 @@ const greetingWords = t.hero.greeting.split(' ');
       </h1>
     </div>
     <div class="hero-side">
-      <p class="lead">{t.hero.tagline}</p>
+      <p class="lead" data-text-reveal>{t.hero.tagline}</p>
       <div class="hero-actions">
         <ButtonLink href={site.cvHref} external>{t.hero.cta}</ButtonLink>
         <ArrowLink href={site.github.href} external>{site.github.label}</ArrowLink>
@@ -167,9 +167,6 @@ const greetingWords = t.hero.greeting.split(' ');
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .hero-main .eyebrow {
-      animation: fade-up 0.7s var(--ease-out) 0.1s both;
-    }
     .status-dot::after {
       animation: status-pulse 2.4s var(--ease-out) 1.2s infinite;
     }
@@ -183,13 +180,6 @@ const greetingWords = t.hero.greeting.split(' ');
         opacity: 0;
         transform: scale(3);
       }
-    }
-    .word > span {
-      animation: word-up 0.9s var(--ease-out) both;
-      animation-delay: calc(0.25s + var(--i) * 90ms);
-    }
-    .hero-side {
-      animation: fade-up 0.9s var(--ease-out) 0.65s both;
     }
   }
 

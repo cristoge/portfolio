@@ -11,6 +11,6 @@ interface Props {
 const { href, variant = 'primary', external = false } = Astro.props;
 ---
 
-<a href={href} class:list={['btn', `btn-${variant}`]} {...(external ? externalLink : {})}>
+<a href={href} data-motion-interactive class:list={['btn', `btn-${variant}`]} {...(external ? externalLink : {})}>
   <slot /> <span class="arrow" aria-hidden="true">→</span>
 </a>

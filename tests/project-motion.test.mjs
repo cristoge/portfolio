@@ -3,24 +3,17 @@ import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { attachProjectMotion } from '../src/lib/project-motion.mjs';
 
-function harness({ reduced = false, intro = false, loaded = true } = {}) {
+function harness({ reduced = false, intro = false } = {}) {
   const listeners = new Map();
-  const triggers = [];
-  const timelines = [];
-  const contexts = [];
-  const mutations = [];
-  const imageListeners = new Map();
-  const image = { complete: loaded, naturalWidth: loaded ? 640 : 0,
-    addEventListener: (name, fn) => imageListeners.set(name, fn),
-    removeEventListener: (name) => imageListeners.delete(name) };
-  const line = {};
-  const nodes = [{}, {}, {}];
-  const paths = [{}, {}];
-  const shot = { querySelector: (s) => s === 'img' ? image : line };
-  const flow = { querySelectorAll: (s) => s === '[data-project-node]' ? nodes : paths };
+  const triggers = [], tweens = [], contexts = [], mutations = [];
+  const paths = Array.from({ length: 6 }, () => ({}));
+  const flow = { querySelectorAll: () => paths };
   const doc = {
     documentElement: { classList: { contains: () => intro } },
-    querySelectorAll: (s) => s === '[data-project-shot]' ? [shot] : [flow],
+    querySelectorAll(selector) {
+      assert.equal(selector, '[data-project-flow]', 'screenshots are never animation targets');
+      return [flow];
+    },
   };
   const win = {
     addEventListener: (name, fn) => listeners.set(name, fn),
@@ -42,148 +35,108 @@ function harness({ reduced = false, intro = false, loaded = true } = {}) {
   };
   const gsap = {
     matchMedia: () => media,
-    context: () => {
+    context() {
       const context = { add: (fn) => fn(), revert() { this.reverted = true; } };
       contexts.push(context);
       return context;
     },
-    timeline: () => {
-      const steps = [];
-      const timeline = {};
-      for (const method of ['set', 'to', 'fromTo']) {
-        timeline[method] = (...args) => { steps.push({ method, args }); return timeline; };
-      }
-      timelines.push(steps);
-      return timeline;
+    to(targets, vars) {
+      const tween = { targets, vars, playing: !vars.paused,
+        play() { this.playing = true; }, pause() { this.playing = false; } };
+      tweens.push(tween);
+      return tween;
     },
   };
-  const ScrollTrigger = { create: (vars) => {
+  const ScrollTrigger = { create(vars) {
     const trigger = { ...vars, kill() { this.killed = true; } };
     triggers.push(trigger);
     return trigger;
   } };
   const detach = attachProjectMotion({ gsap, ScrollTrigger, doc, win, introClass: 'intro-active' });
-  const enter = (target) => triggers.filter((t) => t.trigger === target && !t.killed).at(-1)?.onEnter();
-  return { detach, listeners, triggers, timelines, contexts, mutations, imageListeners, shot, flow, nodes, paths, image, line, enter,
+  return { detach, listeners, triggers, tweens, contexts, mutations, flow, paths,
     finishIntro() { intro = false; mutations.at(-1).callback(); },
     reduce() { media.revert(); },
     enable() { cleanup = media.callback(); },
-    load() { image.complete = true; image.naturalWidth = 640; imageListeners.get('load')?.(); },
   };
 }
 
-test('flow has its own once-visible trigger: three readable highlights alternate with two connector draws', () => {
+test('project connectors use the demo dash loop only while the flow is visible', () => {
   const h = harness();
-  assert.equal(h.timelines.length, 0);
-  assert.equal(h.triggers.length, 2);
-  assert.ok(h.triggers.every((t) => t.once && t.start === 'top 92%'));
-  h.enter(h.shot);
-  assert.equal(h.timelines.length, 1, 'image visibility does not start the mobile flow');
-  h.enter(h.flow);
-  const steps = h.timelines[1];
-  const highlights = steps.filter((s) => s.method === 'to' && s.args[1].borderColor);
-  assert.deepEqual(highlights.map((s) => s.args[0]), h.nodes);
-  const draws = steps.filter((s) => s.method === 'fromTo');
-  assert.deepEqual(draws.map((s) => s.args[0]), h.paths);
-  for (let i = 0; i < 2; i++) {
-    assert.ok(steps.indexOf(highlights[i]) < steps.indexOf(draws[i]));
-    assert.ok(steps.indexOf(draws[i]) < steps.indexOf(highlights[i + 1]));
-    assert.equal(draws[i].args[1].drawSVG, '0%');
-    assert.equal(draws[i].args[2].drawSVG, '100%');
-    const cleanup = steps.findIndex(({ method, args }) => method === 'set' && args[0] === h.paths[i]
-      && args[1].clearProps === 'strokeDasharray,strokeDashoffset');
-    assert.ok(cleanup > steps.indexOf(draws[i]) && cleanup < steps.indexOf(highlights[i + 1]));
+  assert.equal(h.triggers.length, 1);
+  assert.equal(h.tweens.length, 1);
+  const tween = h.tweens[0];
+  assert.deepEqual(tween.targets, h.paths);
+  assert.equal(tween.vars.strokeDashoffset, -390);
+  assert.equal(tween.vars.repeat, -1);
+  assert.equal(tween.vars.duration, 3);
+  assert.equal(tween.vars.ease, 'none');
+  assert.equal(tween.playing, false);
+  const trigger = h.triggers[0];
+  assert.equal(trigger.trigger, h.flow);
+  assert.equal(trigger.start, 'top bottom');
+  assert.equal(trigger.end, 'bottom top');
+  for (const isActive of [true, false, true]) {
+    trigger.onToggle({ isActive });
+    assert.equal(tween.playing, isActive);
   }
-  assert.equal(steps.filter((s) => s.args[1]?.clearProps === 'borderColor,boxShadow').length, 3);
-  for (const { args } of steps) {
-    for (const vars of args.slice(1).filter((v) => v && typeof v === 'object')) {
-      assert.equal(vars.opacity, undefined, 'labels never fade');
-      assert.equal(vars.y, undefined, 'no entry translation');
-      assert.equal(vars.repeat, undefined, 'no loop');
-    }
-  }
-  h.enter(h.flow);
-  assert.equal(h.timelines.length, 2);
   h.detach();
 });
 
-test('loaded screenshot retains the once-only 400ms mask and transient accent line', () => {
-  const h = harness({ loaded: false });
-  assert.equal(h.triggers.some((t) => t.trigger === h.shot), false);
-  h.load();
-  h.enter(h.shot);
-  const steps = h.timelines[0];
-  const mask = steps.find((s) => s.method === 'fromTo' && s.args[0] === h.image);
-  assert.equal(mask.args[1].clipPath, 'inset(0 100% 0 0)');
-  assert.equal(mask.args[2].clipPath, 'inset(0 0% 0 0)');
-  assert.equal(mask.args[2].duration, 0.4);
-  assert.equal(mask.args[2].clearProps, 'clipPath');
-  const sweep = steps.find((s) => s.method === 'fromTo' && s.args[0] === h.line);
-  assert.equal(sweep.args[1].left, '0%');
-  assert.equal(sweep.args[2].left, '100%');
-  assert.equal(sweep.args[2].duration, 0.4);
-  assert.equal(mask.args[3], sweep.args[3]);
-  assert.ok(steps.some((s) => s.args[0] === h.line && s.args[1].clearProps === 'left,opacity'));
-  h.enter(h.shot);
-  assert.equal(h.timelines.length, 1);
-  h.detach();
-});
-
-test('intro completion gates both visuals without consuming their triggers', () => {
+test('intro completion gates the flow and detaches its observer', () => {
   const h = harness({ intro: true });
   assert.equal(h.triggers.length, 0);
   h.finishIntro();
-  assert.equal(h.triggers.length, 2);
+  assert.equal(h.triggers.length, 1);
   assert.equal(h.mutations[0].disconnected, true);
-  h.enter(h.flow);
-  assert.equal(h.timelines.length, 1);
   h.detach();
 });
 
-test('reduced motion stays static; changes and pagehide revert and kill all motion without replaying seen visuals', () => {
+test('reduced motion is static and re-enabling motion restores the continuous flow', () => {
   const reduced = harness({ reduced: true });
   assert.equal(reduced.triggers.length, 0);
-  assert.equal(reduced.timelines.length, 0);
+  assert.equal(reduced.tweens.length, 0);
   reduced.detach();
   const h = harness();
-  h.enter(h.shot);
-  h.enter(h.flow);
   h.reduce();
   assert.equal(h.contexts[0].reverted, true);
-  assert.ok(h.triggers.every((t) => t.killed));
+  assert.ok(h.triggers.every((trigger) => trigger.killed));
   h.enable();
-  h.enter(h.shot);
-  h.enter(h.flow);
-  assert.equal(h.timelines.length, 2);
+  assert.equal(h.tweens.length, 2);
+  h.triggers[1].onToggle({ isActive: true });
+  assert.equal(h.tweens[1].playing, true);
+  h.detach();
+});
+
+test('pagehide cleans up and a persisted pageshow restores one flow', () => {
+  const h = harness();
   h.listeners.get('pagehide')();
-  assert.ok(h.contexts.every((c) => c.reverted));
+  assert.ok(h.contexts.every((context) => context.reverted));
+  assert.ok(h.triggers.every((trigger) => trigger.killed));
   h.listeners.get('pageshow')({ persisted: true });
   h.listeners.get('pageshow')({ persisted: true });
-  h.enter(h.flow);
-  assert.equal(h.timelines.length, 2);
+  assert.equal(h.tweens.length, 2);
   h.detach();
   assert.equal(h.listeners.size, 0);
 });
 
-test('cleanup also cancels a pending intro or image load', () => {
-  const intro = harness({ intro: true });
-  intro.detach();
-  assert.equal(intro.mutations[0].disconnected, true);
-  const image = harness({ loaded: false });
-  image.detach();
-  assert.equal(image.imageListeners.size, 0);
+test('cleanup cancels a pending intro', () => {
+  const h = harness({ intro: true });
+  h.detach();
+  assert.equal(h.mutations[0].disconnected, true);
 });
 
-test('card hooks isolate connectors from the shared observer and static markup stays visible', async () => {
+test('project markup keeps static screenshots and three layers of moving dashes', async () => {
   const card = await readFile(new URL('../src/components/home/ProjectCard.astro', import.meta.url), 'utf8');
   const section = await readFile(new URL('../src/components/home/ProjectsSection.astro', import.meta.url), 'utf8');
-  assert.doesNotMatch(card, /data-draw-svg|data-project-entry/);
-  for (const hook of ['shot', 'sweep', 'flow', 'node', 'connector']) assert.ok(card.includes(`data-project-${hook}`));
-  assert.doesNotMatch(card, /data-project-static-connector|case-connector-motion/);
-  assert.match(card, /background: var\(--accent\)/);
+  assert.doesNotMatch(card, /data-draw-svg|data-project-shot|data-project-sweep|data-project-node|case-sweep/);
+  assert.match(card, /<img src=\{project.image\} alt="" loading="lazy"/);
+  assert.match(card, /data-project-flow/);
+  for (const layer of ['base', 'middle', 'upper']) {
+    assert.match(card, new RegExp(`class="case-dash case-dash-${layer}"[^>]*data-project-connector`));
+  }
+  assert.match(card, /stroke-dasharray: 30 100/);
   assert.doesNotMatch(card, /clip-path:|visibility: hidden/);
-  assert.match(section, /registerPlugin\(ScrollTrigger, DrawSVGPlugin\)/);
+  assert.match(section, /registerPlugin\(ScrollTrigger\)/);
   assert.match(section, /attachProjectMotion/);
-  assert.doesNotMatch(section, /data-project-motion-toggle/);
-  assert.doesNotMatch(section, /gsap\.from\(|data-project-entry/);
+  assert.doesNotMatch(section, /DrawSVGPlugin/);
 });

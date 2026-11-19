@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer" id="site-footer">
-  <div class="container footer-bottom">
+  <div class="container footer-bottom" data-motion="stagger">
     <span>© {year} {site.owner}</span>
     <a href={site.builtWithHref} class="footer-link" {...externalLink}>
       {t.footer.builtWith} <span class="arrow" aria-hidden="true">→</span>
