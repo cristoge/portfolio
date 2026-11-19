@@ -1,4 +1,5 @@
 ---
+import EmbeddingText from '../ui/EmbeddingText.astro';
 import ArrowLink from '../ui/ArrowLink.astro';
 import type { EducationEntry } from '../../i18n/types';
 import { externalLink } from '../../lib/links';
@@ -31,7 +32,7 @@ const { institution, institutionHref, degree, dates, subject, status, note, cour
         </a>
       ) : institution}
     </p>
-    <h3 data-text-reveal>{degree}</h3>
+    <h3 data-text-reveal><EmbeddingText text={degree} /></h3>
     {note && <p class="education-note" data-text-reveal>{note}</p>}
     {coursework && coursework.length > 0 && (
       <p class="education-coursework" data-text-reveal>

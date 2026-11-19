@@ -15,16 +15,16 @@ export function animateEmbeddingText(gsap, target) {
   if (!source || !vector) return () => {};
   vector.textContent = embeddingVector(target.dataset.scrambleText);
 
-  gsap.timeline({ delay: 0.2 })
+  gsap.timeline()
     .set(source, { opacity: 0 })
     .set(vector, { opacity: 1 })
     .to(vector, {
-      duration: 1.65,
+      duration: 0.6,
       ease: 'none',
       scrambleText: {
         text: target.dataset.scrambleText,
         chars: '0123456789.-[],',
-        revealDelay: 0.45,
+        revealDelay: 0.12,
         speed: 0.35,
         tweenLength: false,
         oldClass: 'embedding-encoded',

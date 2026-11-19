@@ -1,4 +1,5 @@
 ---
+import EmbeddingText from '../ui/EmbeddingText.astro';
 import type { StackEntry } from '../../i18n/types';
 import { getDictionary, type Lang } from '../../i18n/utils';
 import { externalLink } from '../../lib/links';
@@ -14,7 +15,7 @@ const { heading, kicker, lead, groups } = getDictionary(lang).stack;
 <section class="section" id="stack" aria-labelledby="stack-heading" data-stack>
   <header class="stack-header">
     <p class="eyebrow stack-kicker" data-text-reveal>{kicker}</p>
-    <h2 id="stack-heading" data-text-reveal>{heading}</h2>
+    <h2 id="stack-heading" data-text-reveal><EmbeddingText text={heading} /></h2>
     <p class="lead" data-text-reveal>{lead}</p>
   </header>
   <div class="stack-mosaic">

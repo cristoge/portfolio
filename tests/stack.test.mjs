@@ -23,7 +23,7 @@ for (const [prefix, labels] of locales) {
     assert.equal(primary(tiles[1]), 'AWS');
     const services = [...tiles[1][2].matchAll(/<li\b[^>]*>([^<]+)<\/li>/g)].map((match) => match[1].trim());
     assert.deepEqual(services, ['Docker', 'Terraform', 'IAM', 'Lambda', 'S3', 'RDS', 'DynamoDB', 'Cognito', 'Bedrock']);
-    assert.deepEqual(tiles.slice(2).map(primary), ['FastAPI', 'PostgreSQL', 'Python', 'Claude Code']);
+    assert.deepEqual(tiles.slice(2).map(primary), ['FastAPI', 'PostgreSQL', 'Python', 'Codex']);
     assert.match(tiles[5][2], /href="https:\/\/github\.com\/Gentleman-Programming\/gentle-ai"/);
     assert.doesNotMatch(section, /stack-num|class="[^"]*\breveal\b/);
   });

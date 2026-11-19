@@ -147,3 +147,16 @@ test('all 18 localized pages have static visible draw targets and a shared motio
     assert.doesNotMatch(html, /<svg[^>]*data-draw-svg[^>]*style="[^"]*(?:visibility:hidden|opacity:0)/);
   }
 });
+
+
+test('embedding titles decode once across repeated viewport entries and page restoration', () => {
+  const h = harness({ text: true });
+  const enter = () => h.observers.at(-1).callback([{ isIntersecting: true, target: h.svg }]);
+  enter(); enter();
+  assert.equal(h.textTweens.length, 1);
+  h.listeners.get('pagehide')();
+  h.listeners.get('pageshow')({ persisted: true });
+  enter();
+  assert.equal(h.textTweens.length, 1);
+  h.detach();
+});

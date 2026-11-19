@@ -21,7 +21,7 @@ for (const { path, lang, current, status, subjects } of locales) {
     for (const [index, stage] of stages.entries()) {
       assert.ok(stage.includes(dates[index]));
       assert.ok(stage.includes(subjects[index]));
-      assert.match(stage, /<h3\b[^>]*>[^<]+<\/h3>/);
+      assert.match(stage, /<h3\b[^>]*>[\s\S]*?class="embedding-source"[^>]*>[^<]+<\/span>[\s\S]*?<\/h3>/);
       assert.match(stage, /class="education-track"[^>]*aria-hidden="true"/);
       assert.match(stage, index === 2 ? /pratfp\.com/ : /agora\.xtec\.cat\/iticbcn/);
     }

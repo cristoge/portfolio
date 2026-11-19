@@ -24,7 +24,7 @@ for (const route of routes) {
     assert.equal(articles.length, images.length);
     for (const [index, [, attrs, story]] of articles.entries()) {
       assert.doesNotMatch(attrs, /\breveal\b/);
-      assert.match(story, /<h2\b[^>]*>[^<]+<\/h2>[\s\S]*<figure\b/);
+      assert.match(story, /<h2\b[^>]*>[\s\S]*?class="embedding-source"[^>]*>[^<]+<\/span>[\s\S]*?<\/h2>[\s\S]*<figure\b/);
       assert.ok(story.includes(`src="${images[index]}"`));
       assert.match(story, /<img\b[^>]*alt="[^"]+"/);
       assert.match(story, /<figcaption\b/);

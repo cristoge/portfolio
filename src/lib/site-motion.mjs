@@ -1,6 +1,6 @@
 // Shared entrances complement (rather than replace) the illustration owners.
 // Nothing is hidden until it enters the viewport: no-JS and failed bundles stay readable.
-export function attachSiteMotion({ gsap, SplitText, doc = document, win = window, introClass }) {
+export function attachSiteMotion({ gsap, doc = document, win = window, introClass }) {
   let media;
   let disposed = false;
   const played = new WeakSet();
@@ -11,7 +11,6 @@ export function attachSiteMotion({ gsap, SplitText, doc = document, win = window
     media.add('(prefers-reduced-motion: no-preference)', () => {
       const context = gsap.context(() => {}, doc.documentElement);
       const removeListeners = [];
-      const splits = new Set();
       let viewport;
       let terminal;
 
@@ -25,16 +24,15 @@ export function attachSiteMotion({ gsap, SplitText, doc = document, win = window
             viewport.unobserve(target);
             // Never fade out the control a keyboard user is already using.
             if (target.matches(':focus-within')) continue;
+            // Embedding titles have their own observer. Labels and controls stay readable.
+            if (target.querySelector('[data-scramble-text]')
+              || target.matches('.eyebrow, .mono, a, button, input, select, textarea, label, form')
+              || target.closest('.eyebrow, a, button, label, form')
+              || target.querySelector('a, button, input, select, textarea, label, form')) continue;
             context.add(() => {
-              // Preserve the independent scramble layers and any links' accessible names.
-              if (SplitText && target.dataset?.textReveal !== undefined && !target.querySelector('[data-scramble-text]')) {
-                const split = SplitText.create(target, { type: 'words', tag: 'span', aria: 'none' });
-                splits.add(split);
-                gsap.fromTo(split.words, { opacity: 0, y: 10 }, {
-                  opacity: 1, y: 0, duration: 0.48,
-                  stagger: { amount: Math.min(0.8, split.words.length * 0.028) },
-                  ease: 'power2.out', clearProps: 'opacity,transform',
-                  onComplete: () => { split.revert(); splits.delete(split); },
+              if (target.dataset?.textReveal !== undefined) {
+                gsap.fromTo(target, { opacity: 0 }, {
+                  opacity: 1, duration: 0.4, ease: 'power2.out', clearProps: 'opacity',
                 });
               } else {
                 const targets = target.dataset?.motion === 'stagger' ? [...target.children] : target;
@@ -86,8 +84,6 @@ export function attachSiteMotion({ gsap, SplitText, doc = document, win = window
         viewport?.disconnect();
         removeListeners.forEach((remove) => remove());
         context.revert();
-        splits.forEach((split) => split.revert());
-        splits.clear();
       };
     });
   }

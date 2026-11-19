@@ -4,6 +4,7 @@ import { animateEmbeddingText } from './embedding-text.mjs';
 export function attachDrawMotion({ gsap, doc = document, win = window, introClass }) {
   let media;
   let disposed = false;
+  const decoded = new WeakSet();
 
   function mount() {
     if (media || disposed || !win.IntersectionObserver || !win.MutationObserver) return;
@@ -22,6 +23,8 @@ export function attachDrawMotion({ gsap, doc = document, win = window, introClas
             if (!entry.isIntersecting) continue;
             viewport.unobserve(entry.target);
             if (entry.target.dataset?.scrambleText !== undefined) {
+              if (decoded.has(entry.target)) continue;
+              decoded.add(entry.target);
               context.add(() => restoreText.push(animateEmbeddingText(gsap, entry.target)));
               continue;
             }

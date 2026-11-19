@@ -38,7 +38,7 @@ export default {
   education: {
     heading: 'Educación',
     kicker: 'Formación / Cronología',
-    lead: 'Tres etapas de formación, de la más reciente a la primera.',
+    lead: 'Tres etapas principales de mi formación.',
     courseworkLabel: 'Asignaturas relevantes',
     items: [
       {
@@ -92,7 +92,7 @@ export default {
   },
   projects: {
     heading: 'Proyectos',
-    note: 'Una selección de proyectos académicos y personales.',
+    note: 'Lo que he ido construyendo durante mi formación y por mi cuenta.',
     archive: {
       label: 'Archivo de casos',
       index: 'Índice de proyectos',
@@ -179,7 +179,7 @@ export default {
   stack: {
     heading: 'Tecnologías',
     kicker: 'Stack técnico',
-    lead: 'Herramientas por especialidad, con IA y cloud en primer plano.',
+    lead: 'Las herramientas con las que trabajo, pruebo ideas y sigo aprendiendo.',
     groups: [
       { label: 'Agentes e IA', highlight: 'focus', lead: { label: 'Strands Agents', href: 'https://strandsagents.com' }, items: ['LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
       { label: 'Cloud e infraestructura', highlight: 'accent', lead: 'AWS', items: ['Docker', 'Terraform', 'IAM', 'Lambda', 'S3', 'RDS', 'DynamoDB', 'Cognito', 'Bedrock'] },
@@ -188,13 +188,13 @@ export default {
       { label: 'Lenguajes', lead: 'Python', items: ['TypeScript', 'JavaScript', 'SQL'] },
       {
         label: 'Herramientas',
-        lead: 'Claude Code',
+        lead: 'Codex',
         items: [
-          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'configurador de agentes de IA' },
-          'OpenCode',
-          { label: 'Pi', description: 'harness minimalista para agentes' },
+          'Claude Code',
+          { label: 'Pi', href: 'https://pi.dev/', description: 'harness minimalista para agentes' },
+          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'configurador de agentes' },
           { label: 'herdr', description: 'multiplexor de agentes de IA' },
-          'Neovim',
+          { label: 'mise', href: 'https://mise.jdx.dev/', description: 'gestor de versiones' },
         ],
       },
     ],

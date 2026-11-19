@@ -43,15 +43,15 @@ test('localized pages reveal editorial text without duplicate container entrance
   }
 });
 
-function harness({ intro = false, reduced = false, observersAvailable = true, text = false, embedded = false } = {}) {
+function harness({ intro = false, reduced = false, observersAvailable = true, text = false, embedded = false, stable = false } = {}) {
   const tweens = [], observers = [], mutations = [], contexts = [], splits = [];
   const listeners = new Map();
   const targetListeners = new Map();
   const target = {
     disabled: false,
     dataset: text ? { textReveal: '' } : {},
-    querySelector: () => embedded ? {} : null,
-    matches: (selector) => selector === ':focus-visible',
+    querySelector: (selector) => selector === '[data-scramble-text]' && embedded ? {} : null,
+    matches: (selector) => selector === ':focus-visible' || (stable && selector !== ':focus-within'),
     closest: () => null,
     addEventListener: (name, fn) => targetListeners.set(name, fn),
     removeEventListener: (name) => targetListeners.delete(name),
@@ -180,40 +180,45 @@ test('missing observer support never hides content', () => {
 });
 
 
-test('text appears word by word only when scrolled into view, then restores semantic markup', () => {
+test('paragraphs fade as a single block without splitting, staggering or movement', () => {
   const h = harness({ text: true });
+  const enter = () => h.observers[0].callback([{ target: h.target, isIntersecting: true }]);
+  enter(); enter();
+  assert.equal(h.tweens.length, 1);
   assert.equal(h.splits.length, 0);
-  h.observers[0].callback([{ target: h.target, isIntersecting: true }]);
-  assert.equal(h.splits.length, 1);
-  const split = h.splits[0];
-  assert.equal(split.options.type, 'words');
-  assert.equal(split.options.aria, 'none');
-  assert.equal(split.options.tag, 'span');
-  assert.equal(h.tweens[0][0], split.words);
-  assert.ok(h.tweens[0][2].stagger.amount > 0);
-  assert.ok(h.tweens[0][2].stagger.amount <= 0.8);
-  h.tweens[0][2].onComplete();
-  assert.equal(split.reverted, true);
+  assert.equal(h.tweens[0][0], h.target);
+  assert.deepEqual(h.tweens[0][1], { opacity: 0 });
+  assert.equal(h.tweens[0][2].opacity, 1);
+  assert.equal(h.tweens[0][2].y, undefined);
+  assert.equal(h.tweens[0][2].stagger, undefined);
+  assert.equal(h.tweens[0][2].clearProps, 'opacity');
   h.detach();
 });
 
-test('text respects intro and motion preferences, and removes split wrappers on interruption', () => {
+test('paragraph fades respect intro, reduced motion and cleanup', () => {
   const reduced = harness({ text: true, reduced: true });
-  assert.equal(reduced.splits.length, 0);
+  assert.equal(reduced.tweens.length, 0);
   reduced.detach();
   const h = harness({ text: true, intro: true });
-  assert.equal(h.splits.length, 0);
+  assert.equal(h.observers.length, 0);
   h.finishIntro();
   h.observers[0].callback([{ target: h.target, isIntersecting: true }]);
   h.reduce();
-  assert.equal(h.splits[0].reverted, true);
+  assert.equal(h.contexts[0].reverted, true);
   h.detach();
 });
 
-test('existing animated text layers keep their own markup and are not split again', () => {
+test('embedding headings have no second fade or translation from the site observer', () => {
   const h = harness({ text: true, embedded: true });
   h.observers[0].callback([{ target: h.target, isIntersecting: true }]);
   assert.equal(h.splits.length, 0);
-  assert.equal(h.tweens[0][0], h.target);
+  assert.equal(h.tweens.length, 0);
+  h.detach();
+});
+
+test('labels and controls have no text entrance', () => {
+  const h = harness({ text: true, stable: true });
+  h.observers[0].callback([{ target: h.target, isIntersecting: true }]);
+  assert.equal(h.tweens.length, 0);
   h.detach();
 });

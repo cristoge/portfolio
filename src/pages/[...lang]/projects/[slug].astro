@@ -40,7 +40,7 @@ const d = t.projects.detail;
     <p class="project-context" data-text-reveal>{project.context}</p>
 
     <section class="detail-block">
-      <h2 class="detail-heading" data-text-reveal>{d.depth}</h2>
+      <h2 class="detail-heading" data-text-reveal><EmbeddingText text={d.depth} /></h2>
       <ol class="depth-list">
         {project.depthTopics.map((topic, i) => (
           <li>
@@ -52,13 +52,13 @@ const d = t.projects.detail;
     </section>
 
     <section class="detail-block">
-      <h2 class="detail-heading" data-text-reveal>{d.stackLabel}</h2>
+      <h2 class="detail-heading" data-text-reveal><EmbeddingText text={d.stackLabel} /></h2>
       <PillList items={project.stack} class="detail-pills" />
     </section>
 
     {project.outcome && (
       <section class="detail-block">
-        <h2 class="detail-heading" data-text-reveal>{d.outcome}</h2>
+        <h2 class="detail-heading" data-text-reveal><EmbeddingText text={d.outcome} /></h2>
         <p class="outcome-text" data-text-reveal>{project.outcome}</p>
       </section>
     )}

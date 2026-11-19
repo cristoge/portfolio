@@ -1,7 +1,6 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle.astro';
-import PixelGuineaPig from '../ui/pixel/PixelGuineaPig.astro';
 import { getDictionary, localePath, type Lang, type Page } from '../../i18n/utils';
 
 interface Props {
@@ -23,10 +22,6 @@ const navItems: { page: Page; label: string }[] = [
 
 <header class="nav" data-nav>
   <div class="container nav-inner">
-    <a href={localePath(lang, 'home')} class="nav-logo" aria-label={t.nav.home}>
-      <PixelGuineaPig size={36} bounce="hover" />
-    </a>
-
     <nav class="nav-links" aria-label={t.nav.ariaLabel}>
       {navItems.map((item) => (
         <a
@@ -76,12 +71,6 @@ const navItems: { page: Page; label: string }[] = [
     align-items: center;
     gap: 16px;
     min-height: 60px;
-  }
-
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
   }
 
   .nav-links {

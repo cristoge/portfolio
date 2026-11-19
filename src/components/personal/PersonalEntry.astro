@@ -1,4 +1,5 @@
 ---
+import EmbeddingText from '../ui/EmbeddingText.astro';
 import ArrowLink from '../ui/ArrowLink.astro';
 import type { PersonalSection } from '../../i18n/types';
 import { externalLink } from '../../lib/links';
@@ -15,7 +16,7 @@ const { entry, reverse } = Astro.props;
 <article class:list={['entry', { 'entry--reverse': reverse }]}>
   <div class="entry-content">
     <p class="eyebrow entry-kicker" data-text-reveal>{entry.kicker}</p>
-    <h2 data-text-reveal>{entry.title}</h2>
+    <h2 data-text-reveal><EmbeddingText text={entry.title} /></h2>
     {entry.body.map((paragraph) => (
       <p data-text-reveal>
         {linkify(paragraph, entry.inlineLinks).map((part) =>

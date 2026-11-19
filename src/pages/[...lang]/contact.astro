@@ -29,7 +29,7 @@ const { contact } = t;
     <section class="contact-panel contact-panel--direct" aria-labelledby="contact-channels-heading">
       <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
       <p class="eyebrow" data-text-reveal>{contact.channels.kicker}</p>
-      <h2 id="contact-channels-heading" data-text-reveal>{contact.channels.heading}</h2>
+      <h2 id="contact-channels-heading" data-text-reveal><EmbeddingText text={contact.channels.heading} /></h2>
       <div data-motion><ContactChannels lang={lang} /></div>
     </section>
 
@@ -37,12 +37,12 @@ const { contact } = t;
       <section class="contact-panel" aria-labelledby="contact-form-heading">
         <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
         <p class="eyebrow" data-text-reveal>{contact.form.kicker}</p>
-        <h2 id="contact-form-heading" data-text-reveal>{contact.form.heading}</h2>
+        <h2 id="contact-form-heading" data-text-reveal><EmbeddingText text={contact.form.heading} /></h2>
         <ContactForm lang={lang} />
       </section>
       <section class="contact-panel contact-location" aria-labelledby="contact-map-heading">
         <span class="contact-trace" data-contact-trace aria-hidden="true"></span>
-        <h2 id="contact-map-heading" data-text-reveal>{contact.map.heading}</h2>
+        <h2 id="contact-map-heading" data-text-reveal><EmbeddingText text={contact.map.heading} /></h2>
         <p data-text-reveal>{contact.map.caption}</p>
         <MapEmbed title={contact.map.heading} />
       </section>

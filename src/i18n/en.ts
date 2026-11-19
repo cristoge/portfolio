@@ -38,7 +38,7 @@ export default {
   education: {
     heading: 'Education',
     kicker: 'Education / Timeline',
-    lead: 'Three stages of education, from the most recent to the first.',
+    lead: 'Three main stages of my education.',
     courseworkLabel: 'Relevant coursework',
     items: [
       {
@@ -92,7 +92,7 @@ export default {
   },
   projects: {
     heading: 'Projects',
-    note: 'A selection of academic and personal projects.',
+    note: 'What I have been building during my studies and on my own.',
     archive: {
       label: 'Case archive',
       index: 'Project index',
@@ -179,7 +179,7 @@ export default {
   stack: {
     heading: 'Technologies',
     kicker: 'Technical stack',
-    lead: 'Tools by specialty, with AI and cloud in the foreground.',
+    lead: 'The tools I use to work, try out ideas and keep learning.',
     groups: [
       { label: 'Agents & AI', highlight: 'focus', lead: { label: 'Strands Agents', href: 'https://strandsagents.com' }, items: ['LangGraph', 'Pydantic AI', 'Ollama', 'scikit-learn', 'Langfuse'] },
       { label: 'Cloud & infrastructure', highlight: 'accent', lead: 'AWS', items: ['Docker', 'Terraform', 'IAM', 'Lambda', 'S3', 'RDS', 'DynamoDB', 'Cognito', 'Bedrock'] },
@@ -188,13 +188,13 @@ export default {
       { label: 'Languages', lead: 'Python', items: ['TypeScript', 'JavaScript', 'SQL'] },
       {
         label: 'Tools',
-        lead: 'Claude Code',
+        lead: 'Codex',
         items: [
-          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'AI agent configurator' },
-          'OpenCode',
-          { label: 'Pi', description: 'minimal agent harness' },
+          'Claude Code',
+          { label: 'Pi', href: 'https://pi.dev/', description: 'minimal agent harness' },
+          { label: 'gentle-ai', href: 'https://github.com/Gentleman-Programming/gentle-ai', description: 'Agent configurator' },
           { label: 'herdr', description: 'AI agent multiplexer' },
-          'Neovim',
+          { label: 'mise', href: 'https://mise.jdx.dev/', description: 'version manager' },
         ],
       },
     ],

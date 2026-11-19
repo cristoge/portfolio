@@ -12,15 +12,19 @@ test('embedding-style numbers decode to the exact localized text, then restore i
     querySelector: (selector) => selector === '.embedding-source' ? source : vector,
   };
   const steps = [];
+  let timing;
   const timeline = {
     set: (target, vars) => { steps.push({ target, vars }); return timeline; },
     to: (target, vars) => { steps.push({ target, vars }); return timeline; },
   };
-  const cleanup = animateEmbeddingText({ timeline: () => timeline }, target);
+  const cleanup = animateEmbeddingText({ timeline: (vars = {}) => { timing = vars; return timeline; } }, target);
   assert.match(vector.textContent, /^\[-?0\.\d{2}(?:, -?0\.\d{2})*\]$/);
   assert.equal(source.textContent, text, 'Accessible source is never scrambled');
   const tween = steps.find(({ vars }) => vars.scrambleText);
   assert.equal(tween.target, vector);
+  assert.equal(tween.vars.duration, 0.6);
+  assert.equal(timing.delay ?? 0, 0);
+  assert.ok(tween.vars.scrambleText.revealDelay <= 0.15);
   assert.equal(tween.vars.scrambleText.text, text);
   assert.equal(tween.vars.scrambleText.chars, '0123456789.-[],');
   assert.equal(tween.vars.scrambleText.newClass, 'embedding-decoded');
@@ -55,6 +59,19 @@ test('all localized pages retain accessible static headings and hidden visual-on
     }
     for (const link of html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)) {
       assert.doesNotMatch(link[0], /data-scramble-text=/, 'Navigation and actions never scramble');
+    }
+  }
+});
+
+
+test('section headings use embeddings while labels and interactive names stay static', async () => {
+  for (const locale of ['', 'es/', 'en/']) {
+    const html = await readFile(new URL(`../dist/${locale}index.html`, import.meta.url), 'utf8');
+    for (const id of ['projects-heading', 'education-heading', 'stack-heading']) {
+      assert.match(html, new RegExp(`<h2[^>]*id="${id}"[^>]*>[\\s\\S]*?data-scramble-text=[\\s\\S]*?</h2>`));
+    }
+    for (const label of html.matchAll(/<(?:p|h3)[^>]*class="[^"]*(?:eyebrow|stack-label)[^"]*"[^>]*>([\s\S]*?)<\/(?:p|h3)>/g)) {
+      assert.doesNotMatch(label[1], /data-scramble-text=/);
     }
   }
 });
