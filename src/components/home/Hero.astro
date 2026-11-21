@@ -18,8 +18,7 @@ const greetingWords = t.hero.greeting.split(' ');
 <section class="hero-intro">
   <div class="hero-intro-body">
     <div class="hero-main">
-      <p class="eyebrow hero-kicker">
-        <span class="status-dot" aria-hidden="true"></span>
+      <p class="eyebrow">
         <span data-text-reveal>{t.hero.kicker} <span aria-hidden="true">·</span> {t.hero.status}</span>
       </p>
       <h1 data-text-reveal>
@@ -52,8 +51,7 @@ const greetingWords = t.hero.greeting.split(' ');
     position: relative;
     isolation: isolate;
     padding: 112px 0;
-    /* Solo se recorta en vertical: en horizontal la onda del punto de estado
-       sobresale del borde izquierdo. */
+    /* Solo se recorta en vertical. */
     overflow-x: visible;
     overflow-y: clip;
   }
@@ -70,33 +68,6 @@ const greetingWords = t.hero.greeting.split(' ');
     width: 100%;
     max-width: 680px;
     text-align: center;
-  }
-
-  /* Rótulo del titular con un punto de estado "en línea" en azul. */
-  .hero-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .status-dot {
-    position: relative;
-    width: 7px;
-    height: 7px;
-    margin-right: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-soft);
-  }
-
-  /* Onda que sale del punto, como un indicador de "en línea". */
-  .status-dot::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0;
   }
 
   .hero-intro h1 {
@@ -165,22 +136,4 @@ const greetingWords = t.hero.greeting.split(' ');
     .hero-intro h1 { font-size: clamp(34px, 9vw, 48px); }
     .hero-side .lead { font-size: 17px; }
   }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .status-dot::after {
-      animation: status-pulse 2.4s var(--ease-out) 1.2s infinite;
-    }
-    @keyframes status-pulse {
-      from {
-        opacity: 0.5;
-        transform: scale(1);
-      }
-      70%,
-      to {
-        opacity: 0;
-        transform: scale(3);
-      }
-    }
-  }
-
 </style>
