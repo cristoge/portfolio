@@ -27,7 +27,7 @@ const { heading, kicker, lead, groups } = getDictionary(lang).stack;
           {highlight && <span class="stack-texture" aria-hidden="true" data-stack-texture></span>}
           <h3 class="mono stack-label" data-text-reveal>{label}</h3>
           <p class="stack-primary" data-text-reveal>
-            {primary.href ? <a class="stack-link animated-underline underline-marked" href={primary.href} {...externalLink}>{primary.label}</a> : primary.label}
+            {primary.href ? <a class="stack-link animated-underline" href={primary.href} {...externalLink}>{primary.label}</a> : primary.label}
           </p>
           {primary.description && <p class="stack-description" data-text-reveal>{primary.description}</p>}
           <ul class="stack-names" role="list">
@@ -35,7 +35,7 @@ const { heading, kicker, lead, groups } = getDictionary(lang).stack;
               <li>
                 {typeof item === 'string' ? item : (
                   <>
-                    {item.href ? <a class="stack-link animated-underline underline-marked" href={item.href} {...externalLink}>{item.label}</a> : item.label}
+                    {item.href ? <a class="stack-link animated-underline" href={item.href} {...externalLink}>{item.label}</a> : item.label}
                     {item.description && <span class="stack-description" data-text-reveal>{item.description}</span>}
                   </>
                 )}
@@ -219,7 +219,11 @@ const { heading, kicker, lead, groups } = getDictionary(lang).stack;
   .stack-tile--focus .stack-names,
   .stack-tile--accent .stack-names { max-width: 40ch; }
 
-  .stack-link { color: var(--tile-mark); }
+  .stack-link {
+    --underline-height: 2px;
+    color: var(--tile-mark);
+  }
+
   .stack-link:focus-visible { outline-color: var(--tile-mark); }
   .stack-primary .stack-link { color: inherit; }
 

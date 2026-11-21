@@ -264,13 +264,14 @@ p {
 /* El subrayado sigue al texto sin mover el enlace ni su flecha. */
 .animated-underline {
   --underline-rest: transparent;
+  --underline-rest-width: 0%;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   background-image: linear-gradient(currentColor, currentColor),
     linear-gradient(var(--underline-rest), var(--underline-rest));
   background-position: left bottom;
   background-repeat: no-repeat;
-  background-size: 0% var(--underline-height, 1px), 100% 1px;
+  background-size: 0% var(--underline-height, 1px), var(--underline-rest-width) 1px;
   transition: background-size 180ms var(--ease-out);
 }
 
@@ -278,11 +279,12 @@ p {
 a[aria-current] > .animated-underline {
   --underline-height: 2px;
   --underline-rest: color-mix(in srgb, currentColor 72%, transparent);
+  --underline-rest-width: 100%;
 }
 
 a.animated-underline:is(:hover, :focus-visible, :active),
 a:is(:hover, :focus-visible, :active) .animated-underline {
-  background-size: 100% var(--underline-height, 1px), 100% 1px;
+  background-size: 100% var(--underline-height, 1px), var(--underline-rest-width) 1px;
 }
 
 @media (forced-colors: active) {

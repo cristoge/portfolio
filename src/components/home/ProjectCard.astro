@@ -20,7 +20,7 @@ const id = `project-${project.slug}`;
     <div>
       <p class="mono case-category" data-text-reveal><span>{number}</span> / {info.category}</p>
       <h3 id={`${id}-title`} data-text-reveal>
-        <a class="case-title-link animated-underline" href={projectDetailPath(lang, project.slug)}>{project.title}</a>
+        <a class="case-title-link" href={projectDetailPath(lang, project.slug)}>{project.title}</a>
       </h3>
       <p class="case-summary" data-text-reveal>{info.summary}</p>
       <p class="case-detail" data-text-reveal>{info.detail}</p>
@@ -83,8 +83,24 @@ const id = `project-${project.slug}`;
     overflow-wrap: anywhere;
   }
 
-  .case-title-link:hover {
+  .case-title-link {
+    text-decoration: none;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background: linear-gradient(var(--accent), var(--accent)) left bottom / 0% 1px no-repeat;
+    transition: background-size 180ms var(--ease-out);
+  }
+
+  .case-title-link:is(:hover, :focus-visible, :active) {
     color: var(--accent);
+    background-size: 100% 1px;
+  }
+
+  @media (forced-colors: active) {
+    .case-title-link:is(:hover, :focus-visible, :active) {
+      background-image: none;
+      text-decoration: underline;
+    }
   }
 
   .case-summary {
