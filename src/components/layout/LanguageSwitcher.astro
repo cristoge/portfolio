@@ -20,7 +20,7 @@ const t = getDictionary(lang);
       hreflang={l}
       aria-current={l === lang ? 'page' : undefined}
     >
-      {languageLabels[l]}
+      <span class="lang-label animated-underline">{languageLabels[l]}</span>
     </a>
   ))}
 </div>
@@ -43,13 +43,16 @@ const t = getDictionary(lang);
     color: var(--muted);
   }
 
-  .lang-option:hover {
-    color: var(--ink);
-    text-decoration: underline 1px;
-    text-underline-offset: 4px;
+  .lang-label {
+    --underline-height: 2px;
+    padding-block: 2px;
   }
 
   .lang-option[aria-current] {
     color: var(--ink);
+  }
+
+  .lang-option:is(:hover, :focus-visible, :active) {
+    color: var(--accent);
   }
 </style>

@@ -27,7 +27,7 @@ const { institution, institutionHref, degree, dates, subject, status, note, cour
     <p class="mono education-meta" data-text-reveal>
       {subject} <span class="education-separator" aria-hidden="true">/</span>
       {institutionHref ? (
-        <a class="education-institution" href={institutionHref} {...externalLink}>
+        <a class="education-institution animated-underline" href={institutionHref} {...externalLink}>
           {institution} <span aria-hidden="true">↗</span>
         </a>
       ) : institution}
@@ -117,11 +117,6 @@ const { institution, institutionHref, degree, dates, subject, status, note, cour
     display: inline-block;
     padding-block: 3px;
     color: var(--accent);
-  }
-
-  .education-institution:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
   }
 
   .education-main h3 {

@@ -16,7 +16,7 @@ const year = new Date().getFullYear();
   <div class="container footer-bottom" data-motion="stagger">
     <span>© {year} {site.owner}</span>
     <a href={site.builtWithHref} class="footer-link" {...externalLink}>
-      {t.footer.builtWith} <span class="arrow" aria-hidden="true">→</span>
+      <span class="animated-underline">{t.footer.builtWith}</span> <span aria-hidden="true">→</span>
     </a>
   </div>
 </footer>

@@ -27,7 +27,9 @@ const d = t.projects.detail;
 
 <BaseLayout lang={lang} title={`${project.title} — ${t.meta.title}`} activePage="home">
   <article class="page project-detail">
-    <a href={`${localePath(lang, 'home')}#projects`} class="back-link"><span class="arrow arrow-back" aria-hidden="true">←</span> {d.back}</a>
+    <a href={`${localePath(lang, 'home')}#projects`} class="back-link">
+      <span aria-hidden="true">←</span> <span class="animated-underline">{d.back}</span>
+    </a>
 
     <header class="project-header">
       <p class="eyebrow" data-text-reveal>{d.context}</p>

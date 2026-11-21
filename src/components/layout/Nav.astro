@@ -27,9 +27,8 @@ const navItems: { page: Page; label: string }[] = [
         <a
           href={localePath(lang, item.page)}
           class="nav-link"
-          data-motion-interactive
           aria-current={item.page === activePage ? 'page' : undefined}
-        >{item.label}</a>
+        ><span class="animated-underline">{item.label}</span></a>
       ))}
     </nav>
 
@@ -97,8 +96,6 @@ const navItems: { page: Page; label: string }[] = [
 
   .nav-link[aria-current] {
     color: var(--ink);
-    text-decoration: underline 1px;
-    text-underline-offset: 6px;
   }
 
   .nav-actions {

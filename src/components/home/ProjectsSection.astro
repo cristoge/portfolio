@@ -28,7 +28,7 @@ const projects = getProjects(lang);
           <li>
             <a href={`#project-${project.slug}`}>
               <span class="mono" aria-hidden="true">{formatIndex(index)}</span>
-              <span>{project.archive.indexTitle ?? project.title}</span>
+              <span class="animated-underline">{project.archive.indexTitle ?? project.title}</span>
               <span class="index-arrow" aria-hidden="true">↓</span>
             </a>
           </li>
@@ -112,11 +112,6 @@ const projects = getProjects(lang);
     border-bottom: 1px solid var(--line);
     color: var(--accent);
     font-size: var(--fs-sm);
-  }
-
-  .project-index a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
   }
 
   .project-index .mono {

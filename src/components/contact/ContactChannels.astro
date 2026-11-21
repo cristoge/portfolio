@@ -14,24 +14,33 @@ const { email, linkedin, github } = site;
 ---
 
 <div class="contact-links">
-  <p class="contact-address"><a href={`mailto:${email}`}>{email}</a></p>
+  <p class="contact-address"><a class="animated-underline" href={`mailto:${email}`}>{email}</a></p>
   <div class="copy-action">
     <button type="button" class="btn copy-email" data-motion-interactive data-copy-email={email} data-done={copyEmail.done} aria-label={copyEmail.ariaLabel} hidden>
-      <Icon name="copy" size={17} />
       <span>{copyEmail.ariaLabel}</span>
+      <span class="copy-icon" aria-hidden="true">
+        <span class="copy-icon-idle"><Icon name="copy" size={17} /></span>
+        <span class="copy-icon-done"><Icon name="check" size={17} /></span>
+      </span>
     </button>
     <span class="mono" role="status" data-copy-status></span>
   </div>
-  <dl class="contact-networks">
-    <div>
-      <dt class="mono">{linkedin.label}</dt>
-      <dd><a href={linkedin.href} {...externalLink}>{linkedin.handle}</a></dd>
-    </div>
-    <div>
-      <dt class="mono">{github.label}</dt>
-      <dd><a href={github.href} {...externalLink}>{new URL(github.href).pathname.slice(1)}</a></dd>
-    </div>
-  </dl>
+  <ul class="contact-networks">
+    {[
+      linkedin,
+      { ...github, handle: new URL(github.href).pathname.slice(1) },
+    ].map(({ label, handle, href }) => (
+      <li>
+        <a class="network-link" href={href} {...externalLink}>
+          <span class="network-profile">
+            <span class="mono">{label}</span>
+            <span class="network-handle"><span class="animated-underline underline-marked">{handle}</span></span>
+          </span>
+          <span class="network-arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    ))}
+  </ul>
 </div>
 
 <script>
@@ -47,9 +56,13 @@ const { email, linkedin, github } = site;
       } catch {
         return;
       }
+      button.dataset.copied = '';
       status.textContent = button.dataset.done ?? '';
       window.clearTimeout(resetTimer);
-      resetTimer = window.setTimeout(() => { status.textContent = ''; }, 2000);
+      resetTimer = window.setTimeout(() => {
+        delete button.dataset.copied;
+        status.textContent = '';
+      }, 2000);
     });
   }
 </script>
@@ -64,52 +77,91 @@ const { email, linkedin, github } = site;
     overflow-wrap: anywhere;
   }
 
-  .contact-links a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.16em;
-  }
-
   .copy-action {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 12px;
+    margin-top: 12px;
   }
 
   .copy-email {
-    min-height: 44px;
     max-width: 100%;
-    margin-top: 12px;
     padding: 8px 12px;
     background: var(--surface);
     color: var(--ink);
     border-color: var(--line-strong);
     text-align: start;
+    white-space: normal;
+    line-height: 1.3;
   }
 
   .copy-email[hidden] { display: none; }
-  .copy-email:hover { background: var(--page); color: var(--ink); }
+  .copy-email:hover { background: var(--page); }
+  .copy-email[data-copied] {
+    background: var(--ink);
+    color: var(--page);
+  }
+
+  .copy-icon {
+    display: grid;
+    flex: none;
+  }
+
+  .copy-icon > span {
+    display: flex;
+    grid-area: 1 / 1;
+    transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+  }
+
+  .copy-icon-done {
+    opacity: 0;
+    transform: translateY(4px) scale(0.8);
+  }
+
+  [data-copied] .copy-icon-idle {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.8);
+  }
+
+  [data-copied] .copy-icon-done {
+    opacity: 1;
+    transform: none;
+  }
+
   .contact-links :focus-visible { outline-color: var(--on-accent); }
 
   .contact-networks {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px 16px;
-    max-width: 44ch;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 12px;
+    max-width: 30rem;
     margin: 16px 0 0;
-    padding-top: 14px;
-    border-top: 1px solid var(--on-accent);
+    padding: 0;
+    list-style: none;
   }
 
-  .contact-networks dd {
-    margin: 0;
-    font-size: var(--fs-sm);
+  .network-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--on-accent);
+    transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out);
+  }
+
+  .network-link:is(:hover, :focus-visible) {
+    background: var(--on-accent);
+    color: var(--accent);
+  }
+
+  .network-profile {
+    display: grid;
     overflow-wrap: anywhere;
   }
 
-  .contact-networks a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
+  .network-handle { font-size: var(--fs-sm); }
+  .network-arrow { flex: none; }
 </style>
