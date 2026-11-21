@@ -106,6 +106,7 @@ export default {
     },
     detail: {
       back: 'Back to projects',
+      screenshot: 'View screenshot',
       context: 'Context',
       depth: 'What this project dug into',
       stackLabel: 'Stack',

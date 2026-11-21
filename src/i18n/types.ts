@@ -133,6 +133,7 @@ export interface Dictionary {
     };
     detail: {
       back: string;
+      screenshot: string;
       context: string;
       depth: string;
       stackLabel: string;

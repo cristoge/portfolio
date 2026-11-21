@@ -8,6 +8,7 @@ import EmbeddingText from '../../../components/ui/EmbeddingText.astro';
 import { getProjects } from '../../../data/projects';
 import { getDictionary, getLangStaticPaths, localePath } from '../../../i18n/utils';
 import { formatIndex } from '../../../lib/format';
+import { externalLink } from '../../../lib/links';
 
 export function getStaticPaths() {
   return getLangStaticPaths().flatMap(({ params, props: { lang } }) =>
@@ -37,9 +38,18 @@ const d = t.projects.detail;
       <p class="project-summary lead" data-text-reveal>{project.description}</p>
     </header>
 
-    <img src={project.image} alt={project.title} class="project-hero-image" data-motion />
-
     <p class="project-context" data-text-reveal>{project.context}</p>
+
+    <div class="project-actions">
+      <ButtonLink href={project.repoHref} external>{t.projects.links.repo}</ButtonLink>
+      {project.demoHref ? (
+        <ButtonLink href={project.demoHref} variant="outline" external>{t.projects.links.demo}</ButtonLink>
+      ) : (
+        <a class="arrow-link" href={project.image} {...externalLink}>
+          <span class="animated-underline">{d.screenshot}</span> <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </div>
 
     <section class="detail-block">
       <h2 class="detail-heading" data-text-reveal><EmbeddingText text={d.depth} /></h2>
@@ -64,13 +74,6 @@ const d = t.projects.detail;
         <p class="outcome-text" data-text-reveal>{project.outcome}</p>
       </section>
     )}
-
-    <div class="project-actions" data-motion>
-      <ButtonLink href={project.repoHref} external>{t.projects.links.repo}</ButtonLink>
-      {project.demoHref && (
-        <ButtonLink href={project.demoHref} variant="outline" external>{t.projects.links.demo}</ButtonLink>
-      )}
-    </div>
   </article>
 </BaseLayout>
 
@@ -105,17 +108,9 @@ const d = t.projects.detail;
     max-width: 68ch;
   }
 
-  .project-hero-image {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    margin: 56px 0;
-    border: 1px solid var(--line-strong);
-    object-fit: cover;
-  }
-
   .project-context {
     max-width: 68ch;
+    margin-top: 24px;
     color: var(--copy);
     font-size: var(--fs-base);
     line-height: 1.65;
@@ -173,8 +168,9 @@ const d = t.projects.detail;
   .project-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 72px;
+    align-items: center;
+    gap: 12px 16px;
+    margin-top: 24px;
   }
 
   @media (max-width: 640px) {

@@ -106,6 +106,7 @@ export default {
     },
     detail: {
       back: 'Tornar a projectes',
+      screenshot: 'Veure captura',
       context: 'Context',
       depth: 'En què es va aprofundir',
       stackLabel: 'Stack',
